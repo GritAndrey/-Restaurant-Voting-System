@@ -8,14 +8,12 @@ import java.util.Set;
 public class User extends AbstractNamedEntity {
     private String email;
     private String password;
-    private boolean enabled = true;
-    private Date registered = new Date();
+    private boolean enabled;
+    private Date registered;
     private Set<Role> roles;
-    private Set<Vote> votes;
 
     public User(User u) {
         this(u.id, u.name, u.email, u.password, u.enabled, u.registered, u.roles);
-        this.votes = u.getVotes();
     }
 
     public User(Integer id, String name, String email, String password, Role role, Role... roles) {
@@ -75,14 +73,6 @@ public class User extends AbstractNamedEntity {
         this.roles = isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
     }
 
-    public Set<Vote> getVotes() {
-        return votes;
-    }
-
-    public void setVotes(Set<Vote> votes) {
-        this.votes = votes;
-    }
-
     @Override
     public String toString() {
         return "User{" +
@@ -93,7 +83,6 @@ public class User extends AbstractNamedEntity {
                 ", enabled=" + enabled +
                 ", registered=" + registered +
                 ", roles=" + roles +
-                ", votes=" + votes +
                 '}';
     }
 }

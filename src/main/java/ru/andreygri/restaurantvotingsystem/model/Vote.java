@@ -1,15 +1,36 @@
 package ru.andreygri.restaurantvotingsystem.model;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class Vote extends AbstractBaseEntity {
     private User user;
-    private Menu menu;
+    private Restaurant restaurant;
+    private LocalDate date;
+    private LocalTime time;
 
     public Vote() {
     }
 
-    public Vote(User user, Menu menu) {
+    public Vote(User user, Restaurant restaurant) {
         this.user = user;
-        this.menu = menu;
+        this.restaurant = restaurant;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 
     public User getUser() {
@@ -20,11 +41,11 @@ public class Vote extends AbstractBaseEntity {
         this.user = user;
     }
 
-    public Menu getMenu() {
-        return menu;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public void setMenu(Menu menu) {
-        this.menu = menu;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 }
