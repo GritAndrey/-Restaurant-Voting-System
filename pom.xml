@@ -23,6 +23,14 @@
 
         <!--DataBase-->
         <hsqldb.version>2.6.1</hsqldb.version>
+        <!--Spring-->
+        <spring-data-jpa.version>2.7.1</spring-data-jpa.version>
+        <spring.version>5.3.20</spring.version>
+        <!-- Hibernate -->
+        <hibernate.version>5.6.9.Final</hibernate.version>
+        <!--    Tests  -->
+        <junit.version>4.13.2</junit.version>
+        <assertj.version>3.23.1</assertj.version>
     </properties>
 
     <build>
@@ -81,6 +89,51 @@
             <artifactId>hsqldb</artifactId>
             <version>${hsqldb.version}</version>
         </dependency>
-
+        <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>${spring-data-jpa.version}</version>
+        </dependency>
+        <!--- ORM -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <!--Test-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>${spring.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

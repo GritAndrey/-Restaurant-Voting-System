@@ -1,11 +1,22 @@
 package ru.andreygri.restaurantvotingsystem.model;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
+@Entity
+@Table(name = "menu")
 public class Menu extends AbstractBaseEntity {
+    @ManyToMany
+    @JoinTable(name = "dish_menu",
+            joinColumns = @JoinColumn(name = "menu_id"),
+            inverseJoinColumns = @JoinColumn(name = "dish_id"))
     private Set<Dish> dishes;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
+    @Column(name = "date_time")
     private Date date;
 
     public Set<Dish> getDishes() {

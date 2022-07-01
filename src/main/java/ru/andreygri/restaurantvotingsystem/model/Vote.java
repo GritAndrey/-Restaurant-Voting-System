@@ -1,10 +1,18 @@
 package ru.andreygri.restaurantvotingsystem.model;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Entity
+@Table(name = "vote")
 public class Vote extends AbstractBaseEntity {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
     private LocalDate date;
     private LocalTime time;

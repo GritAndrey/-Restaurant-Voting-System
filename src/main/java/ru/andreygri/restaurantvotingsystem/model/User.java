@@ -1,16 +1,36 @@
 package ru.andreygri.restaurantvotingsystem.model;
 
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.Set;
 
+@Entity
+@Table(name = "users")
 public class User extends AbstractNamedEntity {
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
+
+    @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "enabled", nullable = false)
     private boolean enabled;
+
+    @Column(name = "registered", nullable = false)
     private Date registered;
+
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role"}, name = "uk_user_roles")})
+    @Column(name = "role")
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
+
+    protected User() {
+
+    }
 
     public User(User u) {
         this(u.id, u.name, u.email, u.password, u.enabled, u.registered, u.roles);

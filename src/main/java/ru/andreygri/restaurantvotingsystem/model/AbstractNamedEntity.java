@@ -1,5 +1,8 @@
 package ru.andreygri.restaurantvotingsystem.model;
 
+import javax.persistence.MappedSuperclass;
+
+@MappedSuperclass
 public abstract class AbstractNamedEntity extends AbstractBaseEntity {
     protected String name;
 
