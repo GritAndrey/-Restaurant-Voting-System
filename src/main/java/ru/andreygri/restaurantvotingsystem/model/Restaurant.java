@@ -3,7 +3,12 @@ package ru.andreygri.restaurantvotingsystem.model;
 public class Restaurant extends AbstractNamedEntity {
     private String address;
 
-    public Restaurant(String address) {
+    protected Restaurant() {
+
+    }
+
+    public Restaurant(Integer id, String name, String address) {
+        super(id, name);
         this.address = address;
     }
 
