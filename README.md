@@ -12,3 +12,26 @@ a voting system for deciding where to have lunch.
 - If it is before 11:00 we assume that he changed his mind.
 - If it is after 11:00 then it is too late, vote can't be changed
 - Each restaurant provides a new menu each day.
+
+GET
+api/v1/restaurants    Get all restaurants 
+api/v1/restaurants/id Get info about restaurant with id 
+api/v1/restaurants/id/menu  today menu(need to think)
+api/v1/restaurants/id/votes -votes for the restaurant
+
+
+POST
+api/v1/restaurants/id/vote vote for the restaurant
+api/v1/admin/restaurants    add restaurant
+api/v1/admin/restaurants/id/menu  add menu
+
+
+PUT
+api/v1/admin/restaurants/id change restaurant
+api/v1/admin/restaurants/id/menu change menu
+PATCH
+
+DELETE
+api/v1/admin/restaurants/id
+api/v1/admin/users/id
+

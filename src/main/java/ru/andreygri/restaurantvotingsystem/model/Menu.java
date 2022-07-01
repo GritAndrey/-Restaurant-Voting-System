@@ -1,18 +1,18 @@
 package ru.andreygri.restaurantvotingsystem.model;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 public class Menu extends AbstractBaseEntity {
-    List<Dish> dishes;
+    private Set<Dish> dishes;
     private Restaurant restaurant;
     private Date date;
 
-    public List<Dish> getDishes() {
+    public Set<Dish> getDishes() {
         return dishes;
     }
 
-    public void setDishes(List<Dish> dishes) {
+    public void setDishes(Set<Dish> dishes) {
         this.dishes = dishes;
     }
 
@@ -30,5 +30,15 @@ public class Menu extends AbstractBaseEntity {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "id=" + id +
+                ", dishes=" + dishes +
+                ", restaurant=" + restaurant +
+                ", date=" + date +
+                '}';
     }
 }

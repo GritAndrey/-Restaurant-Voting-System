@@ -62,7 +62,7 @@ CREATE TABLE vote
     restaurant_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE SET NULL,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE SET NULL,
-    CONSTRAINT vote_restaurant_user_idx UNIQUE (restaurant_id, user_id)
+    CONSTRAINT vote_unique_restaurant_user_date_idx UNIQUE (restaurant_id, user_id, vote_date)
 );
 
 
