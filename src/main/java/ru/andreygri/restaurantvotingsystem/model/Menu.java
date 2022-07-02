@@ -1,14 +1,14 @@
 package ru.andreygri.restaurantvotingsystem.model;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
 @Table(name = "menu")
 public class Menu extends AbstractBaseEntity {
-    @ManyToMany
-    @JoinTable(name = "dish_menu",
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "menu_dish",
             joinColumns = @JoinColumn(name = "menu_id"),
             inverseJoinColumns = @JoinColumn(name = "dish_id"))
     private Set<Dish> dishes;
@@ -16,8 +16,9 @@ public class Menu extends AbstractBaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
-    @Column(name = "date_time")
-    private Date date;
+
+    @Column(name = "menu_date")
+    private LocalDate date;
 
     public Set<Dish> getDishes() {
         return dishes;
@@ -35,11 +36,11 @@ public class Menu extends AbstractBaseEntity {
         this.restaurant = restaurant;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
