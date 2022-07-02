@@ -1,5 +1,6 @@
 package ru.andreygri.restaurantvotingsystem.repository;
 
+import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -8,10 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
-import ru.andreygri.restaurantvotingsystem.model.Menu;
-
-import java.time.LocalDate;
-import java.util.List;
+import ru.andreygri.restaurantvotingsystem.model.Restaurant;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -20,15 +18,21 @@ import static org.slf4j.LoggerFactory.getLogger;
 })
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB_hsql.sql", config = @SqlConfig(encoding = "UTF-8"))
-public class MenuRepositoryTest {
+public class RestaurantRepositoryTest extends TestCase {
+    private static final Logger log = getLogger(RestaurantRepositoryTest.class);
+
     @Autowired
-    private MenuRepository repository;
-    private static final Logger log = getLogger(MenuRepositoryTest.class);
+    private RestaurantRepository repository;
+
     @Test
-    public void getMenusOnDateByRestaurantIdTest() {
-        final List<Menu> menus = repository.getMenusOnDateByRestaurantId(LocalDate.now().minusDays(1), LocalDate.now(), 1);
-        for (Menu menu : menus) {
-            menu.getDishes().forEach(dish -> log.info(dish.getName()));
-        }
+    public void getAll() {
+        repository.findAll().forEach(restaurant -> log.info(restaurant.getName()));
+    }
+
+    @Test
+    public void create() {
+        Restaurant restaurant = repository.save(
+                new Restaurant(null, "test_name", "test_address"));
+        log.info(restaurant.toString());
     }
 }

@@ -7,7 +7,7 @@ DROP TABLE user_roles IF EXISTS;
 DROP TABLE users IF EXISTS;
 DROP SEQUENCE global_seq IF EXISTS;
 
-CREATE SEQUENCE GLOBAL_SEQ AS INTEGER START WITH 100000;
+CREATE SEQUENCE global_seq AS INTEGER START WITH 100000;
 
 CREATE TABLE users
 (
@@ -51,10 +51,12 @@ CREATE TABLE dish
     price NUMERIC(10)  NOT NULL
 );
 
-CREATE TABLE dish_menu
+
+
+CREATE TABLE menu_dish
 (
-    dish_id INTEGER,
     menu_id INTEGER,
+    dish_id INTEGER,
     PRIMARY KEY (dish_id, menu_id)
 );
 

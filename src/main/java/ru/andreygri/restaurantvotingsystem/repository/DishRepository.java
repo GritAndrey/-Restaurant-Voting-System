@@ -1,19 +1,13 @@
 package ru.andreygri.restaurantvotingsystem.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.andreygri.restaurantvotingsystem.model.Dish;
 
-import java.util.List;
+@Repository
+@Transactional(readOnly = true)
+public interface DishRepository extends JpaRepository<Dish, Integer> {
 
-public interface DishRepository {
-    // null if updated meal does not belong to userId
-    Dish save(Dish dish);
-
-    // false if not found
-    boolean delete(int id);
-
-    // null if not found
-    Dish get(int id);
-
-    List<Dish> getAll();
 
 }
