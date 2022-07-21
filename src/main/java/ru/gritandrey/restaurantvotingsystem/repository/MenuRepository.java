@@ -1,12 +1,11 @@
-package ru.andreygri.restaurantvotingsystem.repository;
+package ru.gritandrey.restaurantvotingsystem.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.andreygri.restaurantvotingsystem.model.Dish;
-import ru.andreygri.restaurantvotingsystem.model.Menu;
+import ru.gritandrey.restaurantvotingsystem.model.Menu;
 
 import java.time.LocalDate;
 import java.util.List;

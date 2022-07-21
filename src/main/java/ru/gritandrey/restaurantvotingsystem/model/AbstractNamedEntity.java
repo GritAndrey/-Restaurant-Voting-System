@@ -1,4 +1,4 @@
-package ru.andreygri.restaurantvotingsystem.model;
+package ru.gritandrey.restaurantvotingsystem.model;
 
 import javax.persistence.MappedSuperclass;
 
