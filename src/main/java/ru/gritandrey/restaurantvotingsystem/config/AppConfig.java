@@ -28,5 +28,4 @@ public class AppConfig {
     Module module() {
         return new Hibernate5Module();
     }
-
 }

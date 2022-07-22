@@ -3,6 +3,7 @@ package ru.gritandrey.restaurantvotingsystem.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -16,7 +17,7 @@ public class RestaurantDish extends AbstractBaseEntity {
 
     // :TODO: money https://stackoverflow.com/questions/8148684/what-data-type-to-use-for-money-in-java/43051227#43051227
     @Column(name = "price")
-    private double price;
+    private BigDecimal price;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dish_name_id")
     private Dish dish;

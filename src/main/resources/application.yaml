@@ -40,6 +40,7 @@ logging:
   level:
     root: WARN
     ru.gritandrey.restaurantvotingsystem: DEBUG
+    org.springframework.web.servlet: DEBUG
     org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: DEBUG
 
 server.servlet:

@@ -1,6 +1,10 @@
 package ru.gritandrey.restaurantvotingsystem.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -9,7 +13,6 @@ import java.util.Set;
 @Table(name = "restaurant")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Restaurant extends AbstractNamedEntity {
@@ -17,11 +20,19 @@ public class Restaurant extends AbstractNamedEntity {
     private String address;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
-    private Set<RestaurantDish>  menu;
+    @JsonIgnore
+    private Set<RestaurantDish> menu;
 
     public Restaurant(Integer id, String name, String address) {
         super(id, name);
         this.address = address;
     }
 
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id = " + id + ", " +
+                "name = " + name + ", " +
+                "address = " + address + ")";
+    }
 }
