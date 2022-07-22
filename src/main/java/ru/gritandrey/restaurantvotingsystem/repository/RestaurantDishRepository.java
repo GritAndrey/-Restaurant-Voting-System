@@ -7,5 +7,5 @@ import ru.gritandrey.restaurantvotingsystem.model.RestaurantDish;
 
 @Repository
 @Transactional(readOnly = true)
-public interface UserRepository extends JpaRepository<RestaurantDish, Integer> {
+public interface RestaurantDishRepository extends JpaRepository<RestaurantDish,Integer> {
 }

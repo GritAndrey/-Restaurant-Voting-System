@@ -9,5 +9,4 @@ import ru.gritandrey.restaurantvotingsystem.model.Dish;
 @Transactional(readOnly = true)
 public interface DishRepository extends JpaRepository<Dish, Integer> {
 
-
 }

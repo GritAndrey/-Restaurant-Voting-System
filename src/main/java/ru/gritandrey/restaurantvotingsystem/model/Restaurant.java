@@ -1,37 +1,27 @@
 package ru.gritandrey.restaurantvotingsystem.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "restaurant")
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Restaurant extends AbstractNamedEntity {
     @Column(name = "address")
     private String address;
 
-    protected Restaurant() {
-    }
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
+    private Set<RestaurantDish>  menu;
 
     public Restaurant(Integer id, String name, String address) {
         super(id, name);
         this.address = address;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    @Override
-    public String toString() {
-        return "Restaurant{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                '}';
-    }
 }
