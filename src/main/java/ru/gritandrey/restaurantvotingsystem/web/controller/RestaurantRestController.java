@@ -14,7 +14,7 @@ import ru.gritandrey.restaurantvotingsystem.to.RestaurantWithMenuTo;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/rest/restaurant", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/rest/restaurants", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestaurantRestController {
     private static final Logger log = LoggerFactory.getLogger(RestaurantRestController.class);
     private final RestaurantService service;

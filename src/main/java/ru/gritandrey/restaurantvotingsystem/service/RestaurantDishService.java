@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.gritandrey.restaurantvotingsystem.repository.DishRepository;
 import ru.gritandrey.restaurantvotingsystem.repository.RestaurantDishRepository;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantDishTo;
+import ru.gritandrey.restaurantvotingsystem.util.builder.ToBuilderUtil;
 
 import java.util.List;
 
@@ -21,12 +22,11 @@ public class RestaurantDishService {
 
     public List<RestaurantDishTo> getAll() {
         return restaurantDishRepository.findAll().stream()
-                .map(restaurantDish -> RestaurantDishTo.builder()
-                        .restaurantId(restaurantDish.getRestaurant().getId())
-                        .date(restaurantDish.getDate())
-                        .name(restaurantDish.getDish().getName())
-                        .price(restaurantDish.getPrice())
-                        .id(restaurantDish.id())
-                        .build()).collect(toList());
+                .map(ToBuilderUtil::buildRestaurantDishTo).collect(toList());
+    }
+
+    public RestaurantDishTo findById(int id) {
+        final var restaurantDish = restaurantDishRepository.findById(id);
+        return restaurantDish.map(ToBuilderUtil::buildRestaurantDishTo).orElse(null);
     }
 }
