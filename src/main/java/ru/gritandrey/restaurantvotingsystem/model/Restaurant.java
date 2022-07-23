@@ -1,6 +1,6 @@
 package ru.gritandrey.restaurantvotingsystem.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,7 @@ public class Restaurant extends AbstractNamedEntity {
     private String address;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
-    @JsonIgnore
+    @JsonBackReference
     private Set<RestaurantDish> menu;
 
     public Restaurant(Integer id, String name, String address) {
