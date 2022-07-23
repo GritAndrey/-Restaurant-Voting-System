@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "restaurant")
@@ -21,7 +21,7 @@ public class Restaurant extends AbstractNamedEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @JsonBackReference
-    private Set<RestaurantDish> menu;
+    private List<RestaurantDish> menu;
 
     public Restaurant(Integer id, String name, String address) {
         super(id, name);

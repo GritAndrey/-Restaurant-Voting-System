@@ -6,12 +6,15 @@ import ru.gritandrey.restaurantvotingsystem.model.RestaurantDish;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantDishTo;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantWithMenuTo;
 
-import static java.util.stream.Collectors.toSet;
+import java.util.Collection;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @UtilityClass
 public class ToBuilderUtil {
 
-    public static RestaurantDishTo buildRestaurantDishTo(RestaurantDish restaurantDish) {
+    public static RestaurantDishTo getRestaurantDishTo(RestaurantDish restaurantDish) {
         return RestaurantDishTo.builder()
                 .restaurantId(restaurantDish.getRestaurant().getId())
                 .date(restaurantDish.getDate())
@@ -21,12 +24,20 @@ public class ToBuilderUtil {
                 .build();
     }
 
-    public static RestaurantWithMenuTo buildRestaurantWithMenuTo(Restaurant restaurant) {
+    public static List<RestaurantDishTo> getRestaurantDishTos(Collection<RestaurantDish> restaurantDishes) {
+        return restaurantDishes.stream().map(ToBuilderUtil::getRestaurantDishTo).collect(toList());
+    }
+
+    public static RestaurantWithMenuTo getRestaurantWithMenuTo(Restaurant restaurant) {
         return RestaurantWithMenuTo.builder()
-                .menu(restaurant.getMenu().stream().map(ToBuilderUtil::buildRestaurantDishTo).collect(toSet()))
+                .menu(getRestaurantDishTos(restaurant.getMenu()))
                 .address(restaurant.getAddress())
                 .id(restaurant.id())
                 .name(restaurant.getName())
                 .build();
+    }
+
+    public static List<RestaurantWithMenuTo> getRestaurantWithMenuTos(Collection<Restaurant> restaurants) {
+        return restaurants.stream().map(ToBuilderUtil::getRestaurantWithMenuTo).collect(toList());
     }
 }

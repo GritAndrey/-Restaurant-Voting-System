@@ -48,7 +48,7 @@ CREATE TABLE restaurant_dish
     dish_date     DATE    default now() NOT NULL,
     restaurant_id INTEGER               REFERENCES restaurant (id) ON DELETE SET NULL,
     dish_name_id  INTEGER               REFERENCES dish (id) ON DELETE SET NULL,
-    price         NUMERIC(10)           NOT NULL
+    price         NUMERIC           NOT NULL
 );
 CREATE UNIQUE INDEX dish_restaurant_date_idx on restaurant_dish (restaurant_id, dish_date, dish_name_id);
 
@@ -64,6 +64,4 @@ CREATE TABLE vote
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE SET NULL,
     CONSTRAINT vote_unique_restaurant_user_date_idx UNIQUE (restaurant_id, user_id, vote_date)
 );
-
-
 

@@ -31,6 +31,14 @@ public class RestaurantDish extends AbstractBaseEntity {
     @Column(name = "dish_date")
     private LocalDate date;
 
+    public RestaurantDish(Integer id, BigDecimal price, Dish dish, Restaurant restaurant, LocalDate date) {
+        super(id);
+        this.price = price;
+        this.dish = dish;
+        this.restaurant = restaurant;
+        this.date = date;
+    }
+
     public String toString() {
         return "RestaurantDish(price=" + this.getPrice() + ", name=" +
                 this.getDish().getName() + ", restaurantId=" +

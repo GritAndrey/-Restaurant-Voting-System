@@ -4,9 +4,9 @@ spring:
     show-sql: true
     open-in-view: false
     # https://stackoverflow.com/a/67678945/548473
-    defer-datasource-initialization: true
+    defer-datasource-initialization: false #Set true for H2db
     hibernate:
-      ddl-auto: create
+      ddl-auto: none #Set auto for H2db
     properties:
       #  http://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#configurations
       hibernate:
@@ -14,15 +14,21 @@ spring:
         default_batch_fetch_size: 20
         # https://stackoverflow.com/questions/21257819/what-is-the-difference-between-hibernate-jdbc-fetch-size-and-hibernate-jdbc-batc
         jdbc.batch_size: 20
+  sql:
+    init:
+      mode: always
+  #  datasource:
+#    # ImMemory
+#    url: jdbc:h2:mem:voting
+#    #    tcp: jdbc:h2:tcp://localhost:9092/mem:voting
+##    OLD_INFORMATION_SCHEMA=TRUE
+##    https://github.com/JetBrains/jetbrains_guide/issues/215
+#    username: sa
+#    password:
   datasource:
-    # ImMemory
-    url: jdbc:h2:mem:voting
-    #    tcp: jdbc:h2:tcp://localhost:9092/mem:voting
-#    OLD_INFORMATION_SCHEMA=TRUE
-#    https://github.com/JetBrains/jetbrains_guide/issues/215
-    username: sa
-    password:
-
+    url: jdbc:postgresql://localhost:5431/voting
+    username: user
+    password: password
   # Jackson Serialization Issue Resolver
   jackson:
     visibility:

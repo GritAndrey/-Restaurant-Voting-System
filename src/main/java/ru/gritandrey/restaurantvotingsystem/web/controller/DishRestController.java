@@ -31,7 +31,7 @@ public class DishRestController {
 
     @GetMapping("{id}")
     public RestaurantDishTo get(@PathVariable int id) {
-        RestaurantDishTo dish = service.findById(id);
+        RestaurantDishTo dish = service.get(id);
         log.info("Get restaurant dish with id: {} {}", dish.getId(), dish);
         return dish;
     }

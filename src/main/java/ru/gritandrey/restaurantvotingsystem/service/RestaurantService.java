@@ -11,7 +11,6 @@ import ru.gritandrey.restaurantvotingsystem.util.builder.ToBuilderUtil;
 import java.time.LocalDate;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
 import static ru.gritandrey.restaurantvotingsystem.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
@@ -51,12 +50,10 @@ public class RestaurantService {
 
     public RestaurantWithMenuTo getWithMenu(int id) {
         final Restaurant restaurant = checkNotFoundWithId(repository.getRestaurantByIdWithMenu(id, LocalDate.now()), id);
-        return ToBuilderUtil.buildRestaurantWithMenuTo(restaurant);
+        return ToBuilderUtil.getRestaurantWithMenuTo(restaurant);
     }
 
     public List<RestaurantWithMenuTo> getAllWithMenus() {
-        return repository.findAllWithMenus(LocalDate.now()).stream()
-                .map(ToBuilderUtil::buildRestaurantWithMenuTo)
-                .collect(toList());
+        return ToBuilderUtil.getRestaurantWithMenuTos(repository.findAllWithMenus(LocalDate.now()));
     }
 }
