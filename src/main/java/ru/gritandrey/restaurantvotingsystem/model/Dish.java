@@ -1,6 +1,8 @@
 package ru.gritandrey.restaurantvotingsystem.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -10,7 +12,5 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
 public class Dish extends AbstractNamedEntity {
-
 }
