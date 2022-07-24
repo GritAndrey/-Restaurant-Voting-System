@@ -1,6 +1,5 @@
 package ru.gritandrey.restaurantvotingsystem.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +13,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Dish extends AbstractBaseEntity {
 
     @Column(name = "price")
@@ -36,12 +34,5 @@ public class Dish extends AbstractBaseEntity {
         this.food = food;
         this.restaurant = restaurant;
         this.date = date;
-    }
-
-    public String toString() {
-        return "Dish(price=" + this.getPrice() + ", name=" +
-                this.getFood().getName() + ", restaurantId=" +
-                this.getRestaurant().getId() + ", date=" +
-                this.getDate() + ")";
     }
 }

@@ -13,10 +13,10 @@ import static java.util.stream.Collectors.toList;
 public class RestaurantMapper {
     public static RestaurantWithMenuTo getWithMenuTo(Restaurant restaurant) {
         return RestaurantWithMenuTo.builder()
-                .menu(DishMapper.getTos(restaurant.getMenu()))
-                .address(restaurant.getAddress())
                 .id(restaurant.id())
                 .name(restaurant.getName())
+                .address(restaurant.getAddress())
+                .menu(DishMapper.getTos(restaurant.getMenu()))
                 .build();
     }
 

@@ -2,6 +2,8 @@ package ru.gritandrey.restaurantvotingsystem.util.mapper;
 
 import lombok.experimental.UtilityClass;
 import ru.gritandrey.restaurantvotingsystem.model.Dish;
+import ru.gritandrey.restaurantvotingsystem.model.Food;
+import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
 import ru.gritandrey.restaurantvotingsystem.to.DishTo;
 
 import java.util.Collection;
@@ -17,11 +19,15 @@ public class DishMapper {
                 .date(dish.getDate())
                 .name(dish.getFood().getName())
                 .price(dish.getPrice())
-                .id(dish.id())
+                .id(dish.getId())
                 .build();
     }
 
     public static List<DishTo> getTos(Collection<Dish> dishes) {
         return dishes.stream().map(DishMapper::getTo).collect(toList());
+    }
+
+    public static Dish getDish(DishTo dishTo) {
+        return new Dish(dishTo.getId(), dishTo.getPrice(), new Food(dishTo.getName()), new Restaurant(), dishTo.getDate());
     }
 }

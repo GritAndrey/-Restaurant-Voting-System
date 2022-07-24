@@ -12,4 +12,8 @@ public class Food extends AbstractNamedEntity {
     public Food(Integer id, String name) {
         super(id, name);
     }
+
+    public Food(String dishName) {
+        this.name = dishName;
+    }
 }

@@ -5,8 +5,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gritandrey.restaurantvotingsystem.model.Food;
 
+import java.util.Optional;
+
 @Repository
 @Transactional(readOnly = true)
 public interface FoodRepository extends JpaRepository<Food, Integer> {
 
+    public Optional<Food> findByName(String name);
 }

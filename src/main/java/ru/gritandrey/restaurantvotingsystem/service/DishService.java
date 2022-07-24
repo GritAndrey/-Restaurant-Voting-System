@@ -1,9 +1,12 @@
 package ru.gritandrey.restaurantvotingsystem.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import ru.gritandrey.restaurantvotingsystem.model.Dish;
-import ru.gritandrey.restaurantvotingsystem.repository.FoodRepository;
+import ru.gritandrey.restaurantvotingsystem.model.Food;
 import ru.gritandrey.restaurantvotingsystem.repository.DishRepository;
+import ru.gritandrey.restaurantvotingsystem.repository.FoodRepository;
 import ru.gritandrey.restaurantvotingsystem.repository.RestaurantRepository;
 import ru.gritandrey.restaurantvotingsystem.to.DishTo;
 import ru.gritandrey.restaurantvotingsystem.util.mapper.DishMapper;
@@ -29,8 +32,39 @@ public class DishService {
 
     }
 
-    public DishTo get(int id) {
-        return dishRepository.findById(id).map(DishMapper::getTo).orElse(null);
+    public Dish get(int id) {
+        return dishRepository.findById(id).orElse(null);
+    }
+
+    @Transactional
+    public Dish create(DishTo dishTo) {
+        Assert.notNull(dishTo, "Dish must be not null!");
+        return save(getDishWithFood(dishTo), dishTo.getRestaurantId());
+    }
+
+    @Transactional
+    public void update(DishTo dishTo) {
+        Assert.notNull(dishTo, "Dish must be not null!");
+        final var dish = getDishWithFood(dishTo);
+        checkNotFoundWithId(save(dish, dishTo.getRestaurantId()), dish.id());
+    }
+    @Transactional
+    public void delete(int id) {
+        checkNotFoundWithId(dishRepository.delete(id) != 0, id);
+    }
+
+    private Dish getDishWithFood(DishTo dishTo) {
+        final var mayBeFood = foodRepository.findByName(dishTo.getName());
+        Food food;
+        if (mayBeFood.isPresent()) {
+            food = mayBeFood.get();
+        } else {
+            food = new Food(dishTo.getName());
+            foodRepository.save(food);
+        }
+        Dish dish = DishMapper.getDish(dishTo);
+        dish.setFood(food);
+        return dish;
     }
 
     private Dish save(Dish dish, int restaurantId) {

@@ -14,7 +14,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Restaurant extends AbstractNamedEntity {
     @Column(name = "address")
     private String address;
