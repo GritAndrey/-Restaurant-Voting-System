@@ -6,7 +6,7 @@ import org.springframework.util.Assert;
 import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
 import ru.gritandrey.restaurantvotingsystem.repository.RestaurantRepository;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantWithMenuTo;
-import ru.gritandrey.restaurantvotingsystem.util.builder.ToBuilderUtil;
+import ru.gritandrey.restaurantvotingsystem.util.mapper.RestaurantMapper;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -50,10 +50,10 @@ public class RestaurantService {
 
     public RestaurantWithMenuTo getWithMenu(int id) {
         final Restaurant restaurant = checkNotFoundWithId(repository.getRestaurantByIdWithMenu(id, LocalDate.now()), id);
-        return ToBuilderUtil.getRestaurantWithMenuTo(restaurant);
+        return RestaurantMapper.getWithMenuTo(restaurant);
     }
 
     public List<RestaurantWithMenuTo> getAllWithMenus() {
-        return ToBuilderUtil.getRestaurantWithMenuTos(repository.findAllWithMenus(LocalDate.now()));
+        return RestaurantMapper.getWithMenuTos(repository.findAllWithMenus(LocalDate.now()));
     }
 }

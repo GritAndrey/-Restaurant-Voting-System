@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import ru.gritandrey.restaurantvotingsystem.util.builder.ToBuilderUtil;
+import ru.gritandrey.restaurantvotingsystem.util.mapper.RestaurantMapper;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.gritandrey.restaurantvotingsystem.RestaurantAndDishTestData.*;
@@ -22,12 +22,12 @@ class RestaurantServiceTest {
 
     @Test
     void get() {
-        RESTAURANT_MATCHER.assertMatch(service.get(RESTAURANT_1_ID), restaurant1);
+        RESTAURANT_MATCHER.assertMatch(service.get(RESTAURANT1_ID), restaurant1);
     }
 
     @Test
     void getWithMenu() {
-        RESTAURANT_TO_MATCHER.assertMatch(ToBuilderUtil.getRestaurantWithMenuTo(service.get(RESTAURANT_1_ID)), restaurantWithMenuTo);
+        RESTAURANT_TO_MATCHER.assertMatch((service.getWithMenu(RESTAURANT1_ID)), restaurantWithMenuTo);
     }
 
     @Test

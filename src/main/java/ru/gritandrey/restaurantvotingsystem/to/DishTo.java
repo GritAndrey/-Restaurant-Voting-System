@@ -8,10 +8,11 @@ import java.time.LocalDate;
 
 @Value
 @Builder
-public class RestaurantDishTo {
+public class DishTo {
     Integer id;
     BigDecimal price;
     String name;
     Integer restaurantId;
     LocalDate date;
+
 }

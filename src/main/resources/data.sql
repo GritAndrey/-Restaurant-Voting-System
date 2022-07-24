@@ -1,9 +1,9 @@
 DELETE
 FROM vote;
 DELETE
-FROM restaurant_dish;
-DELETE
 FROM dish;
+DELETE
+FROM food;
 
 DELETE
 FROM restaurant;
@@ -20,7 +20,7 @@ VALUES ('Rau LLC', '1 Stone Corner Junction'),
        ('Kon and Sons', '4916 Kim Street'),
        ('Bechtelar Group', '3 Dorton Court');
 
-INSERT INTO dish(name)
+INSERT INTO food(name)
 VALUES ('California Suncup'),
        ('Uluhe'),
        ('Wild Sweetwilliam'),
@@ -32,7 +32,7 @@ VALUES ('California Suncup'),
        ('Horsetail'),
        ('Goldback Fern');
 
-INSERT INTO restaurant_dish(restaurant_id, dish_date, dish_name_id, price)
+INSERT INTO dish(restaurant_id, dish_date, dish_name_id, price)
 VALUES (100000, now(), 100004, '12.3'),
        (100000, now(), 100005, '4.6'),
        (100000, now(), 100006, '3.5'),

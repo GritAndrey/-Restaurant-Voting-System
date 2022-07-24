@@ -11,6 +11,6 @@ public class RestaurantWithMenuTo {
     Integer id;
     String name;
     String address;
-    List<RestaurantDishTo>  menu;
+    List<DishTo>  menu;
 
 }
