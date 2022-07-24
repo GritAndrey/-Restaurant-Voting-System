@@ -15,9 +15,9 @@ import static java.util.stream.Collectors.toList;
 public class DishMapper {
     public static DishTo getTo(Dish dish) {
         return DishTo.builder()
-                .restaurantId(dish.getRestaurant().getId())
+                .restaurantId(dish.getRestaurant() == null ? null : dish.getRestaurant().getId())
                 .date(dish.getDate())
-                .name(dish.getFood().getName())
+                .name(dish.getFood() == null ? null : dish.getFood().getName())
                 .price(dish.getPrice())
                 .id(dish.getId())
                 .build();
