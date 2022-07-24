@@ -43,6 +43,7 @@ public class DishRestController {
     public ResponseEntity<DishTo> createWithLocation(@RequestBody DishTo dishTo) {
         // TODO: 24.07.2022 Checknew
         final var created = service.create(dishTo);
+        log.info("Create {}", created);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();

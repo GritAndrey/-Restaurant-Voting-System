@@ -27,28 +27,27 @@ public class DishService {
         this.foodRepository = foodRepository;
     }
 
-    public List<DishTo> getAll() {
-        return DishMapper.getTos(dishRepository.findAll());
-
+    public Dish get(int id) {
+        return checkNotFoundWithId(dishRepository.findById(id), id);
     }
 
-    public Dish get(int id) {
-        return dishRepository.findById(id).orElse(null);
+    public List<DishTo> getAll() {
+        return DishMapper.getTos(dishRepository.findAll());
     }
 
     @Transactional
     public Dish create(DishTo dishTo) {
-        Assert.notNull(dishTo, "Dish must be not null!");
+        Assert.notNull(dishTo, "Dish must not be null");
         return save(getDishWithFood(dishTo), dishTo.getRestaurantId());
     }
 
     @Transactional
     public void update(DishTo dishTo) {
-        Assert.notNull(dishTo, "Dish must be not null!");
+        Assert.notNull(dishTo, "Dish must not be null");
         final var dish = getDishWithFood(dishTo);
         checkNotFoundWithId(save(dish, dishTo.getRestaurantId()), dish.id());
     }
-    @Transactional
+
     public void delete(int id) {
         checkNotFoundWithId(dishRepository.delete(id) != 0, id);
     }

@@ -86,4 +86,14 @@ public class RestaurantAndDishTestData {
     public static Dish getNewDishWithNewNameAndRestaurant() {
         return new Dish(null, new BigDecimal("33.1"), newFood,restaurant1, TODAY);
     }
+    public static Dish getUpdatedDish() {
+        return new Dish(DISH1_ID, new BigDecimal("12.3"), food1, restaurant1, TODAY);
+    }
+    public static Restaurant getNewRestaurant() {
+        return new Restaurant(null,"New rest name", "New rest address");
+    }
+
+    public static  Restaurant getUpdatedRestaurant() {
+        return new Restaurant(RESTAURANT1_ID,"updated name","updated address");
+    }
 }
