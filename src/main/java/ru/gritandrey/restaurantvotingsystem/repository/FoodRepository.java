@@ -11,5 +11,5 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public interface FoodRepository extends JpaRepository<Food, Integer> {
 
-    public Optional<Food> findByName(String name);
+    Optional<Food> findByName(String name);
 }

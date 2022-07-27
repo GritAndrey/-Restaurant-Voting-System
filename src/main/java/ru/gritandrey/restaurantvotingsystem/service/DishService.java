@@ -63,7 +63,7 @@ public class DishService {
         if (!dish.isNew() && get(dish.id()) == null) {
             return null;
         }
-        dish.setRestaurant(checkNotFoundWithId(restaurantRepository.findById(restaurantId), restaurantId));
+        dish.setRestaurant(checkNotFoundWithId(restaurantRepository.getReferenceById(restaurantId), restaurantId));
         return dishRepository.save(dish);
     }
 }
