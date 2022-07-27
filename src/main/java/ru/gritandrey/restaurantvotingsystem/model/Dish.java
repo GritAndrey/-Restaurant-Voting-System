@@ -17,7 +17,7 @@ public class Dish extends AbstractBaseEntity {
 
     @Column(name = "price")
     private BigDecimal price;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "dish_name_id")
     private Food food;
 

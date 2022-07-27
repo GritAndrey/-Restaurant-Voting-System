@@ -54,15 +54,8 @@ public class DishService {
 
     private Dish getDishWithFood(DishTo dishTo) {
         final var mayBeFood = foodRepository.findByName(dishTo.getName());
-        Food food;
-        if (mayBeFood.isPresent()) {
-            food = mayBeFood.get();
-        } else {
-            food = new Food(dishTo.getName());
-            foodRepository.save(food);
-        }
         Dish dish = DishMapper.getDish(dishTo);
-        dish.setFood(food);
+        dish.setFood(mayBeFood.orElseGet(() -> foodRepository.save(new Food(dishTo.getName()))));
         return dish;
     }
 
