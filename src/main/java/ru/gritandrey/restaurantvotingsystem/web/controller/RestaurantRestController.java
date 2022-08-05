@@ -11,8 +11,8 @@ import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
 import ru.gritandrey.restaurantvotingsystem.service.RestaurantService;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantTo;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantWithMenuTo;
-import ru.gritandrey.restaurantvotingsystem.util.ValidationUtil;
 import ru.gritandrey.restaurantvotingsystem.util.mapper.RestaurantMapper;
+import ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUtil;
 
 import java.net.URI;
 import java.util.List;

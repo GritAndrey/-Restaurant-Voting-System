@@ -1,4 +1,4 @@
-package ru.gritandrey.restaurantvotingsystem.util;
+package ru.gritandrey.restaurantvotingsystem.util.validation;
 
 
 import org.springframework.core.NestedExceptionUtils;
@@ -44,6 +44,10 @@ public class ValidationUtil {
         checkNotFound(found, "id=" + id);
     }
 
+    public static <T> T checkNotFound(Optional<T> object, String msg) {
+        checkNotFound(object.isPresent(), msg);
+        return object.get();
+    }
     public static <T> T checkNotFound(T object, String msg) {
         checkNotFound(object != null, msg);
         return object;

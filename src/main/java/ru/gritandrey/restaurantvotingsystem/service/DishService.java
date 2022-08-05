@@ -13,7 +13,7 @@ import ru.gritandrey.restaurantvotingsystem.util.mapper.DishMapper;
 
 import java.util.List;
 
-import static ru.gritandrey.restaurantvotingsystem.util.ValidationUtil.checkNotFoundWithId;
+import static ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUtil.checkNotFoundWithId;
 
 @Service
 public class DishService {

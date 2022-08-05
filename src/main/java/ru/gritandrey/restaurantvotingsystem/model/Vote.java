@@ -12,6 +12,7 @@ import java.time.LocalTime;
 @Getter
 @Setter
 public class Vote extends AbstractBaseEntity {
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -19,8 +20,10 @@ public class Vote extends AbstractBaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
+
     @Column(name = "vote_date")
     private LocalDate date;
+
     @Column(name = "vote_time")
     private LocalTime time;
 
@@ -36,8 +39,6 @@ public class Vote extends AbstractBaseEntity {
     public String toString() {
         return "Vote{" +
                 "id=" + id +
-                ", user=" + user +
-                ", restaurant=" + restaurant +
                 ", date=" + date +
                 ", time=" + time +
                 '}';

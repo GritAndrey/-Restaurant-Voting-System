@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.gritandrey.restaurantvotingsystem.service.DishService;
 import ru.gritandrey.restaurantvotingsystem.to.DishTo;
-import ru.gritandrey.restaurantvotingsystem.util.ValidationUtil;
 import ru.gritandrey.restaurantvotingsystem.util.mapper.DishMapper;
+import ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUtil;
 
 import java.net.URI;
 import java.util.List;

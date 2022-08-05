@@ -12,7 +12,7 @@ import ru.gritandrey.restaurantvotingsystem.util.mapper.RestaurantMapper;
 import java.time.LocalDate;
 import java.util.List;
 
-import static ru.gritandrey.restaurantvotingsystem.util.ValidationUtil.checkNotFoundWithId;
+import static ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUtil.checkNotFoundWithId;
 
 @Service
 public class RestaurantService {
