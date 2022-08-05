@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.gritandrey.restaurantvotingsystem.service.DishService;
 import ru.gritandrey.restaurantvotingsystem.to.DishTo;
+import ru.gritandrey.restaurantvotingsystem.util.ValidationUtil;
 import ru.gritandrey.restaurantvotingsystem.util.mapper.DishMapper;
 
 import java.net.URI;
@@ -41,7 +42,7 @@ public class DishRestController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<DishTo> createWithLocation(@RequestBody DishTo dishTo) {
-        // TODO: 24.07.2022 Checknew
+        ValidationUtil.checkNew(dishTo);
         final var created = service.create(dishTo);
         log.info("Create {}", created);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -53,7 +54,7 @@ public class DishRestController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody DishTo dishTo, @PathVariable int id) {
-        // TODO: 24.07.2022 assureIdConsistent
+        ValidationUtil.assureIdConsistent(dishTo,id);
         log.info("Update {}", dishTo);
         service.update(dishTo);
     }

@@ -11,6 +11,7 @@ import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
 import ru.gritandrey.restaurantvotingsystem.service.RestaurantService;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantTo;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantWithMenuTo;
+import ru.gritandrey.restaurantvotingsystem.util.ValidationUtil;
 import ru.gritandrey.restaurantvotingsystem.util.mapper.RestaurantMapper;
 
 import java.net.URI;
@@ -57,7 +58,7 @@ public class RestaurantRestController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestaurantTo> createWithLocation(@RequestBody RestaurantTo restaurantTo) {
-        // TODO: 24.07.2022 Check new
+        ValidationUtil.checkNew(restaurantTo);
         final var created = service.create(restaurantTo);
         log.info("Create {}", created);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -69,8 +70,8 @@ public class RestaurantRestController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody RestaurantTo restaurantTo, @PathVariable int id) {
+        ValidationUtil.assureIdConsistent(restaurantTo,id);
         log.info("Update restaurant: {} with id: {}", restaurantTo, id);
-        // TODO: 24.07.2022 assureIdConsistent
         service.update(restaurantTo);
     }
 
