@@ -70,3 +70,8 @@ VALUES ('USER', 1),
        ('ADMIN', 2),
        ('USER', 2);
 
+INSERT INTO vote (user_id, restaurant_id, vote_date, vote_time)
+VALUES (2, 100000, now() - INTERVAL '1 day', '11:01'),
+       (1, 100000, now(), '12:00'),
+       (2, 100001, now(), '10:00');
+

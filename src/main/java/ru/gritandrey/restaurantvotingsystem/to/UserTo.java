@@ -11,7 +11,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Value
-
 @EqualsAndHashCode(callSuper = true)
 public class UserTo extends AbstractNamedEntity {
     @Email

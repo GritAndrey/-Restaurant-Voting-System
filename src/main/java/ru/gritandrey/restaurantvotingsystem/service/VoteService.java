@@ -29,10 +29,11 @@ public class VoteService {
     }
 
     public List<Vote> getAll() {
-        return null;
+        return voteRepository.findAll();
     }
 
     public Vote create(VoteTo voteTo) {
+        //check user already voted today
         return null;
     }
 
