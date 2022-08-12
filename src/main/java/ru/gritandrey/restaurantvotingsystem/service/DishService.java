@@ -1,5 +1,6 @@
 package ru.gritandrey.restaurantvotingsystem.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -16,16 +17,11 @@ import java.util.List;
 import static ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUtil.checkNotFoundWithId;
 
 @Service
+@RequiredArgsConstructor
 public class DishService {
     private final DishRepository dishRepository;
     private final RestaurantRepository restaurantRepository;
     private final FoodRepository foodRepository;
-
-    public DishService(DishRepository dishRepository, RestaurantRepository restaurantRepository, FoodRepository foodRepository) {
-        this.dishRepository = dishRepository;
-        this.restaurantRepository = restaurantRepository;
-        this.foodRepository = foodRepository;
-    }
 
     public Dish get(int id) {
         return checkNotFoundWithId(dishRepository.findById(id), id);

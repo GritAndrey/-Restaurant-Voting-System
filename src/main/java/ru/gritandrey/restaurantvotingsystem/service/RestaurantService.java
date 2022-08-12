@@ -1,6 +1,6 @@
 package ru.gritandrey.restaurantvotingsystem.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
@@ -15,14 +15,10 @@ import java.util.List;
 import static ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUtil.checkNotFoundWithId;
 
 @Service
+@RequiredArgsConstructor
 public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
-
-    @Autowired
-    public RestaurantService(RestaurantRepository restaurantRepository) {
-        this.restaurantRepository = restaurantRepository;
-    }
 
     public Restaurant get(int id) {
         return checkNotFoundWithId(restaurantRepository.findById(id), id);

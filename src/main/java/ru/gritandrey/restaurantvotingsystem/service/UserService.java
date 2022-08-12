@@ -1,5 +1,6 @@
 package ru.gritandrey.restaurantvotingsystem.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
@@ -20,13 +21,10 @@ import static ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUti
 
 @Service
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository repository;
-
-    public UserService(UserRepository repository) {
-        this.repository = repository;
-    }
 
     @CacheEvict(value = "users", allEntries = true)
     public User create(User user) {

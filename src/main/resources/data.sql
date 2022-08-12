@@ -1,16 +1,9 @@
-DELETE
-FROM vote;
-DELETE
-FROM dish;
-DELETE
-FROM food;
-
-DELETE
-FROM restaurant;
-DELETE
-FROM user_roles;
-DELETE
-FROM users;
+DELETE FROM vote;
+DELETE FROM dish;
+DELETE FROM food;
+DELETE FROM restaurant;
+DELETE FROM user_roles;
+DELETE FROM users;
 
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
@@ -46,20 +39,8 @@ VALUES (100000, now(), 100004, '12.3'),
        (100003, now(), 100007, '22.5'),
        (100003, now(), 100008, '33.1');
 
--- https://stackoverflow.com/questions/70069266/sql-inster-into-with-now-minus-one-day
---for h2 db
---        (12, 0, dateadd('DAY', -1, current_date), 4, '4'),
---        (13, 0, dateadd('DAY', -1, current_date), 3, '3'),
---        (14, 0, dateadd('DAY', -1, current_date), 9, '9'),
---        (15, 1, dateadd('DAY', -1, current_date), 8, '8'),
---        (16, 1, dateadd('DAY', -1, current_date), 7, '7'),
---        (17, 1, dateadd('DAY', -1, current_date), 6, '6'),
---        (18, 2, dateadd('DAY', -1, current_date), 5, '5'),
---        (19, 2, dateadd('DAY', -1, current_date), 4, '4'),
---        (20, 2, dateadd('DAY', -1, current_date), 3, '3'),
---        (21, 3, dateadd('DAY', -1, current_date), 2, '2'),
---        (22, 3, dateadd('DAY', -1, current_date), 1, '1'),
---        (23, 3, dateadd('DAY', -1, current_date), 0, '12');
+
+
 
 INSERT INTO users (id, name, email, password, enabled, registered)
 VALUES (1, 'User', 'user@gmail.com', '{noop}password', TRUE, now()),
@@ -70,8 +51,14 @@ VALUES ('USER', 1),
        ('ADMIN', 2),
        ('USER', 2);
 
+-- INSERT INTO vote (user_id, restaurant_id, vote_date, vote_time)
+-- VALUES (2, 100000, now() - INTERVAL '1 day', '11:01'),
+--        (1, 100000, now(), '12:00'),
+--        (2, 100001, now(), '10:00');
+-- https://stackoverflow.com/questions/70069266/sql-inster-into-with-now-minus-one-day
+--for h2 db
 INSERT INTO vote (user_id, restaurant_id, vote_date, vote_time)
-VALUES (2, 100000, now() - INTERVAL '1 day', '11:01'),
+VALUES (2, 100000, dateadd('DAY', -1, current_date), '11:01'),
        (1, 100000, now(), '12:00'),
        (2, 100001, now(), '10:00');
 
