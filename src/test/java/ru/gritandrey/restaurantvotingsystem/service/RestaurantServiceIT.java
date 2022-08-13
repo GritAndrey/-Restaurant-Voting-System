@@ -1,9 +1,10 @@
 package ru.gritandrey.restaurantvotingsystem.service;
 
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gritandrey.restaurantvotingsystem.util.mapper.RestaurantMapper;
 
@@ -13,9 +14,11 @@ import static ru.gritandrey.restaurantvotingsystem.RestaurantAndDishTestData.*;
 @SpringBootTest
 @DisplayName("Restaurant service tests")
 @Transactional
-class RestaurantServiceTest {
-    @Autowired
-    private RestaurantService service;
+@RequiredArgsConstructor
+@ActiveProfiles("test")
+class RestaurantServiceIT {
+
+    private final RestaurantService service;
 
     @Test
     @DisplayName("Get restaurant without menu")

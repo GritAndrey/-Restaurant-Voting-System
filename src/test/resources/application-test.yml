@@ -2,7 +2,7 @@
 spring:
   jpa:
     # https://stackoverflow.com/a/67678945/548473
-    defer-datasource-initialization: false #Set true for H2db
+    defer-datasource-initialization: true
     hibernate:
       ddl-auto: none
   sql:

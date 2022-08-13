@@ -1,10 +1,11 @@
 package ru.gritandrey.restaurantvotingsystem.service;
 
+import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gritandrey.restaurantvotingsystem.model.Dish;
 import ru.gritandrey.restaurantvotingsystem.to.DishTo;
@@ -16,12 +17,14 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.gritandrey.restaurantvotingsystem.RestaurantAndDishTestData.*;
 
-@SpringBootTest
 @DisplayName("Dish service crud test")
+@RequiredArgsConstructor
+@SpringBootTest
 @Transactional
-class DishServiceTest {
-    @Autowired
-    private DishService dishService;
+@ActiveProfiles("test")
+class DishServiceIT {
+
+    private final DishService dishService;
 
     @Test
     @DisplayName("Get one dish")
@@ -76,7 +79,7 @@ class DishServiceTest {
     void update() {
         final Dish updatedDish = getUpdatedDish();
         dishService.update(DishMapper.getTo(updatedDish));
-        DISH_MATCHER.assertMatch(dishService.get(DISH1_ID),updatedDish);
+        DISH_MATCHER.assertMatch(dishService.get(DISH1_ID), updatedDish);
     }
 
     @Test
