@@ -8,6 +8,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gritandrey.restaurantvotingsystem.model.Vote;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 @Transactional(readOnly = true)
 public interface VoteRepository extends JpaRepository<Vote, Integer> {
@@ -16,4 +20,8 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
     @Transactional
     @Query("DELETE FROM Dish d WHERE d.id=:id")
     int delete(@Param("id") int id);
+
+    List<Vote> findAllByUserId(Integer userId);
+
+    Optional<Vote> findByUserIdAndDate(Integer userId, LocalDate date);
 }

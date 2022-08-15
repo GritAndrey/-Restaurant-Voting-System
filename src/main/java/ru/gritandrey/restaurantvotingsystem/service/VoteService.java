@@ -3,11 +3,17 @@ package ru.gritandrey.restaurantvotingsystem.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.gritandrey.restaurantvotingsystem.model.Vote;
+import ru.gritandrey.restaurantvotingsystem.repository.RestaurantRepository;
+import ru.gritandrey.restaurantvotingsystem.repository.UserRepository;
 import ru.gritandrey.restaurantvotingsystem.repository.VoteRepository;
 import ru.gritandrey.restaurantvotingsystem.to.VoteTo;
+import ru.gritandrey.restaurantvotingsystem.util.mapper.VoteMapper;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
 import static ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUtil.checkNotFoundWithId;
 
 @Service
@@ -15,26 +21,32 @@ import static ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUti
 public class VoteService {
 
     private final VoteRepository voteRepository;
+    private final UserRepository userRepository;
+    private final RestaurantRepository restaurantRepository;
 
-    public Vote get(int id) {
-        return null;
+    public List<VoteTo> getAll() {
+        return voteRepository.findAll().stream().map(VoteMapper::getTo).collect(toList());
     }
 
-    public List<Vote> getAllByUserId(int id) {
-        return null;
+    public List<VoteTo> getAllByUserId(int userId) {
+        return VoteMapper.getTos(voteRepository.findAllByUserId(userId));
     }
 
-    public List<Vote> getAllByRestaurantId(int id) {
-        return null;
+    public VoteTo create(int restaurantId, int userId) {
+        if (voteRepository.findByUserIdAndDate(userId, LocalDate.now()).isPresent()) {
+            throw new RuntimeException("User Already voted");
+        }
+        final var vote = Vote.builder()
+                .date(LocalDate.now())
+                .time(LocalTime.now())
+                .restaurant(checkNotFoundWithId(restaurantRepository.findById(restaurantId), restaurantId))
+                .user(checkNotFoundWithId(userRepository.findById(userId), userId))
+                .build();
+        return VoteMapper.getTo(save(vote));
     }
 
-    public List<Vote> getAll() {
-        return voteRepository.findAll();
-    }
-
-    public Vote create(VoteTo voteTo) {
-        //check user already voted today
-        return null;
+    private Vote save(Vote vote) {
+        return voteRepository.save(vote);
     }
 
     public void update(VoteTo voteTo) {

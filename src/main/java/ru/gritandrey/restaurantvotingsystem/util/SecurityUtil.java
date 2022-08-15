@@ -1,31 +1,34 @@
 package ru.gritandrey.restaurantvotingsystem.util;
 
+import lombok.experimental.UtilityClass;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import ru.gritandrey.AuthorizedUser;
+import ru.gritandrey.restaurantvotingsystem.model.User;
+import ru.gritandrey.restaurantvotingsystem.web.AuthUser;
 
 import static java.util.Objects.requireNonNull;
 
+@UtilityClass
 public class SecurityUtil {
 
-    private SecurityUtil() {
-    }
-
-    public static AuthorizedUser safeGet() {
+    public static AuthUser safeGet() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null) {
             return null;
         }
         Object principal = auth.getPrincipal();
-        return (principal instanceof AuthorizedUser) ? (AuthorizedUser) principal : null;
+        return (principal instanceof AuthUser) ? (AuthUser) principal : null;
     }
 
-    public static AuthorizedUser get() {
+    public static AuthUser get() {
         return requireNonNull(safeGet(), "No authorized user found");
     }
 
-    public static int authUserId() {
-        return get().getUserTo().id();
+    public static User authUser() {
+        return get().getUser();
     }
 
+    public static int authId() {
+        return get().getUser().id();
+    }
 }
