@@ -12,6 +12,7 @@ import ru.gritandrey.restaurantvotingsystem.to.RestaurantTo;
 import ru.gritandrey.restaurantvotingsystem.util.mapper.RestaurantMapper;
 import ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUtil;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -23,7 +24,7 @@ public class AdminRestaurantRestController {
     private final RestaurantService restaurantService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RestaurantTo> createWithLocation(@RequestBody RestaurantTo restaurantTo) {
+    public ResponseEntity<RestaurantTo> createWithLocation(@Valid @RequestBody RestaurantTo restaurantTo) {
         ValidationUtil.checkNew(restaurantTo);
         final var created = restaurantService.create(restaurantTo);
         log.info("Create {}", created);
@@ -35,7 +36,7 @@ public class AdminRestaurantRestController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody RestaurantTo restaurantTo, @PathVariable int id) {
+    public void update(@Valid @RequestBody RestaurantTo restaurantTo, @PathVariable int id) {
         ValidationUtil.assureIdConsistent(restaurantTo, id);
         log.info("Update restaurant: {} with id: {}", restaurantTo, id);
         restaurantService.update(restaurantTo);
