@@ -23,6 +23,7 @@ public class VoteService {
     private final VoteRepository voteRepository;
     private final UserRepository userRepository;
     private final RestaurantRepository restaurantRepository;
+    private static final LocalTime VOTE_END_TIME = LocalTime.of(11, 0);
 
     public List<VoteTo> getAll() {
         return voteRepository.findAll().stream().map(VoteMapper::getTo).collect(toList());
@@ -34,7 +35,7 @@ public class VoteService {
 
     public VoteTo create(int restaurantId, int userId) {
         if (voteRepository.findByUserIdAndDate(userId, LocalDate.now()).isPresent()) {
-            throw new RuntimeException("User Already voted");
+            throw new IllegalArgumentException("User Already voted");
         }
         final var vote = Vote.builder()
                 .date(LocalDate.now())
@@ -49,9 +50,14 @@ public class VoteService {
         return voteRepository.save(vote);
     }
 
-    public void update(VoteTo voteTo) {
-        //check time
-        //if time is good then update
+    public void update(Integer userId, Integer restaurantId) {
+        if (LocalTime.now().isAfter(VOTE_END_TIME)) {
+            throw new IllegalArgumentException("Update Vote time is over");
+        }
+        final var mayBeVote = voteRepository.findByUserIdAndDate(userId, LocalDate.now());
+        final var vote = mayBeVote.orElseThrow(() -> new IllegalArgumentException("User haven`t voted yet"));
+        vote.setTime(LocalTime.now());
+        vote.setRestaurant(checkNotFoundWithId(restaurantRepository.findById(restaurantId), restaurantId));
     }
 
     public void delete(int id) {
