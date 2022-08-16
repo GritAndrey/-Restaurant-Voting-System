@@ -1,4 +1,4 @@
-package ru.gritandrey.restaurantvotingsystem.web.controller;
+package ru.gritandrey.restaurantvotingsystem.web.controller.vote;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,19 +17,12 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping(value = VoteRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class VoteRestController {
-    public static final String REST_URL = "/api/rest/votes";
+@RequestMapping(value = UserVoteRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class UserVoteRestController {
+    public static final String REST_URL = "/api/rest/profile/votes";
     private final VoteService voteService;
 
-    @GetMapping
-    public List<VoteTo> getAll() {
-        final var votes = voteService.getAll();
-        log.info("GetAll Votes: {}", votes);
-        return votes;
-    }
-
-    @GetMapping("/user")
+    @GetMapping()
     public List<VoteTo> getAllByUserId() {
         final var userId = SecurityUtil.authId();
         log.info("Get vote with userId {}", userId);

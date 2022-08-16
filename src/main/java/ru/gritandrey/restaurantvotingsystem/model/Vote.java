@@ -1,9 +1,6 @@
 package ru.gritandrey.restaurantvotingsystem.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -15,6 +12,7 @@ import java.time.LocalTime;
 @Setter
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Vote extends AbstractBaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -30,14 +28,6 @@ public class Vote extends AbstractBaseEntity {
 
     @Column(name = "vote_time")
     private LocalTime time;
-
-    public Vote(Integer id, LocalDate date, LocalTime time, User user, Restaurant restaurant) {
-        super(id);
-        this.date = date;
-        this.time = time;
-        this.user = user;
-        this.restaurant = restaurant;
-    }
 
     @Override
     public String toString() {

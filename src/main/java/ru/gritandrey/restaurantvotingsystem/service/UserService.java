@@ -14,6 +14,7 @@ import ru.gritandrey.restaurantvotingsystem.to.UserTo;
 
 import java.util.List;
 
+import static ru.gritandrey.restaurantvotingsystem.util.UserUtil.prepareToSave;
 import static ru.gritandrey.restaurantvotingsystem.util.mapper.UserMapper.updateFromTo;
 import static ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUtil.checkNotFound;
 import static ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUtil.checkNotFoundWithId;
@@ -29,6 +30,7 @@ public class UserService {
     @CacheEvict(value = "users", allEntries = true)
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
+        prepareToSave(user);
         return userRepository.save(user);
     }
 
@@ -54,6 +56,7 @@ public class UserService {
     @CacheEvict(value = "users", allEntries = true)
     public void update(User user) {
         Assert.notNull(user, "user must not be null");
+        prepareToSave(user);
         userRepository.save(user);
     }
 
