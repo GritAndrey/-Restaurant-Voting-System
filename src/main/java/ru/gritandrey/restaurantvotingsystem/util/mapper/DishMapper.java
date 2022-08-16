@@ -6,6 +6,7 @@ import ru.gritandrey.restaurantvotingsystem.model.Food;
 import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
 import ru.gritandrey.restaurantvotingsystem.to.DishTo;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,7 +18,6 @@ public class DishMapper {
     public static DishTo getTo(Dish dish) {
         return DishTo.builder()
                 .restaurantId(dish.getRestaurant() == null ? null : dish.getRestaurant().getId())
-                .date(dish.getDate())
                 .name(dish.getFood() == null ? null : dish.getFood().getName())
                 .price(dish.getPrice())
                 .id(dish.getId())
@@ -29,6 +29,6 @@ public class DishMapper {
     }
 
     public static Dish getDish(DishTo dishTo) {
-        return new Dish(dishTo.getId(), dishTo.getPrice(), new Food(dishTo.getName()), new Restaurant(), dishTo.getDate());
+        return new Dish(dishTo.getId(), dishTo.getPrice(), new Food(dishTo.getName()), new Restaurant(), LocalDate.now());
     }
 }

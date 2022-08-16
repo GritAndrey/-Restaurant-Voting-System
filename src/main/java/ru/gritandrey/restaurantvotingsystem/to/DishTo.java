@@ -1,6 +1,5 @@
 package ru.gritandrey.restaurantvotingsystem.to;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -11,7 +10,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @EqualsAndHashCode(callSuper = true)
 @Value
@@ -27,15 +25,11 @@ public class DishTo extends BaseTo {
     @NotNull
     Integer restaurantId;
 
-    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
-    LocalDate date;
-
     @Builder
-    public DishTo(Integer id, BigDecimal price, String name, Integer restaurantId, LocalDate date) {
+    public DishTo(Integer id, BigDecimal price, String name, Integer restaurantId) {
         super(id);
         this.price = price;
         this.name = name;
         this.restaurantId = restaurantId;
-        this.date = date;
     }
 }

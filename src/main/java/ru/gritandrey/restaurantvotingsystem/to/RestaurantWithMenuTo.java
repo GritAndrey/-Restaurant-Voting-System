@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.Value;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Value
@@ -13,6 +14,8 @@ import java.util.List;
 public class RestaurantWithMenuTo extends NamedTo {
 
     String address;
+    @Builder.Default
+    LocalDate menuDate = LocalDate.now();
     List<DishTo> menu;
 
     @Builder
