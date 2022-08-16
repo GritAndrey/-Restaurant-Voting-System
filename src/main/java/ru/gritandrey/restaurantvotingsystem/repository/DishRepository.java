@@ -23,4 +23,6 @@ public interface DishRepository extends JpaRepository<Dish, Integer> {
     @NonNull
     @Query("SELECT d FROM Dish d JOIN FETCH d.food ")
     List<Dish> findAll();
+
+    List<Dish> findAllByRestaurantId(int restaurantId);
 }

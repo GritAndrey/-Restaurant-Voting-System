@@ -1,9 +1,11 @@
 package ru.gritandrey.restaurantvotingsystem.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
+import ru.gritandrey.restaurantvotingsystem.repository.DishRepository;
 import ru.gritandrey.restaurantvotingsystem.repository.RestaurantRepository;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantTo;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantWithMenuTo;
@@ -16,9 +18,11 @@ import static ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUti
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
+    private final DishRepository dishRepository;
 
     public Restaurant get(int id) {
         return checkNotFoundWithId(restaurantRepository.findById(id), id);
@@ -29,6 +33,10 @@ public class RestaurantService {
     }
 
     public RestaurantWithMenuTo getWithMenu(int id) {
+        final var dishes = dishRepository.findAllByRestaurantId(id);
+        if (dishes.size() == 0) {
+            log.warn("There is no menu for the restaurant with id: {}", id);
+        }
         final Restaurant restaurant = checkNotFoundWithId(restaurantRepository.getRestaurantByIdWithMenu(id, LocalDate.now()), id);
         return RestaurantMapper.getWithMenuTo(restaurant);
     }
