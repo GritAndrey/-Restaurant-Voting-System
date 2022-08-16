@@ -1,16 +1,24 @@
 package ru.gritandrey.restaurantvotingsystem.to;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.Value;
 
 import java.util.List;
 
 @Value
-@Builder
-public class RestaurantWithMenuTo {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class RestaurantWithMenuTo extends NamedTo {
 
-    Integer id;
-    String name;
     String address;
-    List<DishTo>  menu;
+    List<DishTo> menu;
+
+    @Builder
+    public RestaurantWithMenuTo(Integer id, String name, String address, List<DishTo> menu) {
+        super(id, name);
+        this.address = address;
+        this.menu = menu;
+    }
 }

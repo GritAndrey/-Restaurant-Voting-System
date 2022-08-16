@@ -1,8 +1,9 @@
 package ru.gritandrey.restaurantvotingsystem.to;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.Value;
-import ru.gritandrey.restaurantvotingsystem.model.HasId;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -11,11 +12,10 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@EqualsAndHashCode(callSuper = true)
 @Value
-@Builder
-public class DishTo implements HasId {
-
-    Integer id;
+@ToString(callSuper = true)
+public class DishTo extends BaseTo {
     @Positive
     BigDecimal price;
     @NotBlank
@@ -26,7 +26,12 @@ public class DishTo implements HasId {
     @NotNull
     LocalDate date;
 
-    @Override
-    public void setId(Integer id) {
+    @Builder
+    public DishTo(Integer id, BigDecimal price, String name, Integer restaurantId, LocalDate date) {
+        super(id);
+        this.price = price;
+        this.name = name;
+        this.restaurantId = restaurantId;
+        this.date = date;
     }
 }

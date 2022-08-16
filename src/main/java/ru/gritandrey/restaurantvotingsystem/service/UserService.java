@@ -65,6 +65,7 @@ public class UserService {
     public void update(UserTo userTo) {
         User user = get(userTo.id());
         updateFromTo(user, userTo);
+        prepareToSave(user);
     }
 
     @CacheEvict(value = "users", allEntries = true)

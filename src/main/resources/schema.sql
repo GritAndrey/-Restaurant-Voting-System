@@ -1,4 +1,3 @@
-SET MODE PostgreSQL;
 DROP TABLE IF EXISTS vote;
 DROP TABLE IF EXISTS dish;
 DROP TABLE IF EXISTS food;
@@ -48,7 +47,7 @@ CREATE TABLE dish
     dish_date     DATE    DEFAULT now() NOT NULL,
     restaurant_id INTEGER               REFERENCES restaurant (id) ON DELETE SET NULL,
     dish_name_id  INTEGER               REFERENCES food (id) ON DELETE SET NULL,
-    price         NUMERIC               NOT NULL
+    price NUMERIC(20, 3) NOT NULL
 );
 CREATE UNIQUE INDEX dish_restaurant_date_idx ON dish (restaurant_id, dish_date, dish_name_id);
 

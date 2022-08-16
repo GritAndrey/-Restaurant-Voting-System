@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
+import ru.gritandrey.restaurantvotingsystem.exception.NotFoundException;
 import ru.gritandrey.restaurantvotingsystem.util.mapper.RestaurantMapper;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -33,9 +34,9 @@ class RestaurantServiceIT {
     }
 
     @Test
-    @DisplayName("Get restaurant with fake id. Must be IllegalArgumentException")
+    @DisplayName("Get restaurant with fake id. Must be NotFoundException")
     void getNotFound() {
-        assertThrows(IllegalArgumentException.class, () -> service.get(NOT_FOUND));
+        assertThrows(NotFoundException.class, () -> service.get(NOT_FOUND));
     }
 
     @Test
@@ -71,6 +72,6 @@ class RestaurantServiceIT {
     @DisplayName("Delete restaurant")
     void delete() {
         service.delete(RESTAURANT1_ID);
-        assertThrows(IllegalArgumentException.class, () -> service.get(RESTAURANT1_ID));
+        assertThrows(NotFoundException.class, () -> service.get(RESTAURANT1_ID));
     }
 }

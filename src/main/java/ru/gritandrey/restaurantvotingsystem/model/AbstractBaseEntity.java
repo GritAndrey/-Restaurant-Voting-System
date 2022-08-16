@@ -1,5 +1,6 @@
 package ru.gritandrey.restaurantvotingsystem.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.hibernate.Hibernate;
 import org.springframework.data.domain.Persistable;
 import org.springframework.util.Assert;
@@ -19,6 +20,7 @@ public abstract class AbstractBaseEntity implements Persistable<Integer>, HasId 
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
 //  See https://hibernate.atlassian.net/browse/HHH-3718 and https://hibernate.atlassian.net/browse/HHH-12034
 //  Proxy initialization when accessing its identifier managed now by JPA_PROXY_COMPLIANCE setting
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY) // https://stackoverflow.com/a/28025008/548473
     protected Integer id;
 
     protected AbstractBaseEntity() {

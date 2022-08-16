@@ -1,19 +1,27 @@
 package ru.gritandrey.restaurantvotingsystem.to;
 
 import lombok.Builder;
-import lombok.Data;
-import ru.gritandrey.restaurantvotingsystem.model.HasId;
+import lombok.EqualsAndHashCode;
+import lombok.Value;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Data
-@Builder
-public class VoteTo implements HasId {
+@Value
+@EqualsAndHashCode(callSuper = true)
+public class VoteTo extends BaseTo {
 
-    private Integer id;
-    private Integer restaurantId;
-    private Integer userId;
-    private LocalDate date;
-    private LocalTime time;
+    Integer restaurantId;
+    Integer userId;
+    LocalDate date;
+    LocalTime time;
+
+    @Builder
+    public VoteTo(Integer id, Integer restaurantId, Integer userId, LocalDate date, LocalTime time) {
+        super(id);
+        this.restaurantId = restaurantId;
+        this.userId = userId;
+        this.date = date;
+        this.time = time;
+    }
 }

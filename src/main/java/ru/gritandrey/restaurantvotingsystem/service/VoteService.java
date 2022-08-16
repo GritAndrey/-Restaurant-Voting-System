@@ -2,6 +2,7 @@ package ru.gritandrey.restaurantvotingsystem.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.gritandrey.restaurantvotingsystem.exception.IllegalRequestDataException;
 import ru.gritandrey.restaurantvotingsystem.model.Vote;
 import ru.gritandrey.restaurantvotingsystem.repository.RestaurantRepository;
 import ru.gritandrey.restaurantvotingsystem.repository.UserRepository;
@@ -39,7 +40,7 @@ public class VoteService {
 
     public VoteTo create(int restaurantId, int userId) {
         if (voteRepository.findByUserIdAndDate(userId, LocalDate.now()).isPresent()) {
-            throw new IllegalArgumentException("User Already voted");
+            throw new IllegalRequestDataException("User Already voted");
         }
         final var vote = Vote.builder()
                 .date(LocalDate.now())
@@ -52,7 +53,7 @@ public class VoteService {
 
     public void update(Integer userId, Integer restaurantId) {
         if (LocalTime.now().isAfter(VOTE_END_TIME)) {
-            throw new IllegalArgumentException("Update Vote time is over");
+            throw new IllegalRequestDataException("Update Vote time is over");
         }
         final var mayBeVote = voteRepository.findByUserIdAndDate(userId, LocalDate.now());
         final var vote = mayBeVote.orElseThrow(() -> new IllegalArgumentException("User haven`t voted yet"));

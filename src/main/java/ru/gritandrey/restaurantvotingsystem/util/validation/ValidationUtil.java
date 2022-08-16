@@ -3,6 +3,8 @@ package ru.gritandrey.restaurantvotingsystem.util.validation;
 
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.lang.NonNull;
+import ru.gritandrey.restaurantvotingsystem.exception.IllegalRequestDataException;
+import ru.gritandrey.restaurantvotingsystem.exception.NotFoundException;
 import ru.gritandrey.restaurantvotingsystem.model.HasId;
 
 import javax.validation.*;
@@ -48,6 +50,7 @@ public class ValidationUtil {
         checkNotFound(object.isPresent(), msg);
         return object.get();
     }
+
     public static <T> T checkNotFound(T object, String msg) {
         checkNotFound(object != null, msg);
         return object;
@@ -55,22 +58,22 @@ public class ValidationUtil {
 
     public static void checkNotFound(boolean found, String msg) {
         if (!found) {
-            throw new IllegalArgumentException("Not found entity with " + msg);
+            throw new NotFoundException("Not found entity with " + msg);
         }
     }
 
     public static void checkNew(HasId bean) {
         if (!bean.isNew()) {
-            throw new IllegalArgumentException(bean + " must be new (id=null)");
+            throw new IllegalRequestDataException(bean + " must be new (id=null)");
         }
     }
 
     public static void assureIdConsistent(HasId bean, int id) {
 //      conservative when you reply, but accept liberally (http://stackoverflow.com/a/32728226/548473)
         if (bean.isNew()) {
-            //bean.setId(id);
+            bean.setId(id);
         } else if (bean.id() != id) {
-            throw new IllegalArgumentException(bean + " must be with id=" + id);
+            throw new IllegalRequestDataException(bean + " must be with id=" + id);
         }
     }
 

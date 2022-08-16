@@ -1,25 +1,25 @@
 package ru.gritandrey.restaurantvotingsystem.to;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.Value;
-import ru.gritandrey.restaurantvotingsystem.model.HasId;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+@EqualsAndHashCode(callSuper = true)
 @Value
-@Builder
-public class RestaurantTo implements HasId {
+@ToString(callSuper = true)
+public class RestaurantTo extends NamedTo {
 
-    Integer id;
-    @NotBlank
-    @Size(min = 2, max = 128)
-    String name;
     @NotBlank
     @Size(min = 2, max = 128)
     String address;
 
-    @Override
-    public void setId(Integer id) {
+    @Builder
+    public RestaurantTo(Integer id, String name, String address) {
+        super(id, name);
+        this.address = address;
     }
 }
