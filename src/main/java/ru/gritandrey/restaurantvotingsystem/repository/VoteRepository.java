@@ -24,4 +24,6 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
     List<Vote> findAllByUserId(Integer userId);
 
     Optional<Vote> findByUserIdAndDate(Integer userId, LocalDate date);
+
+    Optional<Vote> findByUserIdAndId(Integer userId, Integer id);
 }

@@ -12,6 +12,7 @@ import static java.util.stream.Collectors.toList;
 
 @UtilityClass
 public class RestaurantMapper {
+
     public static RestaurantWithMenuTo getWithMenuTo(Restaurant restaurant) {
         return RestaurantWithMenuTo.builder()
                 .id(restaurant.id())

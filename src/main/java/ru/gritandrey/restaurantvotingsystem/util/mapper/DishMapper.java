@@ -13,6 +13,7 @@ import static java.util.stream.Collectors.toList;
 
 @UtilityClass
 public class DishMapper {
+
     public static DishTo getTo(Dish dish) {
         return DishTo.builder()
                 .restaurantId(dish.getRestaurant() == null ? null : dish.getRestaurant().getId())

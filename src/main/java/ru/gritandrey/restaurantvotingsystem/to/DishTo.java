@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @Value
 @Builder
 public class DishTo implements HasId {
+
     Integer id;
     BigDecimal price;
     String name;

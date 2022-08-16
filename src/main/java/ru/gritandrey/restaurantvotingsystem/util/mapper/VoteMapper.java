@@ -11,6 +11,7 @@ import static java.util.stream.Collectors.toList;
 
 @UtilityClass
 public class VoteMapper {
+
     public static VoteTo getTo(Vote vote) {
         return VoteTo.builder()
                 .id(vote.getId())

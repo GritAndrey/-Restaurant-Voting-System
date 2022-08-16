@@ -10,6 +10,7 @@ import java.time.LocalTime;
 @Data
 @Builder
 public class VoteTo implements HasId {
+
     private Integer id;
     private Integer restaurantId;
     private Integer userId;

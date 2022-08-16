@@ -14,6 +14,7 @@ import javax.validation.constraints.Size;
 @Value
 @EqualsAndHashCode(callSuper = true)
 public class UserTo extends AbstractNamedEntity implements HasId {
+
     @Email
     @NotBlank
     @Size(max = 128)

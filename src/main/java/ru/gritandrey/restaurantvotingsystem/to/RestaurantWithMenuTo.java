@@ -8,6 +8,7 @@ import java.util.List;
 @Value
 @Builder
 public class RestaurantWithMenuTo {
+
     Integer id;
     String name;
     String address;

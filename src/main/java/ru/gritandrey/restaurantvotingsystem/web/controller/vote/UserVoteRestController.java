@@ -4,14 +4,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.gritandrey.restaurantvotingsystem.service.VoteService;
 import ru.gritandrey.restaurantvotingsystem.to.VoteTo;
 import ru.gritandrey.restaurantvotingsystem.util.SecurityUtil;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -25,21 +22,16 @@ public class UserVoteRestController {
     @GetMapping()
     public List<VoteTo> getAllByUserId() {
         final var userId = SecurityUtil.authId();
-        log.info("Get vote with userId {}", userId);
+        log.info("Get user votes with userId {}", userId);
         return voteService.getAllByUserId(userId);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<VoteTo> create(@RequestBody Integer restaurantId) {
+    @GetMapping("/{id}")
+    public VoteTo get(@PathVariable int id) {
         final var userId = SecurityUtil.authId();
-        log.info("Create Vote.\nuserId: {}\nrestaurantId {}", userId, restaurantId);
-        final var created = voteService.create(restaurantId, userId);
-        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "/{id}")
-                .buildAndExpand(created.getId())
-                .toUri();
-        return ResponseEntity.created(uriOfNewResource)
-                .body(created);
+        final VoteTo vote = voteService.get(id, userId);
+        log.info("Get Vote  {}  with userId {}", vote, userId);
+        return vote;
     }
 
     @PutMapping

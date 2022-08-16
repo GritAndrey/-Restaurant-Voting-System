@@ -7,6 +7,7 @@ import ru.gritandrey.restaurantvotingsystem.model.HasId;
 @Value
 @Builder
 public class RestaurantTo implements HasId {
+
     Integer id;
     String name;
     String address;

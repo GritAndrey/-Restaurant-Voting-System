@@ -25,6 +25,10 @@ public class VoteService {
     private final RestaurantRepository restaurantRepository;
     private static final LocalTime VOTE_END_TIME = LocalTime.of(11, 0);
 
+    public VoteTo get(int voteId, int userId) {
+        return VoteMapper.getTo(checkNotFoundWithId(voteRepository.findByUserIdAndId(userId, voteId), voteId));
+    }
+
     public List<VoteTo> getAll() {
         return voteRepository.findAll().stream().map(VoteMapper::getTo).collect(toList());
     }
@@ -46,10 +50,6 @@ public class VoteService {
         return VoteMapper.getTo(save(vote));
     }
 
-    private Vote save(Vote vote) {
-        return voteRepository.save(vote);
-    }
-
     public void update(Integer userId, Integer restaurantId) {
         if (LocalTime.now().isAfter(VOTE_END_TIME)) {
             throw new IllegalArgumentException("Update Vote time is over");
@@ -62,5 +62,9 @@ public class VoteService {
 
     public void delete(int id) {
         checkNotFoundWithId(voteRepository.delete(id) != 0, id);
+    }
+
+    private Vote save(Vote vote) {
+        return voteRepository.save(vote);
     }
 }
