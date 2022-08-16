@@ -17,12 +17,12 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Restaurant r WHERE r.id=:id")
+    @Query("delete from Restaurant r where r.id=:id")
     int delete(@Param("id") int id);
 
-    @Query("SELECT r FROM Restaurant r JOIN FETCH r.menu m WHERE r.id=:id AND m.date=:date")
+    @Query("select r from Restaurant r join fetch r.menu m join fetch m.food where r.id=:id and m.date=:date")
     Restaurant getRestaurantByIdWithMenu(@Param("id") int id, @Param("date") LocalDate date);
 
-    @Query("SELECT DISTINCT r FROM Restaurant r JOIN FETCH r.menu m WHERE m.date=:date ")
+    @Query("select distinct r from Restaurant r join fetch r.menu m join fetch m.food where m.date=:date")
     List<Restaurant> findAllWithMenus(LocalDate date);
 }

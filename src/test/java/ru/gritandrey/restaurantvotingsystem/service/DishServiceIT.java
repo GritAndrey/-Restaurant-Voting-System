@@ -2,6 +2,7 @@ package ru.gritandrey.restaurantvotingsystem.service;
 
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
+import org.hibernate.Hibernate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,6 +32,7 @@ class DishServiceIT {
     @DisplayName("Get one dish")
     void get() {
         final var dish = dishService.get(DISH1_ID);
+        Hibernate.initialize(dish);
         DISH_MATCHER.assertMatch(dish, dish1);
     }
 

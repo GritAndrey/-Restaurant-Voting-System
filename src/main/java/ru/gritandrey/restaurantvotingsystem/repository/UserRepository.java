@@ -15,9 +15,9 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Integer> {
     @Modifying
     @Transactional
-    @Query("DELETE FROM Dish d WHERE d.id=:id")
+    @Query("delete from Dish d where d.id=:id")
     int delete(@Param("id") int id);
 
-    @Query("SELECT u FROM User u WHERE u.email = LOWER(:email)")
+    @Query("select u from User u where u.email = lower(:email) ")
     Optional<User> findByEmailIgnoreCase(String email);
 }

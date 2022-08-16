@@ -16,13 +16,14 @@ import java.util.List;
 public interface DishRepository extends JpaRepository<Dish, Integer> {
     @Modifying
     @Transactional
-    @Query("DELETE FROM Dish d WHERE d.id=:id")
+    @Query("delete from Dish d where d.id=:id")
     int delete(@Param("id") int id);
 
     @Modifying
     @NonNull
-    @Query("SELECT d FROM Dish d JOIN FETCH d.food ")
+    @Query("select d from Dish d join fetch d.food ")
     List<Dish> findAll();
 
+    @Query("select d from Dish d where d.restaurant.id=:restaurantId")
     List<Dish> findAllByRestaurantId(int restaurantId);
 }
