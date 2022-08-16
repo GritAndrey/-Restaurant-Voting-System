@@ -1,5 +1,8 @@
 package ru.gritandrey.restaurantvotingsystem.web.controller.dish;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,11 +23,13 @@ import java.util.List;
 @RequestMapping(value = AdminDishRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 @Slf4j
+@Tags({@Tag(name = "Admin Dish controller", description = "Manage dishes")})
 public class AdminDishRestController {
     public static final String REST_URL = "/api/rest/admin/dishes";
     private final DishService dishService;
 
     @GetMapping
+    @Operation(summary = "GetAll dishes")
     public List<DishTo> getAll() {
         final var restaurantDishes = dishService.getAll();
         log.info("GetAll restaurant dish  {}", restaurantDishes);

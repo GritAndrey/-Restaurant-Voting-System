@@ -56,9 +56,10 @@ public class VoteService {
             throw new IllegalRequestDataException("Update Vote time is over");
         }
         final var mayBeVote = voteRepository.findByUserIdAndDate(userId, LocalDate.now());
-        final var vote = mayBeVote.orElseThrow(() -> new IllegalArgumentException("User haven`t voted yet"));
+        final var vote = mayBeVote.orElseThrow(() -> new IllegalRequestDataException("User haven`t voted yet"));
         vote.setTime(LocalTime.now());
         vote.setRestaurant(checkNotFoundWithId(restaurantRepository.findById(restaurantId), restaurantId));
+        save(vote);
     }
 
     public void delete(int id) {

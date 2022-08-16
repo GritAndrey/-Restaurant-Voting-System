@@ -1,5 +1,7 @@
 package ru.gritandrey.restaurantvotingsystem.web.controller.vote;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping(value = UserVoteRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@Tags({@Tag(name = "User votes controller", description = "Manage user votes")})
 public class UserVoteRestController {
     public static final String REST_URL = "/api/rest/profile/votes";
     private final VoteService voteService;
@@ -39,6 +42,6 @@ public class UserVoteRestController {
     public void update(@RequestParam int restaurantId) {
         final var userId = SecurityUtil.authId();
         log.info("Update vote. UserId: {} RestaurantId: {}", userId, restaurantId);
-        voteService.update(restaurantId, userId);
+        voteService.update(userId, restaurantId);
     }
 }

@@ -1,5 +1,7 @@
 package ru.gritandrey.restaurantvotingsystem.web.controller.restaurant;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,7 @@ import java.net.URI;
 @RequestMapping(value = AdminRestaurantRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 @RequiredArgsConstructor
+@Tags({@Tag(name = "Admin Restaurant controller", description = "Manage restaurants")})
 public class AdminRestaurantRestController {
     public static final String REST_URL = "/api/rest/admin/restaurants";
     private final RestaurantService restaurantService;

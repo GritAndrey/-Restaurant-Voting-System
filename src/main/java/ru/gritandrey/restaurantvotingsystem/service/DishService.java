@@ -12,6 +12,7 @@ import ru.gritandrey.restaurantvotingsystem.repository.RestaurantRepository;
 import ru.gritandrey.restaurantvotingsystem.to.DishTo;
 import ru.gritandrey.restaurantvotingsystem.util.mapper.DishMapper;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUtil.checkNotFoundWithId;
@@ -59,6 +60,7 @@ public class DishService {
         if (!dish.isNew() && get(dish.id()) == null) {
             return null;
         }
+        dish.setDate(LocalDate.now());
         dish.setRestaurant(checkNotFoundWithId(restaurantRepository.getReferenceById(restaurantId), restaurantId));
         return dishRepository.save(dish);
     }

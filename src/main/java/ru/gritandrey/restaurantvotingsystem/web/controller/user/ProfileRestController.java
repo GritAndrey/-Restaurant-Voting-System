@@ -1,5 +1,7 @@
 package ru.gritandrey.restaurantvotingsystem.web.controller.user;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import static ru.gritandrey.restaurantvotingsystem.util.SecurityUtil.authId;
 
 @RestController
 @RequestMapping(value = ProfileRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@Tags({@Tag(name = "User profile controller", description = "Manage user profile")})
 public class ProfileRestController extends AbstractUserController {
     static final String REST_URL = "api/rest/profile";
 
