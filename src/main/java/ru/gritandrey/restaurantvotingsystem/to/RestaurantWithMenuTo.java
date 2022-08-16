@@ -12,5 +12,4 @@ public class RestaurantWithMenuTo {
     String name;
     String address;
     List<DishTo>  menu;
-
 }

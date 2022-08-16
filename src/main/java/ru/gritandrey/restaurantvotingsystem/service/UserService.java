@@ -24,44 +24,44 @@ import static ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUti
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepository repository;
+    private final UserRepository userRepository;
 
     @CacheEvict(value = "users", allEntries = true)
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
-        return repository.save(user);
+        return userRepository.save(user);
     }
 
     @CacheEvict(value = "users", allEntries = true)
     public void delete(int id) {
-        checkNotFoundWithId(repository.delete(id), id);
+        checkNotFoundWithId(userRepository.delete(id), id);
     }
 
     public User get(int id) {
-        return checkNotFoundWithId(repository.findById(id), id);
+        return checkNotFoundWithId(userRepository.findById(id), id);
     }
 
     public User getByEmail(String email) {
         Assert.notNull(email, "email must not be null");
-        return checkNotFound(repository.findByEmailIgnoreCase(email), "email=" + email);
+        return checkNotFound(userRepository.findByEmailIgnoreCase(email), "email=" + email);
     }
 
     @Cacheable("users")
     public List<User> getAll() {
-        return repository.findAll();
+        return userRepository.findAll();
     }
 
     @CacheEvict(value = "users", allEntries = true)
     public void update(User user) {
         Assert.notNull(user, "user must not be null");
-        repository.save(user);
+        userRepository.save(user);
     }
 
     @CacheEvict(value = "users", allEntries = true)
     @Transactional
     public void update(UserTo userTo) {
         User user = get(userTo.id());
-        User updatedUser = updateFromTo(user, userTo);
+        updateFromTo(user, userTo);
     }
 
     @CacheEvict(value = "users", allEntries = true)

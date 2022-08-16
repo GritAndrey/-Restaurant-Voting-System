@@ -13,14 +13,4 @@ public class RestaurantTo implements HasId {
 
     @Override
     public void setId(Integer id) {}
-
-    @Override
-    public boolean isNew() {
-        return HasId.super.isNew();
-    }
-
-    @Override
-    public int id() {
-        return HasId.super.id();
-    }
 }
