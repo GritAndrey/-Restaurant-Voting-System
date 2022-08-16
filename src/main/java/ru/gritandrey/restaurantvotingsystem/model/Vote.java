@@ -3,6 +3,7 @@ package ru.gritandrey.restaurantvotingsystem.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -27,6 +28,7 @@ public class Vote extends AbstractBaseEntity {
     private LocalDate date;
 
     @Column(name = "vote_time")
+    @NotNull
     private LocalTime time;
 
     @Override

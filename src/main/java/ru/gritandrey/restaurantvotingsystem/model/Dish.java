@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -16,7 +18,9 @@ import java.time.LocalDate;
 public class Dish extends AbstractBaseEntity {
 
     @Column(name = "price")
+    @Positive
     private BigDecimal price;
+
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "dish_name_id")
     private Food food;
@@ -26,6 +30,7 @@ public class Dish extends AbstractBaseEntity {
     private Restaurant restaurant;
 
     @Column(name = "dish_date")
+    @NotNull
     private LocalDate date;
 
     public Dish(Integer id, BigDecimal price, Food food, Restaurant restaurant, LocalDate date) {
