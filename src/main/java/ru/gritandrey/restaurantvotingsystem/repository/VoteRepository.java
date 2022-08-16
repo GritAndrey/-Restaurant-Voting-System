@@ -18,12 +18,15 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Dish d WHERE d.id=:id")
+    @Query("delete from Vote v where v.id=:id")
     int delete(@Param("id") int id);
 
+    @Query("select v from Vote v where v.user.id = :userId")
     List<Vote> findAllByUserId(Integer userId);
 
+    @Query("select v from Vote v where v.date=:date and v.user.id=:userId")
     Optional<Vote> findByUserIdAndDate(Integer userId, LocalDate date);
 
+    @Query("select v from Vote v where v.id =:id and v.user.id=:userId")
     Optional<Vote> findByUserIdAndId(Integer userId, Integer id);
 }

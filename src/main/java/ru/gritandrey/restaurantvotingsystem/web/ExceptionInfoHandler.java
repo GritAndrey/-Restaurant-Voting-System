@@ -1,7 +1,6 @@
 package ru.gritandrey.restaurantvotingsystem.web;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -24,8 +23,8 @@ import static ru.gritandrey.restaurantvotingsystem.exception.ErrorType.*;
 
 @RestControllerAdvice(annotations = RestController.class)
 @Order(Ordered.HIGHEST_PRECEDENCE + 5)
+@Slf4j
 public class ExceptionInfoHandler {
-    private static final Logger log = LoggerFactory.getLogger(ExceptionInfoHandler.class);
 
     //    https://stackoverflow.com/questions/538870/should-private-helper-methods-be-static-if-they-can-be-static
     private static ErrorInfo logAndGetErrorInfo(HttpServletRequest req, Exception e, boolean logException, ErrorType errorType) {

@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Integer> {
     @Modifying
     @Transactional
-    @Query("delete from Dish d where d.id=:id")
+    @Query("delete from User u where u.id=:id")
     int delete(@Param("id") int id);
 
     @Query("select u from User u where u.email = lower(:email) ")
