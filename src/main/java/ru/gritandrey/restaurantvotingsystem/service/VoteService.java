@@ -24,7 +24,7 @@ public class VoteService {
     private final VoteRepository voteRepository;
     private final UserRepository userRepository;
     private final RestaurantRepository restaurantRepository;
-    private static final LocalTime VOTE_END_TIME = LocalTime.of(11, 0);
+    private static final LocalTime VOTE_END_TIME = LocalTime.of(23, 59);
 
     public VoteTo get(int voteId, int userId) {
         return VoteMapper.getTo(checkNotFoundWithId(voteRepository.findByUserIdAndId(userId, voteId), voteId));

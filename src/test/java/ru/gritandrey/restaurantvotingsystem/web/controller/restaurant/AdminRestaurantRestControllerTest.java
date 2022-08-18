@@ -13,7 +13,6 @@ import ru.gritandrey.restaurantvotingsystem.web.controller.AbstractControllerTes
 import ru.gritandrey.restaurantvotingsystem.web.json.JsonUtil;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.gritandrey.restaurantvotingsystem.RestaurantAndDishTestData.*;
 import static ru.gritandrey.restaurantvotingsystem.UserTestData.ADMIN_MAIL;
@@ -21,7 +20,7 @@ import static ru.gritandrey.restaurantvotingsystem.UserTestData.USER_MAIL;
 
 
 class AdminRestaurantRestControllerTest extends AbstractControllerTest {
-    public static final String REST_URL = AdminRestaurantRestController.REST_URL + "/";
+    public static final String REST_URL = AdminRestaurantRestController.REST_URL + '/';
     private final RestaurantService restaurantService;
 
     public AdminRestaurantRestControllerTest(MockMvc mockMvc, RestaurantService restaurantService) {
@@ -40,14 +39,6 @@ class AdminRestaurantRestControllerTest extends AbstractControllerTest {
     void getForbidden() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isForbidden());
-    }
-
-    @Test
-    @WithUserDetails(value = ADMIN_MAIL)
-    void getNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + NOT_FOUND))
-                .andDo(print())
-                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test

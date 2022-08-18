@@ -1,0 +1,37 @@
+package ru.gritandrey.restaurantvotingsystem.web.controller.restaurant;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import ru.gritandrey.restaurantvotingsystem.service.RestaurantService;
+import ru.gritandrey.restaurantvotingsystem.web.controller.AbstractControllerTest;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.gritandrey.restaurantvotingsystem.RestaurantAndDishTestData.NOT_FOUND;
+import static ru.gritandrey.restaurantvotingsystem.UserTestData.USER_MAIL;
+
+class UserRestaurantRestControllerTest extends AbstractControllerTest {
+    private final RestaurantService restaurantService;
+    public static final String REST_URL = UserRestaurantRestController.REST_URL + '/';
+
+    public UserRestaurantRestControllerTest(MockMvc mockMvc, RestaurantService restaurantService) {
+        super(mockMvc);
+        this.restaurantService = restaurantService;
+    }
+
+    @Test
+    void getUnauth() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithUserDetails(value = USER_MAIL)
+    void getNotFound() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL + NOT_FOUND))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
+}

@@ -75,10 +75,12 @@ VALUES (100000, now(), 100004, '12.3'),
 
 INSERT INTO users (id, name, email, password, enabled, registered)
 VALUES (1, 'User', 'user@gmail.com', '{noop}password', TRUE, now()),
+       (3, 'noVoteUser', 'novote@gmail.com', '{noop}password', TRUE, now()),
        (2, 'Admin', 'admin@gmail.com', '{noop}admin', TRUE, now());
 
 INSERT INTO user_roles (role, user_id)
 VALUES ('USER', 1),
+       ('USER', 3),
        ('ADMIN', 2),
        ('USER', 2);
 

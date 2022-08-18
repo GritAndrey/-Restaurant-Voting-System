@@ -6,18 +6,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
 import ru.gritandrey.restaurantvotingsystem.service.RestaurantService;
 import ru.gritandrey.restaurantvotingsystem.service.VoteService;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantWithMenuTo;
-import ru.gritandrey.restaurantvotingsystem.to.VoteTo;
-import ru.gritandrey.restaurantvotingsystem.util.SecurityUtil;
-import ru.gritandrey.restaurantvotingsystem.web.controller.vote.UserVoteRestController;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +19,7 @@ import java.util.Optional;
 @RequestMapping(value = UserRestaurantRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 @RequiredArgsConstructor
-@Tags({@Tag(name = "User restaurant controller", description = "View available restaurants. Vote for the restaurant")})
+@Tags({@Tag(name = "User restaurant controller", description = "View available restaurants. With or without menu.")})
 public class UserRestaurantRestController {
 
     public static final String REST_URL = "/api/rest/restaurants";
@@ -63,18 +57,5 @@ public class UserRestaurantRestController {
         final List<RestaurantWithMenuTo> restaurants = restaurantService.getAllWithMenu();
         log.info("GetAll Restaurants with menu on today: {}", restaurants);
         return restaurants;
-    }
-
-    @PostMapping(value = "{restaurantId}/vote")
-    public ResponseEntity<VoteTo> voteForRestaurant(@PathVariable int restaurantId) {
-        final var userId = SecurityUtil.authId();
-        log.info("Create Vote.\nuserId: {}\nrestaurantId {}", userId, restaurantId);
-        final var created = voteService.create(restaurantId, userId);
-        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(UserVoteRestController.REST_URL + "/{id}")
-                .buildAndExpand(created.getId())
-                .toUri();
-        return ResponseEntity.created(uriOfNewResource)
-                .body(created);
     }
 }

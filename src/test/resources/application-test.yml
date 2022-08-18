@@ -12,3 +12,6 @@ spring:
     url: jdbc:postgresql://localhost:5431/voting
     username: user
     password: password
+
+
+  cache.type: none
