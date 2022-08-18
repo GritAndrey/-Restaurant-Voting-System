@@ -19,6 +19,7 @@
         <springdoc.version>1.6.9</springdoc.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <querydsl.version>5.0.0</querydsl.version>
     </properties>
 
     <dependencies>
@@ -54,6 +55,21 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-security</artifactId>
             <version>${springdoc.version}</version>
+        </dependency>
+
+        <!--        Query dsl-->
+        <!--        https://stackoverflow.com/questions/70390931/upgrade-to-springboot-2-6-1-with-querydsl-jpa-5-0-0-->
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-apt</artifactId>
+            <classifier>jpa</classifier>
+            <version>${querydsl.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+            <version>${querydsl.version}</version>
         </dependency>
 
         <!--cache-->

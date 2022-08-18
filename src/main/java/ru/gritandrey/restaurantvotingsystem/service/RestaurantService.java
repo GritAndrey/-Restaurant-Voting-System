@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -49,24 +50,31 @@ public class RestaurantService {
         return RestaurantMapper.getWithMenuTo(restaurant);
     }
 
+    @Cacheable("restWithMenu")
     public List<RestaurantWithMenuTo> getAllWithMenu() {
         return RestaurantMapper.getWithMenuTos(restaurantRepository.findAllWithMenus(LocalDate.now()));
     }
 
-    @CacheEvict(value = "restaurants", allEntries = true)
+    @Caching(evict = {
+            @CacheEvict(value = "restaurants", allEntries = true),
+            @CacheEvict(value = "restWithMenu", allEntries = true)})
     public Restaurant create(RestaurantTo restaurantTo) {
         Assert.notNull(restaurantTo, "Restaurant must not be null");
         return restaurantRepository.save(RestaurantMapper.getRestaurant(restaurantTo));
     }
 
-    @CacheEvict(value = "restaurants", allEntries = true)
+    @Caching(evict = {
+            @CacheEvict(value = "restaurants", allEntries = true),
+            @CacheEvict(value = "restWithMenu", allEntries = true)})
     public void update(RestaurantTo restaurantTo) {
         Assert.notNull(restaurantTo, "Restaurant must not be null");
         final var restaurant = RestaurantMapper.getRestaurant(restaurantTo);
         checkNotFoundWithId(save(restaurant), restaurant.id());
     }
 
-    @CacheEvict(value = "restaurants", allEntries = true)
+    @Caching(evict = {
+            @CacheEvict(value = "restaurants", allEntries = true),
+            @CacheEvict(value = "restWithMenu", allEntries = true)})
     public void delete(int id) {
         checkNotFoundWithId(restaurantRepository.delete(id) != 0, id);
     }

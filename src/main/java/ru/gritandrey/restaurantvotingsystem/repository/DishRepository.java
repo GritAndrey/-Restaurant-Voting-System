@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public interface DishRepository extends JpaRepository<Dish, Integer> {
+public interface DishRepository extends JpaRepository<Dish, Integer>, FilterDishRepository {
     @Modifying
     @Transactional
     @Query("delete from Dish d where d.id=:id")
@@ -26,4 +26,5 @@ public interface DishRepository extends JpaRepository<Dish, Integer> {
 
     @Query("select d from Dish d where d.restaurant.id=:restaurantId")
     List<Dish> findAllByRestaurantId(int restaurantId);
+
 }
