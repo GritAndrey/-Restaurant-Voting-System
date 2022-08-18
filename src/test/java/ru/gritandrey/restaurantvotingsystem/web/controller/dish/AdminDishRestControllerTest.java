@@ -1,13 +1,11 @@
 package ru.gritandrey.restaurantvotingsystem.web.controller.dish;
 
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.transaction.annotation.Transactional;
 import ru.gritandrey.restaurantvotingsystem.exception.NotFoundException;
 import ru.gritandrey.restaurantvotingsystem.model.Dish;
 import ru.gritandrey.restaurantvotingsystem.service.DishService;
@@ -21,22 +19,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.gritandrey.restaurantvotingsystem.RestaurantAndDishTestData.*;
-import static ru.gritandrey.restaurantvotingsystem.TestUtil.userHttpBasic;
-import static ru.gritandrey.restaurantvotingsystem.UserTestData.admin;
-import static ru.gritandrey.restaurantvotingsystem.UserTestData.user;
+import static ru.gritandrey.restaurantvotingsystem.UserTestData.ADMIN_MAIL;
+import static ru.gritandrey.restaurantvotingsystem.UserTestData.USER_MAIL;
 
-@RequiredArgsConstructor
-@SpringBootTest
-@Transactional
-@ActiveProfiles("test")
 class AdminDishRestControllerTest extends AbstractControllerTest {
     private static final String REST_URL = AdminDishRestController.REST_URL + '/';
     private final DishService dishService;
 
+    public AdminDishRestControllerTest(MockMvc mockMvc, DishService dishService) {
+        super(mockMvc);
+        this.dishService = dishService;
+    }
+
     @Test
+    @WithUserDetails(value = ADMIN_MAIL)
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + DISH1_ID)
-                .with(userHttpBasic(admin)))
+        perform(MockMvcRequestBuilders.get(REST_URL + DISH1_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -50,27 +48,27 @@ class AdminDishRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @WithUserDetails(value = USER_MAIL)
     void getForbidden() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL)
-                .with(userHttpBasic(user)))
+        perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isForbidden());
     }
 
     @Test
+    @WithUserDetails(value = ADMIN_MAIL)
     void getNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + NOT_FOUND)
-                .with(userHttpBasic(admin)))
+        perform(MockMvcRequestBuilders.get(REST_URL + NOT_FOUND))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
+    @WithUserDetails(value = ADMIN_MAIL)
     void createWithLocation() throws Exception {
         final var newDish = getNewDishWithExistingNameAndRestaurant();
         final var newDishTo = getNewDishTo();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .with(userHttpBasic(admin))
                 .content(JsonUtil.writeValue(newDishTo)))
                 .andExpect(status().isCreated());
         DishTo created = DISH_TO_MATCHER.readFromJson(action);
@@ -81,25 +79,25 @@ class AdminDishRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @WithUserDetails(value = ADMIN_MAIL)
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + DISH1_ID)
-                .with(userHttpBasic(admin)))
+        perform(MockMvcRequestBuilders.delete(REST_URL + DISH1_ID))
                 .andExpect(status().isNoContent());
         assertThrows(NotFoundException.class, () -> dishService.get(DISH1_ID));
     }
 
     @Test
+    @WithUserDetails(value = ADMIN_MAIL)
     void deleteNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + NOT_FOUND)
-                .with(userHttpBasic(admin)))
+        perform(MockMvcRequestBuilders.delete(REST_URL + NOT_FOUND))
                 .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
+    @WithUserDetails(value = ADMIN_MAIL)
     void update() throws Exception {
         Dish updated = getUpdatedDish();
         perform(MockMvcRequestBuilders.put(REST_URL + DISH1_ID).contentType(MediaType.APPLICATION_JSON)
-                .with(userHttpBasic(admin))
                 .content(JsonUtil.writeValue(DishMapper.getTo(updated))))
                 .andExpect(status().isNoContent());
         DISH_MATCHER.assertMatch(dishService.get(DISH1_ID), updated);
