@@ -7,12 +7,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import ru.gritandrey.restaurantvotingsystem.service.DishService;
 import ru.gritandrey.restaurantvotingsystem.to.DishFilter;
-import ru.gritandrey.restaurantvotingsystem.to.DishTo;
 import ru.gritandrey.restaurantvotingsystem.to.MenuTo;
-import ru.gritandrey.restaurantvotingsystem.util.mapper.DishMapper;
 
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -41,12 +42,5 @@ public class UserDishRestController {
         log.info("GetAll dishes by Restaurant Id and Date  {}", menus);
         menus.sort(Comparator.comparing(MenuTo::getMenuDate).reversed().thenComparing(MenuTo::getRestaurantId));
         return menus;
-    }
-
-    @GetMapping("{id}")
-    public DishTo get(@PathVariable int id) {
-        DishTo dish = DishMapper.getTo(dishService.get(id));
-        log.info("Get restaurant dish with id: {} {}", dish.getId(), dish);
-        return dish;
     }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -18,6 +19,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@ToString(callSuper = true)
 public class Restaurant extends AbstractNamedEntity {
     @Column(name = "address")
     @NotBlank
@@ -26,18 +28,11 @@ public class Restaurant extends AbstractNamedEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @JsonBackReference
+    @ToString.Exclude
     private List<Dish> menu;
 
     public Restaurant(Integer id, String name, String address) {
         super(id, name);
         this.address = address;
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "id = " + id + ", " +
-                "name = " + name + ", " +
-                "address = " + address + ")";
     }
 }

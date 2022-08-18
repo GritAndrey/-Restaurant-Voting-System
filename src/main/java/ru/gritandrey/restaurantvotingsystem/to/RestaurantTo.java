@@ -1,5 +1,6 @@
 package ru.gritandrey.restaurantvotingsystem.to;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -11,6 +12,7 @@ import javax.validation.constraints.Size;
 @EqualsAndHashCode(callSuper = true)
 @Value
 @ToString(callSuper = true)
+@JsonDeserialize(builder = RestaurantTo.RestaurantToBuilder.class)
 public class RestaurantTo extends NamedTo {
 
     @NotBlank

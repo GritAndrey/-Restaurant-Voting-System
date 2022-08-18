@@ -42,13 +42,13 @@ class RestaurantServiceIT {
     @Test
     @DisplayName("Get restaurant with today`s menu")
     void getWithMenu() {
-        RESTAURANT_TO_MATCHER.assertMatch((service.getWithMenu(RESTAURANT1_ID)), restaurantWithMenuTo);
+        RESTAURANT_WITH_MENU_TO_MATCHER.assertMatch((service.getWithMenu(RESTAURANT1_ID)), restaurantWithMenuTo);
     }
 
     @Test
     @DisplayName("Get all restaurants with today`s menu")
     void getAllWithMenus() {
-        RESTAURANT_TO_MATCHER.assertMatch(service.getAllWithMenu(), restaurantsTo);
+        RESTAURANT_WITH_MENU_TO_MATCHER.assertMatch(service.getAllWithMenu(), restaurantsTo);
     }
 
     @Test

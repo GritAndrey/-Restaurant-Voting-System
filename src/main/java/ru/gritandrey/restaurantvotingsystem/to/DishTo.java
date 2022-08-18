@@ -1,5 +1,6 @@
 package ru.gritandrey.restaurantvotingsystem.to;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = true)
 @Value
 @ToString(callSuper = true)
+@JsonDeserialize(builder = DishTo.DishToBuilder.class)
 public class DishTo extends BaseTo {
 
     @Positive

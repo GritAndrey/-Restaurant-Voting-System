@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gritandrey.restaurantvotingsystem.model.Dish;
@@ -18,11 +17,6 @@ public interface DishRepository extends JpaRepository<Dish, Integer>, FilterDish
     @Transactional
     @Query("delete from Dish d where d.id=:id")
     int delete(@Param("id") int id);
-
-    @Modifying
-    @NonNull
-    @Query("select d from Dish d join fetch d.food ")
-    List<Dish> findAll();
 
     @Query("select d from Dish d where d.restaurant.id=:restaurantId")
     List<Dish> findAllByRestaurantId(int restaurantId);

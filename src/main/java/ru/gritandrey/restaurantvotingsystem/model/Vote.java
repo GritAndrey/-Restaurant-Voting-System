@@ -14,14 +14,17 @@ import java.time.LocalTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Vote extends AbstractBaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @ToString.Exclude
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
+    @ToString.Exclude
     private Restaurant restaurant;
 
     @Column(name = "vote_date")
@@ -30,13 +33,4 @@ public class Vote extends AbstractBaseEntity {
     @Column(name = "vote_time")
     @NotNull
     private LocalTime time;
-
-    @Override
-    public String toString() {
-        return "Vote{" +
-                "id=" + id +
-                ", date=" + date +
-                ", time=" + time +
-                '}';
-    }
 }

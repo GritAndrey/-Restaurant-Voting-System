@@ -1,5 +1,6 @@
 package ru.gritandrey.restaurantvotingsystem.to;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -11,6 +12,7 @@ import java.util.List;
 @Value
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@JsonDeserialize(builder = RestaurantWithMenuTo.RestaurantWithMenuToBuilder.class)
 public class RestaurantWithMenuTo extends NamedTo {
 
     String address;

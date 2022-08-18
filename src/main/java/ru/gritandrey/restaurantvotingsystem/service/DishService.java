@@ -34,7 +34,6 @@ public class DishService {
         return checkNotFoundWithId(dishRepository.findById(id), id);
     }
 
-    @Cacheable(value = "dishes")
     public List<DishTo> getAll() {
         return DishMapper.getTos(dishRepository.findAll());
     }
@@ -62,8 +61,8 @@ public class DishService {
     @Transactional
     @Caching(evict = {
             @CacheEvict(value = "menus", allEntries = true),
-            @CacheEvict(value = "restWithMenu", allEntries = true),
-            @CacheEvict(value = "dishes", allEntries = true)})
+            @CacheEvict(value = "restWithMenu", allEntries = true)
+    })
     public Dish create(DishTo dishTo) {
         Assert.notNull(dishTo, "Dish must not be null");
         return save(getDishWithFood(dishTo), dishTo.getRestaurantId());
@@ -72,8 +71,7 @@ public class DishService {
     @Transactional
     @Caching(evict = {
             @CacheEvict(value = "menus", allEntries = true),
-            @CacheEvict(value = "restWithMenu", allEntries = true),
-            @CacheEvict(value = "dishes", allEntries = true)})
+            @CacheEvict(value = "restWithMenu", allEntries = true)})
     public void update(DishTo dishTo) {
         Assert.notNull(dishTo, "Dish must not be null");
         final var dish = getDishWithFood(dishTo);
@@ -82,8 +80,7 @@ public class DishService {
 
     @Caching(evict = {
             @CacheEvict(value = "menus", allEntries = true),
-            @CacheEvict(value = "restWithMenu", allEntries = true),
-            @CacheEvict(value = "dishes", allEntries = true)})
+            @CacheEvict(value = "restWithMenu", allEntries = true)})
     public void delete(int id) {
         checkNotFoundWithId(dishRepository.delete(id) != 0, id);
     }

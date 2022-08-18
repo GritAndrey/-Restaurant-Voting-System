@@ -5,7 +5,9 @@ import ru.gritandrey.restaurantvotingsystem.model.Dish;
 import ru.gritandrey.restaurantvotingsystem.model.Food;
 import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
 import ru.gritandrey.restaurantvotingsystem.to.DishTo;
+import ru.gritandrey.restaurantvotingsystem.to.RestaurantTo;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantWithMenuTo;
+import ru.gritandrey.restaurantvotingsystem.util.mapper.DishMapper;
 import ru.gritandrey.restaurantvotingsystem.util.mapper.RestaurantMapper;
 
 import java.math.BigDecimal;
@@ -20,7 +22,8 @@ public class RestaurantAndDishTestData {
     public static final MatcherFactory.Matcher<Dish> DISH_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Dish.class, "restaurant", "food");
     public static final MatcherFactory.Matcher<DishTo> DISH_TO_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(DishTo.class);
     public static final MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class, "menu");
-    public static final MatcherFactory.Matcher<RestaurantWithMenuTo> RESTAURANT_TO_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(RestaurantWithMenuTo.class);
+    public static final MatcherFactory.Matcher<RestaurantWithMenuTo> RESTAURANT_WITH_MENU_TO_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(RestaurantWithMenuTo.class);
+    public static final MatcherFactory.Matcher<RestaurantTo> RESTAURANT_TO_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(RestaurantTo.class);
 
     public static final LocalDate TODAY = LocalDate.now();
     public static final int NOT_FOUND = 66666;
@@ -33,7 +36,7 @@ public class RestaurantAndDishTestData {
 
 
     public static final Food food1 = new Food(FOOD1_ID, "California Suncup");
-    public static final Food food2 = new Food(FOOD1_ID +1, "Uluhe");
+    public static final Food food2 = new Food(FOOD1_ID + 1, "Uluhe");
     public static final Food food3 = new Food(FOOD1_ID + 2, "Wild Sweetwilliam");
     public static final Food food4 = new Food(FOOD1_ID + 3, "Smallhead Cat's Ear");
     public static final Food food5 = new Food(FOOD1_ID + 4, "West Indian Mahogany");
@@ -42,7 +45,7 @@ public class RestaurantAndDishTestData {
     public static final Food food8 = new Food(FOOD1_ID + 7, "Oryctes");
     public static final Food food9 = new Food(FOOD1_ID + 8, "Horsetail");
     public static final Food food10 = new Food(FOOD1_ID + 9, "Goldback Fern");
-    public static final Food newFood = new Food( "New food");
+    public static final Food newFood = new Food("New food");
 
     public static final Restaurant restaurant1 = new Restaurant(RESTAURANT1_ID, "Rau LLC", "1 Stone Corner Junction");
     public static final Restaurant restaurant2 = new Restaurant(RESTAURANT2_ID, "Sporer-Parisian", "16 Forest Junction");
@@ -52,7 +55,12 @@ public class RestaurantAndDishTestData {
     public static final Dish dish1 = new Dish(DISH1_ID, new BigDecimal("12.3"), food1, restaurant1, TODAY);
     public static final Dish dish2 = new Dish(DISH1_ID + 1, new BigDecimal("4.6"), food2, restaurant1, TODAY);
     public static final Dish dish3 = new Dish(DISH1_ID + 2, new BigDecimal("3.5"), food3, restaurant1, TODAY);
-
+    public static final DishTo dish1To = DishTo.builder()
+            .id(dish1.getId())
+            .price(dish1.getPrice())
+            .name(dish1.getFood().getName())
+            .restaurantId(dish1.getRestaurant().getId())
+            .build();
     public static final Dish dish4 = new Dish(DISH1_ID + 3, new BigDecimal("35.12"), food4, restaurant2, TODAY);
     public static final Dish dish5 = new Dish(DISH1_ID + 4, new BigDecimal("12.5"), food5, restaurant2, TODAY);
     public static final Dish dish6 = new Dish(DISH1_ID + 5, new BigDecimal("2.1"), food6, restaurant2, TODAY);
@@ -81,19 +89,31 @@ public class RestaurantAndDishTestData {
     }
 
     public static Dish getNewDishWithExistingNameAndRestaurant() {
-        return new Dish(null, new BigDecimal("33.1"), food10,restaurant1, TODAY);
+        return new Dish(null, new BigDecimal("33.1"), food10, restaurant1, TODAY);
     }
+
+    public static DishTo getNewDishTo() {
+        final var newDish = getNewDishWithExistingNameAndRestaurant();
+        return DishMapper.getTo(newDish);
+    }
+
     public static Dish getNewDishWithNewNameAndRestaurant() {
-        return new Dish(null, new BigDecimal("33.1"), newFood,restaurant1, TODAY);
+        return new Dish(null, new BigDecimal("33.1"), newFood, restaurant1, TODAY);
     }
+
     public static Dish getUpdatedDish() {
         return new Dish(DISH1_ID, new BigDecimal("12.3"), food1, restaurant1, TODAY);
     }
+
     public static Restaurant getNewRestaurant() {
-        return new Restaurant(null,"New rest name", "New rest address");
+        return new Restaurant(null, "New rest name", "New rest address");
     }
 
-    public static  Restaurant getUpdatedRestaurant() {
-        return new Restaurant(RESTAURANT1_ID,"updated name","updated address");
+    public static RestaurantTo getNewRestaurantTo() {
+        return RestaurantMapper.getTo(getNewRestaurant());
+    }
+
+    public static Restaurant getUpdatedRestaurant() {
+        return new Restaurant(RESTAURANT1_ID, "updated name", "updated address");
     }
 }
