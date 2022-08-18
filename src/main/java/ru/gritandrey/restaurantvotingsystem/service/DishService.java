@@ -38,7 +38,7 @@ public class DishService {
         return DishMapper.getTos(dishRepository.findAll());
     }
 
-    @Cacheable(value = "menus")
+    @Cacheable(value = "menus", condition = ("#dishFilter.startDate != null && #dishFilter.startDate.equals(T(java.time.LocalDate).now())"))
     public List<MenuTo> getByFilter(DishFilter dishFilter) {
         final var filteredDishes = dishRepository.findAllByFilter(dishFilter);
         record MenuKey(LocalDate menuDate,
