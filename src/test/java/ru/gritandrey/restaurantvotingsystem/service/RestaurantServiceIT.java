@@ -30,7 +30,7 @@ class RestaurantServiceIT {
     @Test
     @DisplayName("Get all restaurants without menus")
     void getAll() {
-        RESTAURANT_MATCHER.assertMatch(service.getAll(), restaurants);
+        RESTAURANT_MATCHER.assertMatch(service.getAll(0, 20), restaurants);
     }
 
     @Test

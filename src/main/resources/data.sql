@@ -1,9 +1,15 @@
-DELETE FROM vote;
-DELETE FROM dish;
-DELETE FROM food;
-DELETE FROM restaurant;
-DELETE FROM user_roles;
-DELETE FROM users;
+DELETE
+FROM vote;
+DELETE
+FROM dish;
+DELETE
+FROM food;
+DELETE
+FROM restaurant;
+DELETE
+FROM user_roles;
+DELETE
+FROM users;
 
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
@@ -37,8 +43,33 @@ VALUES (100000, now(), 100004, '12.3'),
        (100002, now(), 100012, '6.4'),
        (100003, now(), 100013, '2.8'),
        (100003, now(), 100007, '22.5'),
-       (100003, now(), 100008, '33.1');
+       (100003, now(), 100008, '33.1'),
 
+       (100000, dateadd('DAY', -2, current_date), 100004, '12.3'),
+       (100000, dateadd('DAY', -2, current_date), 100005, '4.6'),
+       (100000, dateadd('DAY', -2, current_date), 100006, '3.5'),
+       (100001, dateadd('DAY', -2, current_date), 100007, '35.12'),
+       (100001, dateadd('DAY', -2, current_date), 100008, '12.5'),
+       (100001, dateadd('DAY', -2, current_date), 100009, '2.1'),
+       (100002, dateadd('DAY', -2, current_date), 100010, '0.3'),
+       (100002, dateadd('DAY', -2, current_date), 100011, '4.5'),
+       (100002, dateadd('DAY', -2, current_date), 100012, '6.4'),
+       (100003, dateadd('DAY', -2, current_date), 100013, '2.8'),
+       (100003, dateadd('DAY', -2, current_date), 100007, '22.5'),
+       (100003, dateadd('DAY', -2, current_date), 100008, '33.1'),
+
+       (100000, dateadd('DAY', -1, current_date), 100004, '12.3'),
+       (100000, dateadd('DAY', -1, current_date), 100005, '4.6'),
+       (100000, dateadd('DAY', -1, current_date), 100006, '3.5'),
+       (100001, dateadd('DAY', -1, current_date), 100007, '35.12'),
+       (100001, dateadd('DAY', -1, current_date), 100008, '12.5'),
+       (100001, dateadd('DAY', -1, current_date), 100009, '2.1'),
+       (100002, dateadd('DAY', -1, current_date), 100010, '0.3'),
+       (100002, dateadd('DAY', -1, current_date), 100011, '4.5'),
+       (100002, dateadd('DAY', -1, current_date), 100012, '6.4'),
+       (100003, dateadd('DAY', -1, current_date), 100013, '2.8'),
+       (100003, dateadd('DAY', -1, current_date), 100007, '22.5'),
+       (100003, dateadd('DAY', -1, current_date), 100008, '33.1');
 
 
 

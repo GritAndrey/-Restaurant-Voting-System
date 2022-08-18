@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import ru.gritandrey.restaurantvotingsystem.web.controller.vote.UserVoteRestCont
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = UserRestaurantRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -27,6 +29,8 @@ import java.util.List;
 public class UserRestaurantRestController {
 
     public static final String REST_URL = "/api/rest/restaurants";
+    public static final int DEFAULT_PAGE = 0;
+    public static final int DEFAULT_ITEMS_PER_PAGE = 4;
     private final RestaurantService restaurantService;
     private final VoteService voteService;
 
@@ -38,8 +42,11 @@ public class UserRestaurantRestController {
     }
 
     @GetMapping
-    public List<Restaurant> getAll() {
-        final var restaurants = restaurantService.getAll();
+    public Page<Restaurant> getAll(@RequestParam(required = false) Integer page,
+                                   @RequestParam(required = false) Integer itemsPerPage) {
+        page = Optional.ofNullable(page).orElse(DEFAULT_PAGE);
+        itemsPerPage = Optional.ofNullable(itemsPerPage).orElse(DEFAULT_ITEMS_PER_PAGE);
+        final var restaurants = restaurantService.getAll(page, itemsPerPage);
         log.info("GetAll Restaurants without menu: {}", restaurants);
         return restaurants;
     }
