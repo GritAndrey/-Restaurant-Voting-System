@@ -1,6 +1,7 @@
 package ru.gritandrey.restaurantvotingsystem.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.gritandrey.restaurantvotingsystem.exception.IllegalRequestDataException;
 import ru.gritandrey.restaurantvotingsystem.model.Vote;
@@ -24,7 +25,8 @@ public class VoteService {
     private final VoteRepository voteRepository;
     private final UserRepository userRepository;
     private final RestaurantRepository restaurantRepository;
-    private static final LocalTime VOTE_END_TIME = LocalTime.of(23, 59);
+    @Value("${voting.voteEnding}")
+    private final LocalTime VOTE_END_TIME;
 
     public VoteTo get(int voteId, int userId) {
         return VoteMapper.getTo(checkNotFoundWithId(voteRepository.findByUserIdAndId(userId, voteId), voteId));

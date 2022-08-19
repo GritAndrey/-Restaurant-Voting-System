@@ -9,7 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
 import ru.gritandrey.restaurantvotingsystem.service.RestaurantService;
-import ru.gritandrey.restaurantvotingsystem.service.VoteService;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantWithMenuTo;
 
 import java.util.List;
@@ -26,7 +25,6 @@ public class UserRestaurantRestController {
     public static final int DEFAULT_PAGE = 0;
     public static final int DEFAULT_ITEMS_PER_PAGE = 4;
     private final RestaurantService restaurantService;
-    private final VoteService voteService;
 
     @GetMapping("/{id}")
     public Restaurant get(@PathVariable int id) {

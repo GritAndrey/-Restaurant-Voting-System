@@ -18,11 +18,11 @@ spring:
     init:
       mode: always
   datasource:
-#    # ImMemory
+    #    # ImMemory
     url: jdbc:h2:mem:voting
-#    #    tcp: jdbc:h2:tcp://localhost:9092/mem:voting;MODE=PostgreSQL
-##    OLD_INFORMATION_SCHEMA=TRUE
-##    https://github.com/JetBrains/jetbrains_guide/issues/215
+    #    #    tcp: jdbc:h2:tcp://localhost:9092/mem:voting;MODE=PostgreSQL
+    ##    OLD_INFORMATION_SCHEMA=TRUE
+    ##    https://github.com/JetBrains/jetbrains_guide/issues/215
     username: sa
     password:
   # Jackson Serialization Issue Resolver
@@ -56,3 +56,6 @@ springdoc:
   swagger-ui:
     tagsSorter: alpha
     operationsSorter: alpha
+
+voting:
+  voteEnding: "23:00"
