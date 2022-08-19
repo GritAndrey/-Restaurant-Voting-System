@@ -17,7 +17,7 @@ import static ru.gritandrey.restaurantvotingsystem.RestaurantAndDishTestData.*;
 @Transactional
 @RequiredArgsConstructor
 @ActiveProfiles("test")
-class RestaurantServiceIT {
+class RestaurantServiceTest {
 
     private final RestaurantService service;
 

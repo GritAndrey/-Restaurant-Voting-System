@@ -34,7 +34,7 @@ public class VoteTestData {
         adminVote.setId(ADMIN_VOTE_ID);
         adminVote.setRestaurant(restaurant1);
         adminVote.setUser(admin);
-        adminVote.setDate(LocalDate.now());
+        adminVote.setDate(LocalDate.now().minusDays(1));
         adminVote.setTime(LocalTime.of(11, 1));
 
         updatedVote.setId(USER_VOTE_ID);

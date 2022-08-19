@@ -55,12 +55,7 @@ public class RestaurantAndDishTestData {
     public static final Dish dish1 = new Dish(DISH1_ID, new BigDecimal("12.3"), food1, restaurant1, TODAY);
     public static final Dish dish2 = new Dish(DISH1_ID + 1, new BigDecimal("4.6"), food2, restaurant1, TODAY);
     public static final Dish dish3 = new Dish(DISH1_ID + 2, new BigDecimal("3.5"), food3, restaurant1, TODAY);
-    public static final DishTo dish1To = DishTo.builder()
-            .id(dish1.getId())
-            .price(dish1.getPrice())
-            .name(dish1.getFood().getName())
-            .restaurantId(dish1.getRestaurant().getId())
-            .build();
+
     public static final Dish dish4 = new Dish(DISH1_ID + 3, new BigDecimal("35.12"), food4, restaurant2, TODAY);
     public static final Dish dish5 = new Dish(DISH1_ID + 4, new BigDecimal("12.5"), food5, restaurant2, TODAY);
     public static final Dish dish6 = new Dish(DISH1_ID + 5, new BigDecimal("2.1"), food6, restaurant2, TODAY);
@@ -73,6 +68,13 @@ public class RestaurantAndDishTestData {
     public static final Dish dish11 = new Dish(DISH1_ID + 10, new BigDecimal("22.5"), food4, restaurant4, TODAY);
     public static final Dish dish12 = new Dish(DISH1_ID + 11, new BigDecimal("33.1"), food5, restaurant4, TODAY);
 
+
+    public static final DishTo dish1To = DishTo.builder()
+            .id(dish1.getId())
+            .price(dish1.getPrice())
+            .name(dish1.getFood().getName())
+            .restaurantId(dish1.getRestaurant().getId())
+            .build();
     public static final List<Dish> dishes = List.of(dish1, dish2, dish3, dish4, dish5, dish6, dish7, dish8, dish9, dish10, dish11, dish12);
     public static final List<Restaurant> restaurants = List.of(restaurant1, restaurant2, restaurant3, restaurant4);
     public static final List<RestaurantWithMenuTo> restaurantsTo;

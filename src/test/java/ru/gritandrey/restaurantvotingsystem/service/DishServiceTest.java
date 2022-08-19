@@ -23,7 +23,7 @@ import static ru.gritandrey.restaurantvotingsystem.RestaurantAndDishTestData.*;
 @SpringBootTest
 @Transactional
 @ActiveProfiles("test")
-class DishServiceIT {
+class DishServiceTest {
 
     private final DishService dishService;
 
