@@ -52,21 +52,21 @@ public class RestaurantAndDishTestData {
     public static final Restaurant restaurant3 = new Restaurant(RESTAURANT3_ID, "Kon and Sons", "4916 Kim Street");
     public static final Restaurant restaurant4 = new Restaurant(RESTAURANT4_ID, "Bechtelar Group", "3 Dorton Court");
 
-    public static final Dish dish1 = new Dish(DISH1_ID, new BigDecimal("12.3"), food1, restaurant1, TODAY);
-    public static final Dish dish2 = new Dish(DISH1_ID + 1, new BigDecimal("4.6"), food2, restaurant1, TODAY);
-    public static final Dish dish3 = new Dish(DISH1_ID + 2, new BigDecimal("3.5"), food3, restaurant1, TODAY);
+    public static final Dish dish1 = new Dish(DISH1_ID, new BigDecimal("12.300"), food1, restaurant1, TODAY);
+    public static final Dish dish2 = new Dish(DISH1_ID + 1, new BigDecimal("4.600"), food2, restaurant1, TODAY);
+    public static final Dish dish3 = new Dish(DISH1_ID + 2, new BigDecimal("3.500"), food3, restaurant1, TODAY);
 
-    public static final Dish dish4 = new Dish(DISH1_ID + 3, new BigDecimal("35.12"), food4, restaurant2, TODAY);
-    public static final Dish dish5 = new Dish(DISH1_ID + 4, new BigDecimal("12.5"), food5, restaurant2, TODAY);
-    public static final Dish dish6 = new Dish(DISH1_ID + 5, new BigDecimal("2.1"), food6, restaurant2, TODAY);
+    public static final Dish dish4 = new Dish(DISH1_ID + 3, new BigDecimal("35.120"), food4, restaurant2, TODAY);
+    public static final Dish dish5 = new Dish(DISH1_ID + 4, new BigDecimal("12.500"), food5, restaurant2, TODAY);
+    public static final Dish dish6 = new Dish(DISH1_ID + 5, new BigDecimal("2.100"), food6, restaurant2, TODAY);
 
-    public static final Dish dish7 = new Dish(DISH1_ID + 6, new BigDecimal("0.3"), food7, restaurant3, TODAY);
-    public static final Dish dish8 = new Dish(DISH1_ID + 7, new BigDecimal("4.5"), food8, restaurant3, TODAY);
-    public static final Dish dish9 = new Dish(DISH1_ID + 8, new BigDecimal("6.4"), food9, restaurant3, TODAY);
+    public static final Dish dish7 = new Dish(DISH1_ID + 6, new BigDecimal("0.300"), food7, restaurant3, TODAY);
+    public static final Dish dish8 = new Dish(DISH1_ID + 7, new BigDecimal("4.500"), food8, restaurant3, TODAY);
+    public static final Dish dish9 = new Dish(DISH1_ID + 8, new BigDecimal("6.400"), food9, restaurant3, TODAY);
 
-    public static final Dish dish10 = new Dish(DISH1_ID + 9, new BigDecimal("2.8"), food10, restaurant4, TODAY);
-    public static final Dish dish11 = new Dish(DISH1_ID + 10, new BigDecimal("22.5"), food4, restaurant4, TODAY);
-    public static final Dish dish12 = new Dish(DISH1_ID + 11, new BigDecimal("33.1"), food5, restaurant4, TODAY);
+    public static final Dish dish10 = new Dish(DISH1_ID + 9, new BigDecimal("2.800"), food10, restaurant4, TODAY);
+    public static final Dish dish11 = new Dish(DISH1_ID + 10, new BigDecimal("22.500"), food4, restaurant4, TODAY);
+    public static final Dish dish12 = new Dish(DISH1_ID + 11, new BigDecimal("33.100"), food5, restaurant4, TODAY);
 
 
     public static final DishTo dish1To = DishTo.builder()
@@ -100,11 +100,11 @@ public class RestaurantAndDishTestData {
     }
 
     public static Dish getNewDishWithNewNameAndRestaurant() {
-        return new Dish(null, new BigDecimal("33.1"), newFood, restaurant1, TODAY);
+        return new Dish(null, new BigDecimal("33.100"), newFood, restaurant1, TODAY);
     }
 
     public static Dish getUpdatedDish() {
-        return new Dish(DISH1_ID, new BigDecimal("12.3"), food1, restaurant1, TODAY);
+        return new Dish(DISH1_ID, new BigDecimal("12.300"), food1, restaurant1, TODAY);
     }
 
     public static Restaurant getNewRestaurant() {

@@ -4,10 +4,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.gritandrey.restaurantvotingsystem.service.VoteService;
 import ru.gritandrey.restaurantvotingsystem.to.VoteTo;
 
@@ -27,5 +26,12 @@ public class AdminVoteRestController {
         final var votes = voteService.getAll();
         log.info("GetAll Votes: {}", votes);
         return votes;
+    }
+
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@RequestParam int id) {
+        log.info("Delete vote {}", id);
+        voteService.delete(id);
     }
 }
