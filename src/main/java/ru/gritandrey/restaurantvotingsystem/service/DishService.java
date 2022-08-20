@@ -34,16 +34,14 @@ public class DishService {
         return checkNotFoundWithId(dishRepository.findById(id), id);
     }
 
-    public List<DishTo> getAll() {
-        return DishMapper.getTos(dishRepository.findAll());
-    }
-
     @Cacheable(value = "menus", condition = ("#dishFilter.startDate != null && #dishFilter.startDate.equals(T(java.time.LocalDate).now())"))
     public List<MenuTo> getByFilter(DishFilter dishFilter) {
         final var filteredDishes = dishRepository.findAllByFilter(dishFilter);
+
         record MenuKey(LocalDate menuDate,
                        Integer restaurantId) {
         }
+
         final var groupedByDateAndRestaurantId = filteredDishes.stream()
                 .collect(Collectors.groupingBy(dish -> new MenuKey(dish.getDate(), dish.getRestaurant().getId())));
 

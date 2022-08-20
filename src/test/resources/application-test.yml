@@ -1,17 +1,1 @@
-#  https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
-spring:
-  jpa:
-    # https://stackoverflow.com/a/67678945/548473
-    defer-datasource-initialization: true
-    hibernate:
-      ddl-auto: none
-  sql:
-    init:
-      mode: never
-  datasource:
-    url: jdbc:postgresql://localhost:5431/voting
-    username: user
-    password: password
-
-
-  cache.type: none
+spring.cache.type: none

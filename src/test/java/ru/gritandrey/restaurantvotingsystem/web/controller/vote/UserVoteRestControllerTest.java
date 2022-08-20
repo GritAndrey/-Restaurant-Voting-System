@@ -39,7 +39,6 @@ class UserVoteRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(VOTE_TO_MATCHER.contentJson(VoteMapper.getTos(List.of(userVote))));
-
     }
 
     @Test
@@ -70,10 +69,20 @@ class UserVoteRestControllerTest extends AbstractControllerTest {
     @WithUserDetails(value = USER_MAIL)
     void update() throws Exception {
         final var updated = getUpdatedVote();
+        voteService.VOTE_END_TIME = LocalTime.now().plusMinutes(10);
         perform(MockMvcRequestBuilders.put(REST_URL)
                 .param("restaurantId", String.valueOf(RESTAURANT2_ID)))
                 .andExpect(status().isNoContent());
         VOTE_TO_MATCHER.assertMatch(voteService.get(USER_VOTE_ID, USER_ID), VoteMapper.getTo(updated));
+    }
+
+    @Test
+    @WithUserDetails(value = USER_MAIL)
+    void updateWhenVoteTimeEnded() throws Exception {
+        voteService.VOTE_END_TIME = LocalTime.now().minusMinutes(10);
+        perform(MockMvcRequestBuilders.put(REST_URL)
+                .param("restaurantId", String.valueOf(RESTAURANT2_ID)))
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test

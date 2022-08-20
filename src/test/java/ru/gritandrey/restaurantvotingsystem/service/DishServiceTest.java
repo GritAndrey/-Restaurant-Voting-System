@@ -9,12 +9,13 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gritandrey.restaurantvotingsystem.exception.NotFoundException;
 import ru.gritandrey.restaurantvotingsystem.model.Dish;
+import ru.gritandrey.restaurantvotingsystem.to.DishFilter;
 import ru.gritandrey.restaurantvotingsystem.to.DishTo;
 import ru.gritandrey.restaurantvotingsystem.util.mapper.DishMapper;
 
 import java.util.Comparator;
-import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.gritandrey.restaurantvotingsystem.RestaurantAndDishTestData.*;
 
@@ -35,13 +36,14 @@ class DishServiceTest {
     }
 
     @Test
-    @DisplayName("Get all dishes")
-    void getAll() {
-        final var all = dishService.getAll();
-        DISH_TO_MATCHER.assertMatch(all, DishMapper.getTos(dishes)
+    @DisplayName("Get all today dishes")
+    void getAllToday() {
+        final var actual = dishService.getByFilter(new DishFilter(null, TODAY, null)).stream()
+                .flatMap(menuTo -> menuTo.getDishes().stream()).collect(toList());
+        DISH_TO_MATCHER.assertMatch(actual, DishMapper.getTos(dishes)
                 .stream()
                 .sorted(Comparator.comparing(DishTo::getId))
-                .collect(Collectors.toList()));
+                .collect(toList()));
     }
 
     @Test
