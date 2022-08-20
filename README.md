@@ -13,25 +13,61 @@ a voting system for deciding where to have lunch.
 - If it is after 11:00 then it is too late, vote can't be changed
 - Each restaurant provides a new menu each day.
 
-GET
-api/v1/restaurants    Get all restaurants 
-api/v1/restaurants/id Get info about restaurant with id 
-api/v1/restaurants/id/menu  today menu(need to think)
-api/v1/restaurants/id/votes -votes for the restaurant
+## Stack
 
+JDK 17, Spring Boot 2.7, Lombok, H2, Querydsl, Caffeine Cache, Swagger/OpenAPI 3.0
 
-POST
-api/v1/restaurants/id/vote vote for the restaurant
-api/v1/admin/restaurants    add restaurant
-api/v1/admin/restaurants/id/menu  add menu
+## Launch methods.
 
+### Local
 
-PUT
-api/v1/admin/restaurants/id change restaurant
-api/v1/admin/restaurants/id/menu change menu
-PATCH
+- Run```mvn spring-boot:run``` in project root directory.
+- Open [localhost](http://localhost:8080/)
 
-DELETE
-api/v1/admin/restaurants/id
-api/v1/admin/users/id
+### Docker
 
+```shell
+mvn clean package
+```
+
+- Build:
+
+```shell
+docker build -t voting .
+```
+
+- Run:
+
+```shell
+docker run --name voting -p 8080:8080 voting:latest
+```
+
+- Open [localhost](http://localhost:8080/)
+
+### Docker Compose
+
+```shell
+mvn clean package
+```
+
+```shell
+docker-compose build 
+```
+
+```shell
+docker-compose up
+```
+
+Open [localhost](http://localhost:8080/)
+
+## Testing credentials.
+
+| email | password |
+| ------ | ------ |
+| user@gmail.com | password |
+| admin@gmail.com | admin |
+
+## API documentation
+
+- [api-docs](http://localhost:8080/v3/api-docs/REST%20API) - Api docs
+- [swagger](http://localhost:8080/swagger-ui/) - Swagger ui
