@@ -29,8 +29,9 @@ public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final DishRepository dishRepository;
 
-    public Restaurant get(int id) {
-        return checkNotFoundWithId(restaurantRepository.findById(id), id);
+    public RestaurantTo get(int id) {
+        final var restaurant = checkNotFoundWithId(restaurantRepository.findById(id), id);
+        return RestaurantMapper.getTo(restaurant);
     }
 
     public Page<Restaurant> getAll(Integer page, Integer itemsPerPage) {
@@ -41,7 +42,7 @@ public class RestaurantService {
     @Cacheable("restWithMenu")
     public RestaurantWithMenuTo getWithMenu(int id) {
         final var dishes = dishRepository.findAllByRestaurantId(id);
-        if (dishes.size() == 0) {
+        if (dishes.isEmpty()) {
             log.warn("There is no menu for the restaurant with id: {}", id);
         }
         final Restaurant restaurant = checkNotFoundWithId(restaurantRepository.getRestaurantByIdWithMenu(id, LocalDate.now()), id);

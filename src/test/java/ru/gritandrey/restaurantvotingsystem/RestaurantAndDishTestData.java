@@ -79,6 +79,7 @@ public class RestaurantAndDishTestData {
     public static final List<Restaurant> restaurants = List.of(restaurant1, restaurant2, restaurant3, restaurant4);
     public static final List<RestaurantWithMenuTo> restaurantsTo;
     public static final RestaurantWithMenuTo restaurantWithMenuTo;
+    public static final RestaurantTo restaurant1To;
 
     static {
         restaurant1.setMenu(List.of(dish1, dish2, dish3));
@@ -88,6 +89,7 @@ public class RestaurantAndDishTestData {
         restaurantsTo = Stream.of(restaurant1, restaurant2, restaurant3, restaurant4).map(RestaurantMapper::getWithMenuTo)
                 .collect(toList());
         restaurantWithMenuTo = RestaurantMapper.getWithMenuTo(restaurant1);
+        restaurant1To = RestaurantMapper.getTo(restaurant1);
     }
 
     public static Dish getNewDishWithExistingNameAndRestaurant() {

@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
 import ru.gritandrey.restaurantvotingsystem.service.RestaurantService;
+import ru.gritandrey.restaurantvotingsystem.to.RestaurantTo;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantWithMenuTo;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class UserRestaurantRestController {
     private final RestaurantService restaurantService;
 
     @GetMapping("/{id}")
-    public Restaurant get(@PathVariable int id) {
+    public RestaurantTo get(@PathVariable int id) {
         final var restaurant = restaurantService.get(id);
         log.info("Get Restaurant with id {} without menu: {}", restaurant.getId(), restaurant);
         return restaurant;

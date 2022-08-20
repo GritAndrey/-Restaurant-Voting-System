@@ -29,7 +29,7 @@ public class UserDishRestController {
     private final DishService dishService;
 
     @GetMapping
-    @Operation(summary = "GetAll dishes by Restaurant Id and period.")
+    @Operation(summary = "GetAll dishes by Restaurant Id and period. If all params are null, return all menu for today")
     public List<MenuTo> getAllBy(@RequestParam(required = false) Integer restaurantId,
                                  @RequestParam(required = false)
                                  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,

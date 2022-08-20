@@ -44,7 +44,6 @@ class AdminRestaurantRestControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void createWithLocation() throws Exception {
-        final var newRestaurant = getNewRestaurant();
         final var newRestaurantTo = getNewRestaurantTo();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -52,8 +51,8 @@ class AdminRestaurantRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isCreated());
         final var created = RESTAURANT_TO_MATCHER.readFromJson(action);
         int newId = created.id();
-        newRestaurant.setId(newId);
-        RESTAURANT_MATCHER.assertMatch(restaurantService.get(newId), newRestaurant);
+        newRestaurantTo.setId(newId);
+        RESTAURANT_TO_MATCHER.assertMatch(restaurantService.get(newId), newRestaurantTo);
     }
 
     @Test
@@ -74,10 +73,10 @@ class AdminRestaurantRestControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void update() throws Exception {
-        final var updated = getUpdatedRestaurant();
+        final var updated = RestaurantMapper.getTo(getUpdatedRestaurant());
         perform(MockMvcRequestBuilders.put(REST_URL + RESTAURANT1_ID).contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(RestaurantMapper.getTo(updated))))
+                .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
-        RESTAURANT_MATCHER.assertMatch(restaurantService.get(RESTAURANT1_ID), updated);
+        RESTAURANT_TO_MATCHER.assertMatch(restaurantService.get(RESTAURANT1_ID), updated);
     }
 }

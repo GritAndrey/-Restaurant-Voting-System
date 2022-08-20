@@ -24,7 +24,7 @@ class RestaurantServiceTest {
     @Test
     @DisplayName("Get restaurant without menu")
     void get() {
-        RESTAURANT_MATCHER.assertMatch(service.get(RESTAURANT1_ID), restaurant1);
+        RESTAURANT_TO_MATCHER.assertMatch(service.get(RESTAURANT1_ID), restaurant1To);
     }
 
     @Test
@@ -63,9 +63,9 @@ class RestaurantServiceTest {
     @Test
     @DisplayName("Update restaurant1")
     void update() {
-        final var updatedRestaurant = getUpdatedRestaurant();
-        service.update(RestaurantMapper.getTo(updatedRestaurant));
-        RESTAURANT_MATCHER.assertMatch(service.get(RESTAURANT1_ID), updatedRestaurant);
+        final var updatedRestaurant = RestaurantMapper.getTo(getUpdatedRestaurant());
+        service.update(updatedRestaurant);
+        RESTAURANT_TO_MATCHER.assertMatch(service.get(RESTAURANT1_ID), updatedRestaurant);
     }
 
     @Test

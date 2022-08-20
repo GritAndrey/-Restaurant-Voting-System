@@ -7,6 +7,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import ru.gritandrey.restaurantvotingsystem.exception.NotFoundException;
 import ru.gritandrey.restaurantvotingsystem.model.Dish;
 import ru.gritandrey.restaurantvotingsystem.model.Food;
 import ru.gritandrey.restaurantvotingsystem.repository.DishRepository;
@@ -19,8 +20,9 @@ import ru.gritandrey.restaurantvotingsystem.util.mapper.DishMapper;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 import static ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUtil.checkNotFoundWithId;
 
 @Service
@@ -37,13 +39,14 @@ public class DishService {
     @Cacheable(value = "menus", condition = ("#dishFilter.startDate != null && #dishFilter.startDate.equals(T(java.time.LocalDate).now())"))
     public List<MenuTo> getByFilter(DishFilter dishFilter) {
         final var filteredDishes = dishRepository.findAllByFilter(dishFilter);
-
+        if (filteredDishes.isEmpty()) {
+            throw new NotFoundException("Dishes not found!");
+        }
         record MenuKey(LocalDate menuDate,
                        Integer restaurantId) {
         }
-
         final var groupedByDateAndRestaurantId = filteredDishes.stream()
-                .collect(Collectors.groupingBy(dish -> new MenuKey(dish.getDate(), dish.getRestaurant().getId())));
+                .collect(groupingBy(dish -> new MenuKey(dish.getDate(), dish.getRestaurant().getId())));
 
         return groupedByDateAndRestaurantId.entrySet().stream()
                 .map(entry ->
@@ -53,7 +56,7 @@ public class DishService {
                                 .dishes(DishMapper.getTos(entry.getValue()))
                                 .build()
                 )
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     @Transactional
