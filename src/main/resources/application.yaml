@@ -41,7 +41,7 @@ spring:
 logging:
   level:
     root: WARN
-    org.springframework.cache: TRACE
+    org.springframework.cache: INFO
     ru.gritandrey.restaurantvotingsystem: DEBUG
     org.springframework.web.servlet: DEBUG
     org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: DEBUG
