@@ -54,6 +54,7 @@ VALUES (1, 'User', 'user@gmail.com', '{noop}password', TRUE, now()),
 
 INSERT INTO user_roles (role, user_id)
 VALUES ('USER', 1),
+       ('USER', 3),
        ('ADMIN', 2),
        ('USER', 2);
 

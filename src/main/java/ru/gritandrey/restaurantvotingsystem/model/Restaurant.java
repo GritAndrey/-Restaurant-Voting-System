@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import ru.gritandrey.restaurantvotingsystem.util.validation.NoHtml;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -24,6 +25,7 @@ public class Restaurant extends AbstractNamedEntity {
     @Column(name = "address")
     @NotBlank
     @Size(min = 2, max = 128)
+    @NoHtml
     private String address;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")

@@ -43,33 +43,7 @@ VALUES (100000, now(), 100004, '12.3'),
        (100002, now(), 100012, '6.4'),
        (100003, now(), 100013, '2.8'),
        (100003, now(), 100007, '22.5'),
-       (100003, now(), 100008, '33.1'),
-
-       (100000, dateadd('DAY', -2, current_date), 100008, '12.3'),
-       (100000, dateadd('DAY', -2, current_date), 100007, '4.6'),
-       (100000, dateadd('DAY', -2, current_date), 100013, '3.5'),
-       (100001, dateadd('DAY', -2, current_date), 100012, '35.12'),
-       (100001, dateadd('DAY', -2, current_date), 100011, '12.5'),
-       (100001, dateadd('DAY', -2, current_date), 100010, '2.1'),
-       (100002, dateadd('DAY', -2, current_date), 100009, '0.3'),
-       (100002, dateadd('DAY', -2, current_date), 100008, '4.5'),
-       (100002, dateadd('DAY', -2, current_date), 100007, '6.4'),
-       (100003, dateadd('DAY', -2, current_date), 100006, '2.8'),
-       (100003, dateadd('DAY', -2, current_date), 100005, '22.5'),
-       (100003, dateadd('DAY', -2, current_date), 100004, '33.1'),
-
-       (100000, dateadd('DAY', -1, current_date), 100005, '12.3'),
-       (100000, dateadd('DAY', -1, current_date), 100006, '4.6'),
-       (100000, dateadd('DAY', -1, current_date), 100007, '3.5'),
-       (100001, dateadd('DAY', -1, current_date), 100008, '35.12'),
-       (100001, dateadd('DAY', -1, current_date), 100009, '12.5'),
-       (100001, dateadd('DAY', -1, current_date), 100010, '2.1'),
-       (100002, dateadd('DAY', -1, current_date), 100012, '0.3'),
-       (100002, dateadd('DAY', -1, current_date), 100013, '4.5'),
-       (100002, dateadd('DAY', -1, current_date), 100011, '6.4'),
-       (100003, dateadd('DAY', -1, current_date), 100012, '2.8'),
-       (100003, dateadd('DAY', -1, current_date), 100004, '22.5'),
-       (100003, dateadd('DAY', -1, current_date), 100005, '33.1');
+       (100003, now(), 100008, '33.1');
 
 
 
@@ -94,4 +68,31 @@ INSERT INTO vote (user_id, restaurant_id, vote_date, vote_time)
 VALUES (2, 100000, dateadd('DAY', -1, current_date), '11:01'),
        (1, 100000, now(), '12:00'),
        (2, 100001, now(), '10:00');
+
+INSERT INTO dish(restaurant_id, dish_date, dish_name_id, price)
+VALUES (100000, dateadd('DAY', -2, current_date), 100008, '12.3'),
+       (100000, dateadd('DAY', -2, current_date), 100007, '4.6'),
+       (100000, dateadd('DAY', -2, current_date), 100013, '3.5'),
+       (100001, dateadd('DAY', -2, current_date), 100012, '35.12'),
+       (100001, dateadd('DAY', -2, current_date), 100011, '12.5'),
+       (100001, dateadd('DAY', -2, current_date), 100010, '2.1'),
+       (100002, dateadd('DAY', -2, current_date), 100009, '0.3'),
+       (100002, dateadd('DAY', -2, current_date), 100008, '4.5'),
+       (100002, dateadd('DAY', -2, current_date), 100007, '6.4'),
+       (100003, dateadd('DAY', -2, current_date), 100006, '2.8'),
+       (100003, dateadd('DAY', -2, current_date), 100005, '22.5'),
+       (100003, dateadd('DAY', -2, current_date), 100004, '33.1'),
+
+       (100000, dateadd('DAY', -1, current_date), 100005, '12.3'),
+       (100000, dateadd('DAY', -1, current_date), 100006, '4.6'),
+       (100000, dateadd('DAY', -1, current_date), 100007, '3.5'),
+       (100001, dateadd('DAY', -1, current_date), 100008, '35.12'),
+       (100001, dateadd('DAY', -1, current_date), 100009, '12.5'),
+       (100001, dateadd('DAY', -1, current_date), 100010, '2.1'),
+       (100002, dateadd('DAY', -1, current_date), 100012, '0.3'),
+       (100002, dateadd('DAY', -1, current_date), 100013, '4.5'),
+       (100002, dateadd('DAY', -1, current_date), 100011, '6.4'),
+       (100003, dateadd('DAY', -1, current_date), 100012, '2.8'),
+       (100003, dateadd('DAY', -1, current_date), 100004, '22.5'),
+       (100003, dateadd('DAY', -1, current_date), 100005, '33.1');
 

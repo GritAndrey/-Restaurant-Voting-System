@@ -19,7 +19,7 @@ import java.util.List;
 @Tags({@Tag(name = "Admin users controller", description = "Manage users")})
 public class AdminUserRestController extends AbstractUserController {
 
-    static final String REST_URL = "api/rest/admin/users";
+    static final String REST_URL = "/api/rest/admin/users";
 
     @Override
     @GetMapping
@@ -68,7 +68,7 @@ public class AdminUserRestController extends AbstractUserController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Create new user")
-    public ResponseEntity<User> createWithLocation(@RequestBody User user) {
+    public ResponseEntity<User> createWithLocation(@Valid @RequestBody User user) {
         User created = super.create(user);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")

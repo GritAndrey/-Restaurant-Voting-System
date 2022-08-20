@@ -36,7 +36,7 @@ public class UserService {
 
     @CacheEvict(value = "users", allEntries = true)
     public void delete(int id) {
-        checkNotFoundWithId(userRepository.delete(id), id);
+        checkNotFoundWithId(userRepository.delete(id) != 0, id);
     }
 
     public User get(int id) {

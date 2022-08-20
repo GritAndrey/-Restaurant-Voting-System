@@ -26,7 +26,7 @@ public class VoteService {
     private final UserRepository userRepository;
     private final RestaurantRepository restaurantRepository;
     @Value("${voting.voteEnding}")
-    private final LocalTime VOTE_END_TIME;
+    private LocalTime VOTE_END_TIME;
 
     public VoteTo get(int voteId, int userId) {
         return VoteMapper.getTo(checkNotFoundWithId(voteRepository.findByUserIdAndId(userId, voteId), voteId));

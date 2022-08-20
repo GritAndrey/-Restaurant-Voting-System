@@ -10,6 +10,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.util.CollectionUtils;
+import ru.gritandrey.restaurantvotingsystem.util.validation.NoHtml;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -36,6 +37,7 @@ public class User extends AbstractNamedEntity implements Serializable {
     @Column(name = "email", nullable = false, unique = true)
     @Email
     @NotBlank
+    @NoHtml
     @Size(max = 128)
     private String email;
 
