@@ -1,6 +1,9 @@
 package ru.gritandrey.restaurantvotingsystem.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.hibernate.Hibernate;
 import org.springframework.data.domain.Persistable;
 import org.springframework.util.Assert;
@@ -9,6 +12,8 @@ import javax.persistence.*;
 
 @MappedSuperclass
 @Access(AccessType.FIELD)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseEntity implements Persistable<Integer>, HasId {
     public static final int START_SEQ = 100000;
 
@@ -16,13 +21,6 @@ public abstract class AbstractBaseEntity implements Persistable<Integer>, HasId 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     protected Integer id;
-
-    protected AbstractBaseEntity() {
-    }
-
-    protected AbstractBaseEntity(Integer id) {
-        this.id = id;
-    }
 
     @Override
     public Integer getId() {
