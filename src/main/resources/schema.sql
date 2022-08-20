@@ -22,9 +22,9 @@ CREATE TABLE user_roles
 (
     user_id INTEGER NOT NULL,
     role    VARCHAR(255),
-    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    CONSTRAINT uk_user_roles UNIQUE (user_id, role)
 );
-CREATE INDEX user_id_idx ON user_roles (user_id);
 
 CREATE TABLE restaurant
 (
