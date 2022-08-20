@@ -14,11 +14,14 @@ import static ru.gritandrey.restaurantvotingsystem.UserTestData.user;
 public class VoteTestData {
     public static final MatcherFactory.Matcher<VoteTo> VOTE_TO_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(VoteTo.class, "time");
 
+
     public static Vote userVote = new Vote();
     public static Vote adminVote = new Vote();
+    public static Vote adminVote2 = new Vote();
     public static Vote updatedVote = new Vote();
     public static final Integer USER_VOTE_ID = 100027;
     public static final Integer ADMIN_VOTE_ID = 100026;
+    public static final Integer ADMIN_VOTE2_ID = 100028;
 
     static {
         prepareVotes();
@@ -36,6 +39,12 @@ public class VoteTestData {
         adminVote.setUser(admin);
         adminVote.setDate(LocalDate.now().minusDays(1));
         adminVote.setTime(LocalTime.of(11, 1));
+
+        adminVote2.setId(ADMIN_VOTE2_ID);
+        adminVote2.setRestaurant(restaurant2);
+        adminVote2.setUser(admin);
+        adminVote2.setDate(LocalDate.now());
+        adminVote2.setTime(LocalTime.of(10, 0));
 
         updatedVote.setId(USER_VOTE_ID);
         updatedVote.setRestaurant(restaurant2);

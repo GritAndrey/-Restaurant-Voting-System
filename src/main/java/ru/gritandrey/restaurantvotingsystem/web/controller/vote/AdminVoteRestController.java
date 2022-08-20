@@ -28,9 +28,9 @@ public class AdminVoteRestController {
         return votes;
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@RequestParam int id) {
+    public void delete(@PathVariable int id) {
         log.info("Delete vote {}", id);
         voteService.delete(id);
     }
