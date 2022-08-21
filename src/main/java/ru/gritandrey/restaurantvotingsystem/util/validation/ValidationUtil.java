@@ -1,37 +1,17 @@
 package ru.gritandrey.restaurantvotingsystem.util.validation;
 
 
+import lombok.experimental.UtilityClass;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.lang.NonNull;
 import ru.gritandrey.restaurantvotingsystem.exception.IllegalRequestDataException;
 import ru.gritandrey.restaurantvotingsystem.exception.NotFoundException;
 import ru.gritandrey.restaurantvotingsystem.model.HasId;
 
-import javax.validation.*;
 import java.util.Optional;
-import java.util.Set;
 
+@UtilityClass
 public class ValidationUtil {
-    private static final Validator validator;
-
-    static {
-        //  From Javadoc: implementations are thread-safe and instances are typically cached and reused.
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        //  From Javadoc: implementations of this interface must be thread-safe
-        validator = factory.getValidator();
-    }
-
-    private ValidationUtil() {
-    }
-
-    public static <T> void validate(T bean) {
-        // https://alexkosarev.name/2018/07/30/bean-validation-api/
-        Set<ConstraintViolation<T>> violations = validator.validate(bean);
-        if (!violations.isEmpty()) {
-            throw new ConstraintViolationException(violations);
-        }
-    }
-
     public static <T> T checkNotFoundWithId(Optional<T> object, int id) {
         checkNotFoundWithId(object.isPresent(), id);
         return object.get();
