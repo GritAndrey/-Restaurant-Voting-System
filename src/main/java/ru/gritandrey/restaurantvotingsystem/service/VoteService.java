@@ -28,7 +28,7 @@ public class VoteService {
     private final RestaurantRepository restaurantRepository;
     @Value("${voting.voteEnding}")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    public LocalTime VOTE_END_TIME;
+    public LocalTime voteEndTime;
 
     public VoteTo get(int voteId, int userId) {
         return VoteMapper.getTo(checkNotFoundWithId(voteRepository.findByUserIdAndId(userId, voteId), voteId));
@@ -56,7 +56,7 @@ public class VoteService {
     }
 
     public void update(Integer userId, Integer restaurantId) {
-        if (LocalTime.now().isAfter(VOTE_END_TIME)) {
+        if (LocalTime.now().isAfter(voteEndTime)) {
             throw new IllegalRequestDataException("Update Vote time is over");
         }
         final var mayBeVote = voteRepository.findByUserIdAndDate(userId, LocalDate.now());
