@@ -98,7 +98,7 @@ public class DishService {
             return null;
         }
         dish.setDate(LocalDate.now());
-        dish.setRestaurant(checkNotFoundWithId(restaurantRepository.getReferenceById(restaurantId), restaurantId));
+        dish.setRestaurant(checkNotFoundWithId(restaurantRepository.findById(restaurantId), restaurantId));
         return dishRepository.save(dish);
     }
 }

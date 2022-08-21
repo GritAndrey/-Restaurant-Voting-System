@@ -22,7 +22,7 @@ public class UserRestaurantRestController {
 
     public static final String REST_URL = "/api/rest/restaurants";
     public static final int DEFAULT_PAGE = 0;
-    public static final int DEFAULT_ITEMS_PER_PAGE = 4;
+    public static final int DEFAULT_ITEMS_PER_PAGE = 10;
     private final RestaurantService restaurantService;
 
     @GetMapping("/{id}")
