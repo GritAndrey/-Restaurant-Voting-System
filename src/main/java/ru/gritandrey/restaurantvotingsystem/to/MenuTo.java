@@ -11,16 +11,10 @@ import java.util.List;
 @EqualsAndHashCode(of = {"menuDate", "restaurantId"})
 @Value
 @ToString
+@Builder
 public class MenuTo {
 
     LocalDate menuDate;
     Integer restaurantId;
     List<DishTo> dishes;
-
-    @Builder
-    public MenuTo(LocalDate menuDate, Integer restaurantId, List<DishTo> dishes) {
-        this.menuDate = menuDate;
-        this.restaurantId = restaurantId;
-        this.dishes = dishes;
-    }
 }

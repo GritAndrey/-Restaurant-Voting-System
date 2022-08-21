@@ -22,9 +22,11 @@ public class DishTo extends BaseTo {
     @Positive
     @NotNull
     BigDecimal price;
+
     @NotBlank
     @Size(min = 2, max = 128)
     String name;
+
     @NotNull
     Integer restaurantId;
 }

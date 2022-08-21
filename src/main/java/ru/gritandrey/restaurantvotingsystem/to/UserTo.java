@@ -28,11 +28,4 @@ public class UserTo extends NamedTo {
     @NotBlank
     @Size(min = 5, max = 32)
     String password;
-
-
-//    public UserTo(Integer id, String name, String email, String password) {
-//        super(id, name);
-//        this.email = email;
-//        this.password = password;
-//    }
 }

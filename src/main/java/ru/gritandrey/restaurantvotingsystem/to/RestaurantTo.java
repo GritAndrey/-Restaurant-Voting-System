@@ -1,7 +1,9 @@
 package ru.gritandrey.restaurantvotingsystem.to;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.Value;
@@ -26,9 +28,10 @@ public class RestaurantTo extends NamedTo {
     @NoHtml
     String address;
 
-    //    @Builder.Default
+    @Builder.Default
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @JsonDeserialize
     List<DishTo> menu = new ArrayList<>();
 
 
