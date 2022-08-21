@@ -27,8 +27,4 @@ public class QPredicates {
     public Predicate build() {
         return ExpressionUtils.allOf(predicates);
     }
-
-    public Predicate buildOr() {
-        return ExpressionUtils.anyOf(predicates);
-    }
 }

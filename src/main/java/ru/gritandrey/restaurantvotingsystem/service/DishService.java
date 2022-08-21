@@ -47,14 +47,12 @@ public class DishService {
         }
         final var groupedByDateAndRestaurantId = filteredDishes.stream()
                 .collect(groupingBy(dish -> new MenuKey(dish.getDate(), dish.getRestaurant().getId())));
-
         return groupedByDateAndRestaurantId.entrySet().stream()
-                .map(entry ->
-                        MenuTo.builder()
-                                .restaurantId(entry.getKey().restaurantId())
-                                .menuDate(entry.getKey().menuDate())
-                                .dishes(DishMapper.getTos(entry.getValue()))
-                                .build()
+                .map(entry -> MenuTo.builder()
+                        .restaurantId(entry.getKey().restaurantId())
+                        .menuDate(entry.getKey().menuDate())
+                        .dishes(DishMapper.getTos(entry.getValue()))
+                        .build()
                 )
                 .collect(toList());
     }

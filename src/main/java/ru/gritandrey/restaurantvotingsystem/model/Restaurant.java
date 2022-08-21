@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import ru.gritandrey.restaurantvotingsystem.util.validation.NoHtml;
 
 import javax.persistence.*;
@@ -19,7 +17,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @ToString(callSuper = true)
 public class Restaurant extends AbstractNamedEntity {
     @Column(name = "address")

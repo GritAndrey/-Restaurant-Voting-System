@@ -22,7 +22,6 @@ import java.util.List;
 @Jacksonized
 @SuperBuilder
 public class RestaurantTo extends NamedTo {
-
     @NotBlank
     @Size(min = 2, max = 128)
     @NoHtml
@@ -33,6 +32,4 @@ public class RestaurantTo extends NamedTo {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @JsonDeserialize
     List<DishTo> menu = new ArrayList<>();
-
-
 }

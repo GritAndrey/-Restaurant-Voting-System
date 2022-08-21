@@ -14,6 +14,7 @@ import javax.validation.constraints.Size;
 @Jacksonized
 @SuperBuilder
 public class NamedTo extends BaseTo {
+
     @NotBlank
     @Size(min = 2, max = 100)
     @NoHtml

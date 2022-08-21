@@ -14,6 +14,7 @@ import ru.gritandrey.restaurantvotingsystem.model.HasId;
 @Data
 @SuperBuilder
 public abstract class BaseTo implements HasId {
+
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     protected Integer id;
 }

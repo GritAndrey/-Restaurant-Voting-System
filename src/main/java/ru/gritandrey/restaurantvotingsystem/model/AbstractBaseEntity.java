@@ -1,9 +1,7 @@
 package ru.gritandrey.restaurantvotingsystem.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.Hibernate;
 import org.springframework.data.domain.Persistable;
 import org.springframework.util.Assert;
@@ -12,6 +10,8 @@ import javax.persistence.*;
 
 @MappedSuperclass
 @Access(AccessType.FIELD)
+@Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractBaseEntity implements Persistable<Integer>, HasId {
@@ -21,15 +21,6 @@ public abstract class AbstractBaseEntity implements Persistable<Integer>, HasId 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     protected Integer id;
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public int id() {
         Assert.notNull(id, "Entity must have id");
@@ -42,11 +33,6 @@ public abstract class AbstractBaseEntity implements Persistable<Integer>, HasId 
     }
 
     @Override
-    public int hashCode() {
-        return id == null ? 0 : id;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -56,6 +42,11 @@ public abstract class AbstractBaseEntity implements Persistable<Integer>, HasId 
         }
         AbstractBaseEntity that = (AbstractBaseEntity) o;
         return id != null && id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id == null ? 0 : id;
     }
 
     @Override

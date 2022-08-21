@@ -41,7 +41,6 @@ public class UserRestaurantRestController {
     public Page<RestaurantTo> getAll(@RequestParam(defaultValue = "false") boolean showMenu,
                                      @RequestParam(required = false) Integer page,
                                      @RequestParam(required = false) Integer itemsPerPage) {
-
         page = Optional.ofNullable(page).orElse(DEFAULT_PAGE);
         itemsPerPage = Optional.ofNullable(itemsPerPage).orElse(DEFAULT_ITEMS_PER_PAGE);
         if (showMenu) {
@@ -50,6 +49,5 @@ public class UserRestaurantRestController {
         }
         log.info("GetAll Restaurants without menu");
         return restaurantService.getAll(page, itemsPerPage);
-
     }
 }
