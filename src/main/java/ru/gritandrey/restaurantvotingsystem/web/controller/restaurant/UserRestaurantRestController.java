@@ -7,10 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
 import ru.gritandrey.restaurantvotingsystem.service.RestaurantService;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantTo;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantWithMenuTo;
+import ru.gritandrey.restaurantvotingsystem.util.mapper.RestaurantMapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,13 +35,13 @@ public class UserRestaurantRestController {
     }
 
     @GetMapping
-    public Page<Restaurant> getAll(@RequestParam(required = false) Integer page,
-                                   @RequestParam(required = false) Integer itemsPerPage) {
+    public Page<RestaurantTo> getAll(@RequestParam(required = false) Integer page,
+                                     @RequestParam(required = false) Integer itemsPerPage) {
         page = Optional.ofNullable(page).orElse(DEFAULT_PAGE);
         itemsPerPage = Optional.ofNullable(itemsPerPage).orElse(DEFAULT_ITEMS_PER_PAGE);
         final var restaurants = restaurantService.getAll(page, itemsPerPage);
         log.info("GetAll Restaurants without menu: {}", restaurants);
-        return restaurants;
+        return restaurants.map(RestaurantMapper::getTo);
     }
 
     @GetMapping("/{id}/menu")
