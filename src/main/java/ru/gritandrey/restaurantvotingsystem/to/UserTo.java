@@ -1,9 +1,10 @@
 package ru.gritandrey.restaurantvotingsystem.to;
 
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.Value;
+import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import ru.gritandrey.restaurantvotingsystem.util.validation.NoHtml;
 
 import javax.validation.constraints.Email;
@@ -13,6 +14,8 @@ import javax.validation.constraints.Size;
 @Value
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@Jacksonized
+@SuperBuilder
 public class UserTo extends NamedTo {
 
     @Email
@@ -26,10 +29,10 @@ public class UserTo extends NamedTo {
     @Size(min = 5, max = 32)
     String password;
 
-    @Builder
-    public UserTo(Integer id, String name, String email, String password) {
-        super(id, name);
-        this.email = email;
-        this.password = password;
-    }
+
+//    public UserTo(Integer id, String name, String email, String password) {
+//        super(id, name);
+//        this.email = email;
+//        this.password = password;
+//    }
 }

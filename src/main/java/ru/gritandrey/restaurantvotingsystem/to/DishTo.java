@@ -1,10 +1,10 @@
 package ru.gritandrey.restaurantvotingsystem.to;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.Value;
+import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -15,7 +15,8 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = true)
 @Value
 @ToString(callSuper = true)
-@JsonDeserialize(builder = DishTo.DishToBuilder.class)
+@Jacksonized
+@SuperBuilder
 public class DishTo extends BaseTo {
 
     @Positive
@@ -26,12 +27,4 @@ public class DishTo extends BaseTo {
     String name;
     @NotNull
     Integer restaurantId;
-
-    @Builder
-    public DishTo(Integer id, BigDecimal price, String name, Integer restaurantId) {
-        super(id);
-        this.price = price;
-        this.name = name;
-        this.restaurantId = restaurantId;
-    }
 }
