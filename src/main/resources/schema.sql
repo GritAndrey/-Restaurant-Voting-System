@@ -44,9 +44,9 @@ CREATE TABLE dish
 (
     id            INTEGER DEFAULT nextval('global_seq') PRIMARY KEY,
     dish_date     DATE    DEFAULT now() NOT NULL,
-    restaurant_id INTEGER               REFERENCES restaurant (id) ON DELETE SET NULL,
-    dish_name_id  INTEGER               REFERENCES food (id) ON DELETE SET NULL,
-    price NUMERIC(20, 3) NOT NULL
+    restaurant_id INTEGER REFERENCES restaurant (id) ON DELETE CASCADE,
+    dish_name_id  INTEGER REFERENCES food (id) ON DELETE CASCADE,
+    price         NUMERIC(20, 3)        NOT NULL
 );
 CREATE UNIQUE INDEX dish_restaurant_date_idx ON dish (restaurant_id, dish_date, dish_name_id);
 

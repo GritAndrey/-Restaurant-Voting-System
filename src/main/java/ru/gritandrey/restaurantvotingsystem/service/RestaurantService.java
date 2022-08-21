@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
 import ru.gritandrey.restaurantvotingsystem.repository.DishRepository;
@@ -68,7 +70,11 @@ public class RestaurantService {
         checkNotFoundWithId(save(restaurant), restaurant.id());
     }
 
-    @CacheEvict(value = "restWithMenu", allEntries = true)
+    @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "menus", allEntries = true),
+            @CacheEvict(value = "restWithMenu", allEntries = true)
+    })
     public void delete(int id) {
         checkNotFoundWithId(restaurantRepository.delete(id) != 0, id);
     }
