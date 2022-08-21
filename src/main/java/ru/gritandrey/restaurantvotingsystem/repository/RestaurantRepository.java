@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Transactional(readOnly = true)
 public interface RestaurantRepository extends BaseRepository<Restaurant> {
@@ -18,6 +17,7 @@ public interface RestaurantRepository extends BaseRepository<Restaurant> {
     @Query("select r from Restaurant r join fetch r.menu m join fetch m.food where r.id=:id and m.date=:date")
     Restaurant getRestaurantByIdWithMenu(@Param("id") int id, @Param("date") LocalDate date);
 
-    @Query("select distinct r from Restaurant r join fetch r.menu m join fetch m.food where m.date=:date")
-    List<Restaurant> findAllWithMenus(LocalDate date);
+    @Query(value = "select distinct r from Restaurant r join fetch r.menu m join fetch m.food where m.date=:date",
+            countQuery = "select count(distinct r.id) from Restaurant r")
+    Page<Restaurant> findAllWithMenus(Pageable pageable, LocalDate date);
 }

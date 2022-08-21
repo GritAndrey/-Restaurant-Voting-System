@@ -6,10 +6,7 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.gritandrey.restaurantvotingsystem.service.RestaurantService;
-import ru.gritandrey.restaurantvotingsystem.util.mapper.RestaurantMapper;
 import ru.gritandrey.restaurantvotingsystem.web.controller.AbstractControllerTest;
-
-import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -42,23 +39,22 @@ class UserRestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     @WithUserDetails(value = USER_MAIL)
-    void get() throws Exception {
+    void getWithoutMenu() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT1_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RESTAURANT_MATCHER.contentJson(restaurant1));
+                .andExpect(RESTAURANT_TO_MATCHER.contentJson(restaurant1ToWithoutMenu));
     }
 
     @Test
     @WithUserDetails(value = USER_MAIL)
-    void getAllWithTodayMenu() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "/menu"))
+    void getWithMenu() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT1_ID)
+                .param("showMenu", String.valueOf(true)))
                 .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(RESTAURANT_WITH_MENU_TO_MATCHER.contentJson(RestaurantMapper.getWithMenuTos(
-                        List.of(restaurant1, restaurant2, restaurant3, restaurant4)
-                )));
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(RESTAURANT_TO_MATCHER.contentJson(restaurant1ToWithMenu));
     }
 }

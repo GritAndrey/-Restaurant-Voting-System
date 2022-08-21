@@ -15,11 +15,9 @@ import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
 import ru.gritandrey.restaurantvotingsystem.repository.DishRepository;
 import ru.gritandrey.restaurantvotingsystem.repository.RestaurantRepository;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantTo;
-import ru.gritandrey.restaurantvotingsystem.to.RestaurantWithMenuTo;
 import ru.gritandrey.restaurantvotingsystem.util.mapper.RestaurantMapper;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import static ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUtil.checkNotFoundWithId;
 
@@ -36,24 +34,24 @@ public class RestaurantService {
         return RestaurantMapper.getTo(restaurant);
     }
 
-    public Page<Restaurant> getAll(Integer page, Integer itemsPerPage) {
+    public Page<RestaurantTo> getAll(Integer page, Integer itemsPerPage) {
         var pageRequest = PageRequest.of(page, itemsPerPage, Sort.by("id"));
-        return restaurantRepository.findAllBy(pageRequest);
+        return restaurantRepository.findAllBy(pageRequest).map(RestaurantMapper::getTo);
     }
 
     @Cacheable("restWithMenu")
-    public RestaurantWithMenuTo getWithMenu(int id) {
+    public RestaurantTo getWithMenu(int id) {
         final var dishes = dishRepository.findAllByRestaurantId(id);
         if (dishes.isEmpty()) {
             log.warn("There is no menu for the restaurant with id: {}", id);
         }
         final Restaurant restaurant = checkNotFoundWithId(restaurantRepository.getRestaurantByIdWithMenu(id, LocalDate.now()), id);
-        return RestaurantMapper.getWithMenuTo(restaurant);
+        return RestaurantMapper.getTo(restaurant);
     }
 
-    @Cacheable("restWithMenu")
-    public List<RestaurantWithMenuTo> getAllWithMenu() {
-        return RestaurantMapper.getWithMenuTos(restaurantRepository.findAllWithMenus(LocalDate.now()));
+    public Page<RestaurantTo> getAllWithMenu(Integer page, Integer itemsPerPage) {
+        var pageRequest = PageRequest.of(page, itemsPerPage, Sort.by("id"));
+        return restaurantRepository.findAllWithMenus(pageRequest, LocalDate.now()).map(RestaurantMapper::getTo);
     }
 
 

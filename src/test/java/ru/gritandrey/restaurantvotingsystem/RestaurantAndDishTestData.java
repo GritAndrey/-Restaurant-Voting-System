@@ -6,7 +6,6 @@ import ru.gritandrey.restaurantvotingsystem.model.Food;
 import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
 import ru.gritandrey.restaurantvotingsystem.to.DishTo;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantTo;
-import ru.gritandrey.restaurantvotingsystem.to.RestaurantWithMenuTo;
 import ru.gritandrey.restaurantvotingsystem.util.mapper.DishMapper;
 import ru.gritandrey.restaurantvotingsystem.util.mapper.RestaurantMapper;
 
@@ -22,7 +21,6 @@ public class RestaurantAndDishTestData {
     public static final MatcherFactory.Matcher<Dish> DISH_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Dish.class, "restaurant", "food");
     public static final MatcherFactory.Matcher<DishTo> DISH_TO_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(DishTo.class);
     public static final MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class, "menu");
-    public static final MatcherFactory.Matcher<RestaurantWithMenuTo> RESTAURANT_WITH_MENU_TO_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(RestaurantWithMenuTo.class);
     public static final MatcherFactory.Matcher<RestaurantTo> RESTAURANT_TO_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(RestaurantTo.class);
 
     public static final LocalDate TODAY = LocalDate.now();
@@ -76,20 +74,24 @@ public class RestaurantAndDishTestData {
             .restaurantId(dish1.getRestaurant().getId())
             .build();
     public static final List<Dish> dishes = List.of(dish1, dish2, dish3, dish4, dish5, dish6, dish7, dish8, dish9, dish10, dish11, dish12);
-    public static final List<Restaurant> restaurants = List.of(restaurant1, restaurant2, restaurant3, restaurant4);
-    public static final List<RestaurantWithMenuTo> restaurantsTo;
-    public static final RestaurantWithMenuTo restaurantWithMenuTo;
-    public static final RestaurantTo restaurant1To;
+    public static final List<RestaurantTo> restaurantsTo;
+    public static final List<RestaurantTo> restaurantsToNoMenu;
+    public static final RestaurantTo restaurant1ToWithMenu;
+    public static final RestaurantTo restaurant1ToWithoutMenu;
 
     static {
+        restaurant1ToWithoutMenu = RestaurantMapper.getTo(restaurant1);
+        restaurantsToNoMenu = Stream.of(restaurant1, restaurant2, restaurant3, restaurant4)
+                .map(RestaurantMapper::getTo)
+                .collect(toList());
         restaurant1.setMenu(List.of(dish1, dish2, dish3));
         restaurant2.setMenu(List.of(dish4, dish5, dish6));
         restaurant3.setMenu(List.of(dish7, dish8, dish9));
         restaurant4.setMenu(List.of(dish10, dish11, dish12));
-        restaurantsTo = Stream.of(restaurant1, restaurant2, restaurant3, restaurant4).map(RestaurantMapper::getWithMenuTo)
+        restaurant1ToWithMenu = RestaurantMapper.getTo(restaurant1);
+        restaurantsTo = Stream.of(restaurant1, restaurant2, restaurant3, restaurant4)
+                .map(RestaurantMapper::getTo)
                 .collect(toList());
-        restaurantWithMenuTo = RestaurantMapper.getWithMenuTo(restaurant1);
-        restaurant1To = RestaurantMapper.getTo(restaurant1);
     }
 
     public static Dish getNewDishWithExistingNameAndRestaurant() {

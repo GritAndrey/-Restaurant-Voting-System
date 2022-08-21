@@ -31,4 +31,8 @@ public class DishMapper {
     public static Dish getDish(DishTo dishTo) {
         return new Dish(dishTo.getId(), dishTo.getPrice(), new Food(dishTo.getName()), new Restaurant(), LocalDate.now());
     }
+
+    public static List<Dish> getDishes(Collection<DishTo> dishesTo) {
+        return dishesTo.stream().map(DishMapper::getDish).collect(toList());
+    }
 }
