@@ -13,10 +13,12 @@ import static java.util.stream.Collectors.toList;
 public class VoteMapper {
 
     public static VoteTo getTo(Vote vote) {
+        final var restaurant = vote.getRestaurant();
+        final var user = vote.getUser();
         return VoteTo.builder()
                 .id(vote.getId())
-                .restaurantId(vote.getRestaurant().getId())
-                .userId(vote.getUser().getId())
+                .restaurantId(restaurant == null ? null : restaurant.getId())
+                .userId(user == null ? null : user.getId())
                 .date(vote.getDate())
                 .time(vote.getTime())
                 .build();
