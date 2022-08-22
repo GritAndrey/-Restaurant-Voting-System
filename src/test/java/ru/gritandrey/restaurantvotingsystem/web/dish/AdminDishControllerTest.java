@@ -102,4 +102,14 @@ class AdminDishControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent());
         DISH_MATCHER.assertMatch(dishService.get(DISH1_ID), updated);
     }
+
+    @Test
+    @WithUserDetails(value = ADMIN_MAIL)
+    void updateNotFound() throws Exception {
+        Dish updated = getUpdatedDish();
+        updated.setId(NOT_FOUND);
+        perform(MockMvcRequestBuilders.put(REST_URL + NOT_FOUND).contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(DishUtil.getTo(updated))))
+                .andExpect(status().isUnprocessableEntity());
+    }
 }

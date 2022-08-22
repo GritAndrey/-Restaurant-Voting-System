@@ -60,6 +60,7 @@ public class AdminUserController extends AbstractUserController {
     public void update(@Valid @RequestBody User user, @PathVariable int id) {
         log.info("update {} with id={}", user, id);
         assureIdConsistent(user, id);
+        repository.getExisted(id);
         prepareAndSave(user);
     }
 

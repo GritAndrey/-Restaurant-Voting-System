@@ -54,8 +54,8 @@ public class RestaurantService {
 
     @CacheEvict(value = "restWithMenu", key = "#restaurantTo.id")
     public void update(RestaurantTo restaurantTo) {
-        final var restaurant = RestaurantUtil.getRestaurant(restaurantTo);
-        save(restaurant);
+        get(restaurantTo.getId());
+        save(RestaurantUtil.getRestaurant(restaurantTo));
     }
 
     @Transactional

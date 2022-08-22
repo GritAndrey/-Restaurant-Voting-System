@@ -118,6 +118,19 @@ class AdminUserControllerTest extends AbstractControllerTest {
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
+    void updateNotFound() throws Exception {
+        User updated = getUpdated();
+        updated.setId(NOT_FOUND);
+        updated.setEmail(NEW_USER_EMAIL);
+        perform(MockMvcRequestBuilders.put(REST_URL + NOT_FOUND)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonWithPassword(updated, "newPass")))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    @WithUserDetails(value = ADMIN_MAIL)
     void createWithLocation() throws Exception {
         User newUser = getNew();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)

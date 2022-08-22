@@ -17,6 +17,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.gritandrey.restaurantvotingsystem.RestaurantAndDishTestData.NOT_FOUND;
 import static ru.gritandrey.restaurantvotingsystem.UserTestData.*;
 import static ru.gritandrey.restaurantvotingsystem.web.user.ProfileController.REST_URL;
 import static ru.gritandrey.restaurantvotingsystem.web.user.UniqueMailValidator.EXCEPTION_DUPLICATE_EMAIL;
@@ -89,6 +90,19 @@ class ProfileControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent());
 
         USER_MATCHER.assertMatch(userRepository.getExisted(USER_ID), UserUtil.updateFromTo(new User(user), updatedTo));
+    }
+
+    @Test
+    @WithUserDetails(value = USER_MAIL)
+    void updateNotFound() throws Exception {
+        User updated = getUpdated();
+        updated.setId(NOT_FOUND);
+        updated.setEmail(NEW_USER_EMAIL);
+        perform(MockMvcRequestBuilders.put(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonWithPassword(updated, "newPass")))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test

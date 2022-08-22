@@ -79,4 +79,14 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent());
         RESTAURANT_TO_MATCHER.assertMatch(restaurantService.get(RESTAURANT1_ID), updated);
     }
+
+    @Test
+    @WithUserDetails(value = ADMIN_MAIL)
+    void updateNotFound() throws Exception {
+        final var updated = RestaurantUtil.getTo(getUpdatedRestaurant());
+        updated.setId(NOT_FOUND);
+        perform(MockMvcRequestBuilders.put(REST_URL + RESTAURANT1_ID).contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(updated)))
+                .andExpect(status().isUnprocessableEntity());
+    }
 }

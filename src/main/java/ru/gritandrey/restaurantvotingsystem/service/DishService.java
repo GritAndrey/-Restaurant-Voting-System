@@ -66,6 +66,7 @@ public class DishService {
             @CacheEvict(value = "menus", allEntries = true),
             @CacheEvict(value = "restWithMenu", allEntries = true)})
     public void update(DishTo dishTo) {
+        get(dishTo.getId());
         save(DishUtil.getDish(dishTo), dishTo.getRestaurantId());
     }
 
