@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AbstractBaseEntity implements Persistable<Integer>, HasId {
+public abstract class BaseEntity implements Persistable<Integer>, HasId {
     public static final int START_SEQ = 100000;
 
     @Id
@@ -41,7 +41,7 @@ public abstract class AbstractBaseEntity implements Persistable<Integer>, HasId 
         if (o == null || !getClass().equals(Hibernate.getClass(o))) {
             return false;
         }
-        AbstractBaseEntity that = (AbstractBaseEntity) o;
+        BaseEntity that = (BaseEntity) o;
         return id != null && id.equals(that.id);
     }
 

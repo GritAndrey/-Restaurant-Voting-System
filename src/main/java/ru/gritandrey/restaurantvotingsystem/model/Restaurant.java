@@ -18,7 +18,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class Restaurant extends AbstractNamedEntity {
+public class Restaurant extends NamedEntity {
     @Column(name = "address")
     @NotBlank
     @Size(min = 2, max = 128)

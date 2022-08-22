@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Dish extends AbstractNamedEntity {
+public class Dish extends NamedEntity {
 
     @Column(name = "price")
     @Positive

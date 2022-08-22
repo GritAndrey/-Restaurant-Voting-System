@@ -13,14 +13,14 @@ import javax.validation.constraints.Size;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true)
-public abstract class AbstractNamedEntity extends AbstractBaseEntity {
+public abstract class NamedEntity extends BaseEntity {
     @NotBlank
     @Size(min = 2, max = 128)
     @Column(name = "name", nullable = false)
     @NoHtml
     protected String name;
 
-    protected AbstractNamedEntity(Integer id, String name) {
+    protected NamedEntity(Integer id, String name) {
         super(id);
         this.name = name;
     }

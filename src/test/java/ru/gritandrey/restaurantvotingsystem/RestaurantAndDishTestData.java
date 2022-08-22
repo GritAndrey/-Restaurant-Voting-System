@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
-import static ru.gritandrey.restaurantvotingsystem.model.AbstractBaseEntity.START_SEQ;
+import static ru.gritandrey.restaurantvotingsystem.model.BaseEntity.START_SEQ;
 
 public class RestaurantAndDishTestData {
     public static final MatcherFactory.Matcher<Dish> DISH_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Dish.class, "restaurant", "food");

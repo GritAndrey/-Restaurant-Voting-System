@@ -26,7 +26,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true, exclude = {"password"})
-public class User extends AbstractNamedEntity implements Serializable, HasIdAndEmail {
+public class User extends NamedEntity implements Serializable, HasIdAndEmail {
     @Serial
     private static final long serialVersionUID = 1L;
 
