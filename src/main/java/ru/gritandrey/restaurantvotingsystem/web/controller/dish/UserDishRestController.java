@@ -25,7 +25,7 @@ import java.util.List;
 @Slf4j
 @Tags({@Tag(name = "User Dish controller", description = "Get dishes by restaurantId and(or) date")})
 public class UserDishRestController {
-    public static final String REST_URL = "/api/rest/dishes";
+    public static final String REST_URL = "/api/dishes";
     private final DishService dishService;
 
     @GetMapping

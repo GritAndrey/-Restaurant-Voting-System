@@ -23,7 +23,7 @@ import java.net.URI;
 @Slf4j
 @Tags({@Tag(name = "Admin Dish controller", description = "Manage dishes")})
 public class AdminDishRestController {
-    public static final String REST_URL = "/api/rest/admin/dishes";
+    public static final String REST_URL = "/api/admin/dishes";
     private final DishService dishService;
 
     @GetMapping("{id}")

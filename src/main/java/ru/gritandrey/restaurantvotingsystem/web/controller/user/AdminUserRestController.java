@@ -19,7 +19,7 @@ import java.util.List;
 @Tags({@Tag(name = "Admin users controller", description = "Manage users")})
 public class AdminUserRestController extends AbstractUserController {
 
-    static final String REST_URL = "/api/rest/admin/users";
+    static final String REST_URL = "/api/admin/users";
 
     @Override
     @GetMapping

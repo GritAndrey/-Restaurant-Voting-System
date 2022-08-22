@@ -23,7 +23,7 @@ import java.net.URI;
 @RequiredArgsConstructor
 @Tags({@Tag(name = "Admin Restaurant controller", description = "Manage restaurants")})
 public class AdminRestaurantRestController {
-    public static final String REST_URL = "/api/rest/admin/restaurants";
+    public static final String REST_URL = "/api/admin/restaurants";
     private final RestaurantService restaurantService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

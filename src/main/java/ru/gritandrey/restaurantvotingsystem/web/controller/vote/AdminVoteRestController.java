@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping(value = AdminVoteRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Tags({@Tag(name = "Admin votes controller", description = "Manage votes")})
 public class AdminVoteRestController {
-    public static final String REST_URL = "/api/rest/admin/votes";
+    public static final String REST_URL = "/api/admin/votes";
     private final VoteService voteService;
 
     @GetMapping()

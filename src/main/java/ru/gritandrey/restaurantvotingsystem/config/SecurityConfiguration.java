@@ -48,8 +48,8 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/api/rest/admin/**").hasRole(Role.ADMIN.name())
-                .antMatchers(HttpMethod.POST, "/api/rest/profile").anonymous()
+                .antMatchers("/api/admin/**").hasRole(Role.ADMIN.name())
+                .antMatchers(HttpMethod.POST, "/api/profile").anonymous()
                 .antMatchers("/api/**").authenticated()
                 .and().httpBasic()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

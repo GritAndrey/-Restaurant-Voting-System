@@ -20,7 +20,7 @@ import static ru.gritandrey.restaurantvotingsystem.util.SecurityUtil.authId;
 @RequestMapping(value = ProfileRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Tags({@Tag(name = "User profile controller", description = "Manage user profile")})
 public class ProfileRestController extends AbstractUserController {
-    static final String REST_URL = "/api/rest/profile";
+    static final String REST_URL = "/api/profile";
 
     @GetMapping
     public User get() {

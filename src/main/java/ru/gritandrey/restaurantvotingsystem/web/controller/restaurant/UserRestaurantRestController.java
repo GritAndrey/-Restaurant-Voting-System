@@ -20,7 +20,7 @@ import java.util.Optional;
 @Tags({@Tag(name = "User restaurant controller", description = "View available restaurants. With or without menu.")})
 public class UserRestaurantRestController {
 
-    public static final String REST_URL = "/api/rest/restaurants";
+    public static final String REST_URL = "/api/restaurants";
     public static final int DEFAULT_PAGE = 0;
     public static final int DEFAULT_ITEMS_PER_PAGE = 10;
     private final RestaurantService restaurantService;

@@ -22,7 +22,7 @@ import java.util.List;
 @RequestMapping(value = UserVoteRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Tags({@Tag(name = "User votes controller", description = "Manage user votes")})
 public class UserVoteRestController {
-    public static final String REST_URL = "/api/rest/profile/votes";
+    public static final String REST_URL = "/api/profile/votes";
     private final VoteService voteService;
 
     @GetMapping()
