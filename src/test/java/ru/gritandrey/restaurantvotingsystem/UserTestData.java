@@ -2,7 +2,7 @@ package ru.gritandrey.restaurantvotingsystem;
 
 import ru.gritandrey.restaurantvotingsystem.model.Role;
 import ru.gritandrey.restaurantvotingsystem.model.User;
-import ru.gritandrey.restaurantvotingsystem.web.json.JsonUtil;
+import ru.gritandrey.restaurantvotingsystem.util.JsonUtil;
 
 import java.util.Collections;
 import java.util.Date;

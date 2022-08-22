@@ -3,7 +3,7 @@ package ru.gritandrey.restaurantvotingsystem;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultMatcher;
-import ru.gritandrey.restaurantvotingsystem.web.json.JsonUtil;
+import ru.gritandrey.restaurantvotingsystem.util.JsonUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;

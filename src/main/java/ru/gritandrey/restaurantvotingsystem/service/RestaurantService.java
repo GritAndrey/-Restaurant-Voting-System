@@ -15,7 +15,7 @@ import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
 import ru.gritandrey.restaurantvotingsystem.repository.DishRepository;
 import ru.gritandrey.restaurantvotingsystem.repository.RestaurantRepository;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantTo;
-import ru.gritandrey.restaurantvotingsystem.util.mapper.RestaurantMapper;
+import ru.gritandrey.restaurantvotingsystem.util.RestaurantUtil;
 
 import java.time.LocalDate;
 
@@ -31,12 +31,12 @@ public class RestaurantService {
 
     public RestaurantTo get(int id) {
         final var restaurant = checkNotFoundWithId(restaurantRepository.findById(id), id);
-        return RestaurantMapper.getTo(restaurant);
+        return RestaurantUtil.getTo(restaurant);
     }
 
     public Page<RestaurantTo> getAll(Integer page, Integer itemsPerPage) {
         var pageRequest = PageRequest.of(page, itemsPerPage, Sort.by("id"));
-        return restaurantRepository.findAllBy(pageRequest).map(RestaurantMapper::getTo);
+        return restaurantRepository.findAllBy(pageRequest).map(RestaurantUtil::getTo);
     }
 
     @Cacheable("restWithMenu")
@@ -46,25 +46,25 @@ public class RestaurantService {
             log.warn("There is no menu for the restaurant with id: {}", id);
         }
         final Restaurant restaurant = checkNotFoundWithId(restaurantRepository.getRestaurantByIdWithMenu(id, LocalDate.now()), id);
-        return RestaurantMapper.getTo(restaurant);
+        return RestaurantUtil.getTo(restaurant);
     }
 
     public Page<RestaurantTo> getAllWithMenu(Integer page, Integer itemsPerPage) {
         var pageRequest = PageRequest.of(page, itemsPerPage, Sort.by("id"));
-        return restaurantRepository.findAllWithMenus(pageRequest, LocalDate.now()).map(RestaurantMapper::getTo);
+        return restaurantRepository.findAllWithMenus(pageRequest, LocalDate.now()).map(RestaurantUtil::getTo);
     }
 
 
     @CacheEvict(value = "restWithMenu", allEntries = true)
     public Restaurant create(RestaurantTo restaurantTo) {
         Assert.notNull(restaurantTo, "Restaurant must not be null");
-        return restaurantRepository.save(RestaurantMapper.getRestaurant(restaurantTo));
+        return restaurantRepository.save(RestaurantUtil.getRestaurant(restaurantTo));
     }
 
     @CacheEvict(value = "restWithMenu", allEntries = true)
     public void update(RestaurantTo restaurantTo) {
         Assert.notNull(restaurantTo, "Restaurant must not be null");
-        final var restaurant = RestaurantMapper.getRestaurant(restaurantTo);
+        final var restaurant = RestaurantUtil.getRestaurant(restaurantTo);
         checkNotFoundWithId(save(restaurant), restaurant.id());
     }
 

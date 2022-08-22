@@ -5,8 +5,8 @@ import ru.gritandrey.restaurantvotingsystem.model.Dish;
 import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
 import ru.gritandrey.restaurantvotingsystem.to.DishTo;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantTo;
-import ru.gritandrey.restaurantvotingsystem.util.mapper.DishMapper;
-import ru.gritandrey.restaurantvotingsystem.util.mapper.RestaurantMapper;
+import ru.gritandrey.restaurantvotingsystem.util.DishUtil;
+import ru.gritandrey.restaurantvotingsystem.util.RestaurantUtil;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -76,17 +76,17 @@ public class RestaurantAndDishTestData {
     public static final RestaurantTo restaurant1ToWithoutMenu;
 
     static {
-        restaurant1ToWithoutMenu = RestaurantMapper.getTo(restaurant1);
+        restaurant1ToWithoutMenu = RestaurantUtil.getTo(restaurant1);
         restaurantsToNoMenu = Stream.of(restaurant1, restaurant2, restaurant3, restaurant4)
-                .map(RestaurantMapper::getTo)
+                .map(RestaurantUtil::getTo)
                 .collect(toList());
         restaurant1.setMenu(List.of(dish1, dish2, dish3));
         restaurant2.setMenu(List.of(dish4, dish5, dish6));
         restaurant3.setMenu(List.of(dish7, dish8, dish9));
         restaurant4.setMenu(List.of(dish10, dish11, dish12));
-        restaurant1ToWithMenu = RestaurantMapper.getTo(restaurant1);
+        restaurant1ToWithMenu = RestaurantUtil.getTo(restaurant1);
         restaurantsTo = Stream.of(restaurant1, restaurant2, restaurant3, restaurant4)
-                .map(RestaurantMapper::getTo)
+                .map(RestaurantUtil::getTo)
                 .collect(toList());
     }
 
@@ -96,11 +96,7 @@ public class RestaurantAndDishTestData {
 
     public static DishTo getNewDishTo() {
         final var newDish = getNewDishWithExistingNameAndRestaurant();
-        return DishMapper.getTo(newDish);
-    }
-
-    public static Dish getNewDishWithNewNameAndRestaurant() {
-        return new Dish(null, new BigDecimal("33.100"), newFood, restaurant1, TODAY);
+        return DishUtil.getTo(newDish);
     }
 
     public static Dish getUpdatedDish() {
@@ -112,7 +108,7 @@ public class RestaurantAndDishTestData {
     }
 
     public static RestaurantTo getNewRestaurantTo() {
-        return RestaurantMapper.getTo(getNewRestaurant());
+        return RestaurantUtil.getTo(getNewRestaurant());
     }
 
     public static Restaurant getUpdatedRestaurant() {

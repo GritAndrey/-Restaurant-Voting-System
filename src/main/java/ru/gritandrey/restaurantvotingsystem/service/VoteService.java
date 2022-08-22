@@ -10,7 +10,7 @@ import ru.gritandrey.restaurantvotingsystem.repository.RestaurantRepository;
 import ru.gritandrey.restaurantvotingsystem.repository.UserRepository;
 import ru.gritandrey.restaurantvotingsystem.repository.VoteRepository;
 import ru.gritandrey.restaurantvotingsystem.to.VoteTo;
-import ru.gritandrey.restaurantvotingsystem.util.mapper.VoteMapper;
+import ru.gritandrey.restaurantvotingsystem.util.VoteUtil;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -31,15 +31,15 @@ public class VoteService {
     public LocalTime voteEndTime;
 
     public VoteTo get(int voteId, int userId) {
-        return VoteMapper.getTo(checkNotFoundWithId(voteRepository.findByUserIdAndId(userId, voteId), voteId));
+        return VoteUtil.getTo(checkNotFoundWithId(voteRepository.findByUserIdAndId(userId, voteId), voteId));
     }
 
     public List<VoteTo> getAll() {
-        return voteRepository.findAll().stream().map(VoteMapper::getTo).collect(toList());
+        return voteRepository.findAll().stream().map(VoteUtil::getTo).collect(toList());
     }
 
     public List<VoteTo> getAllByUserId(int userId) {
-        return VoteMapper.getTos(voteRepository.findAllByUserId(userId));
+        return VoteUtil.getTos(voteRepository.findAllByUserId(userId));
     }
 
     public VoteTo create(int restaurantId, int userId) {
@@ -52,7 +52,7 @@ public class VoteService {
                 .restaurant(checkNotFoundWithId(restaurantRepository.findById(restaurantId), restaurantId))
                 .user(checkNotFoundWithId(userRepository.findById(userId), userId))
                 .build();
-        return VoteMapper.getTo(save(vote));
+        return VoteUtil.getTo(save(vote));
     }
 
     public void update(Integer userId, Integer restaurantId) {

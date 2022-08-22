@@ -15,7 +15,7 @@ import ru.gritandrey.restaurantvotingsystem.to.UserTo;
 import java.util.List;
 
 import static ru.gritandrey.restaurantvotingsystem.util.UserUtil.prepareToSave;
-import static ru.gritandrey.restaurantvotingsystem.util.mapper.UserMapper.updateFromTo;
+import static ru.gritandrey.restaurantvotingsystem.util.UserUtil.updateFromTo;
 import static ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUtil.checkNotFound;
 import static ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUtil.checkNotFoundWithId;
 

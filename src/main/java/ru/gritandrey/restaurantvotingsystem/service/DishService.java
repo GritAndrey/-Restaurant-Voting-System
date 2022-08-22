@@ -14,7 +14,7 @@ import ru.gritandrey.restaurantvotingsystem.repository.RestaurantRepository;
 import ru.gritandrey.restaurantvotingsystem.to.DishFilter;
 import ru.gritandrey.restaurantvotingsystem.to.DishTo;
 import ru.gritandrey.restaurantvotingsystem.to.MenuTo;
-import ru.gritandrey.restaurantvotingsystem.util.mapper.DishMapper;
+import ru.gritandrey.restaurantvotingsystem.util.DishUtil;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -48,7 +48,7 @@ public class DishService {
                 .map(entry -> MenuTo.builder()
                         .restaurantId(entry.getKey().restaurantId())
                         .menuDate(entry.getKey().menuDate())
-                        .dishes(DishMapper.getTos(entry.getValue()))
+                        .dishes(DishUtil.getTos(entry.getValue()))
                         .build()
                 )
                 .collect(toList());
@@ -61,7 +61,7 @@ public class DishService {
     })
     public Dish create(DishTo dishTo) {
         Assert.notNull(dishTo, "Dish must not be null");
-        return save(DishMapper.getDish(dishTo), dishTo.getRestaurantId());
+        return save(DishUtil.getDish(dishTo), dishTo.getRestaurantId());
     }
 
     @Transactional
@@ -70,7 +70,7 @@ public class DishService {
             @CacheEvict(value = "restWithMenu", allEntries = true)})
     public void update(DishTo dishTo) {
         Assert.notNull(dishTo, "Dish must not be null");
-        final var dish = DishMapper.getDish(dishTo);
+        final var dish = DishUtil.getDish(dishTo);
         checkNotFoundWithId(save(dish, dishTo.getRestaurantId()), dish.id());
     }
 

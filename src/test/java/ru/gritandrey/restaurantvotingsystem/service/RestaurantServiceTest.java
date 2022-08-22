@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gritandrey.restaurantvotingsystem.exception.IllegalRequestDataException;
-import ru.gritandrey.restaurantvotingsystem.util.mapper.RestaurantMapper;
+import ru.gritandrey.restaurantvotingsystem.util.RestaurantUtil;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.gritandrey.restaurantvotingsystem.RestaurantAndDishTestData.*;
@@ -55,7 +55,7 @@ class RestaurantServiceTest {
     @DisplayName("Create new restaurant")
     void create() {
         final var newRestaurant = getNewRestaurant();
-        final var created = service.create(RestaurantMapper.getTo(newRestaurant));
+        final var created = service.create(RestaurantUtil.getTo(newRestaurant));
         newRestaurant.setId(created.getId());
         RESTAURANT_MATCHER.assertMatch(newRestaurant, created);
     }
@@ -63,7 +63,7 @@ class RestaurantServiceTest {
     @Test
     @DisplayName("Update restaurant1")
     void update() {
-        final var updatedRestaurant = RestaurantMapper.getTo(getUpdatedRestaurant());
+        final var updatedRestaurant = RestaurantUtil.getTo(getUpdatedRestaurant());
         service.update(updatedRestaurant);
         RESTAURANT_TO_MATCHER.assertMatch(service.get(RESTAURANT1_ID), updatedRestaurant);
     }

@@ -10,7 +10,7 @@ import ru.gritandrey.restaurantvotingsystem.exception.IllegalRequestDataExceptio
 import ru.gritandrey.restaurantvotingsystem.model.Dish;
 import ru.gritandrey.restaurantvotingsystem.to.DishFilter;
 import ru.gritandrey.restaurantvotingsystem.to.DishTo;
-import ru.gritandrey.restaurantvotingsystem.util.mapper.DishMapper;
+import ru.gritandrey.restaurantvotingsystem.util.DishUtil;
 
 import java.util.Comparator;
 
@@ -39,7 +39,7 @@ class DishServiceTest {
     void getAllToday() {
         final var actual = dishService.getByFilter(new DishFilter(null, TODAY, null)).stream()
                 .flatMap(menuTo -> menuTo.getDishes().stream()).collect(toList());
-        DISH_TO_MATCHER.assertMatch(actual, DishMapper.getTos(dishes)
+        DISH_TO_MATCHER.assertMatch(actual, DishUtil.getTos(dishes)
                 .stream()
                 .sorted(Comparator.comparing(DishTo::getId))
                 .collect(toList()));
@@ -55,7 +55,7 @@ class DishServiceTest {
     @DisplayName("Checking new dish creation")
     void create() {
         final var newDish = getNewDishWithExistingNameAndRestaurant();
-        final Dish created = dishService.create(DishMapper.getTo(newDish));
+        final Dish created = dishService.create(DishUtil.getTo(newDish));
         final var newId = created.getId();
         newDish.setId(newId);
         DISH_MATCHER.assertMatch(created, newDish);
@@ -66,7 +66,7 @@ class DishServiceTest {
     @DisplayName("Update dish1")
     void update() {
         final Dish updatedDish = getUpdatedDish();
-        dishService.update(DishMapper.getTo(updatedDish));
+        dishService.update(DishUtil.getTo(updatedDish));
         DISH_MATCHER.assertMatch(dishService.get(DISH1_ID), updatedDish);
     }
 
