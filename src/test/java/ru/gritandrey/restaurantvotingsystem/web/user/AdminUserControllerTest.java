@@ -8,15 +8,13 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.gritandrey.restaurantvotingsystem.exception.IllegalRequestDataException;
 import ru.gritandrey.restaurantvotingsystem.model.Role;
 import ru.gritandrey.restaurantvotingsystem.model.User;
-import ru.gritandrey.restaurantvotingsystem.service.UserService;
+import ru.gritandrey.restaurantvotingsystem.repository.UserRepository;
 import ru.gritandrey.restaurantvotingsystem.web.AbstractControllerTest;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -29,12 +27,11 @@ class AdminUserControllerTest extends AbstractControllerTest {
 
     private static final String REST_URL = AdminUserController.REST_URL + '/';
 
+    private final UserRepository userRepository;
 
-    private final UserService userService;
-
-    public AdminUserControllerTest(MockMvc mockMvc, UserService userService) {
+    public AdminUserControllerTest(MockMvc mockMvc, UserRepository userRepository) {
         super(mockMvc);
-        this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @Test
@@ -53,7 +50,7 @@ class AdminUserControllerTest extends AbstractControllerTest {
     void getNotFound() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + NOT_FOUND))
                 .andDo(print())
-                .andExpect(status().isUnprocessableEntity());
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -71,7 +68,7 @@ class AdminUserControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.delete(REST_URL + USER_ID))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        assertThrows(IllegalRequestDataException.class, () -> userService.get(USER_ID));
+        assertFalse(userRepository.findById(USER_ID).isPresent());
     }
 
     @Test
@@ -116,7 +113,7 @@ class AdminUserControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        USER_MATCHER.assertMatch(userService.get(USER_ID), getUpdated());
+        USER_MATCHER.assertMatch(userRepository.getExisted(USER_ID), getUpdated());
     }
 
     @Test
@@ -132,7 +129,7 @@ class AdminUserControllerTest extends AbstractControllerTest {
         int newId = created.id();
         newUser.setId(newId);
         USER_MATCHER.assertMatch(created, newUser);
-        USER_MATCHER.assertMatch(userService.get(newId), newUser);
+        USER_MATCHER.assertMatch(userRepository.getExisted(newId), newUser);
     }
 
     @Test
@@ -141,7 +138,7 @@ class AdminUserControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(USER_MATCHER.contentJson(user, admin, noVoteUser));
+                .andExpect(USER_MATCHER.contentJson(admin, user, noVoteUser));
     }
 
     @Test
@@ -153,7 +150,7 @@ class AdminUserControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        assertFalse(userService.get(USER_ID).isEnabled());
+        assertFalse(userRepository.getExisted(USER_ID).isEnabled());
     }
 
     @Test

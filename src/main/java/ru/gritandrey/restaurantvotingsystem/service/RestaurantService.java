@@ -61,7 +61,7 @@ public class RestaurantService {
         return restaurantRepository.save(RestaurantUtil.getRestaurant(restaurantTo));
     }
 
-    @CacheEvict(value = "restWithMenu", allEntries = true)
+    @CacheEvict(value = "restWithMenu", key = "#restaurantTo.id")
     public void update(RestaurantTo restaurantTo) {
         Assert.notNull(restaurantTo, "Restaurant must not be null");
         final var restaurant = RestaurantUtil.getRestaurant(restaurantTo);
@@ -71,7 +71,7 @@ public class RestaurantService {
     @Transactional
     @Caching(evict = {
             @CacheEvict(value = "menus", allEntries = true),
-            @CacheEvict(value = "restWithMenu", allEntries = true)
+            @CacheEvict(value = "restWithMenu")
     })
     public void delete(int id) {
         checkNotFoundWithId(restaurantRepository.delete(id) != 0, id);

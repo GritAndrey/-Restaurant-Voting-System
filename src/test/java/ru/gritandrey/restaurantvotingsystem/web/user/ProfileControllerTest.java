@@ -7,7 +7,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.gritandrey.restaurantvotingsystem.model.User;
-import ru.gritandrey.restaurantvotingsystem.service.UserService;
+import ru.gritandrey.restaurantvotingsystem.repository.UserRepository;
 import ru.gritandrey.restaurantvotingsystem.to.UserTo;
 import ru.gritandrey.restaurantvotingsystem.util.JsonUtil;
 import ru.gritandrey.restaurantvotingsystem.util.UserUtil;
@@ -24,11 +24,11 @@ import static ru.gritandrey.restaurantvotingsystem.web.user.UniqueMailValidator.
 
 class ProfileControllerTest extends AbstractControllerTest {
 
-    private final UserService userService;
+    private final UserRepository userRepository;
 
-    public ProfileControllerTest(MockMvc mockMvc, UserService userService) {
+    public ProfileControllerTest(MockMvc mockMvc, UserRepository userRepository) {
         super(mockMvc);
-        this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @Test
@@ -51,7 +51,7 @@ class ProfileControllerTest extends AbstractControllerTest {
     void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL))
                 .andExpect(status().isNoContent());
-        USER_MATCHER.assertMatch(userService.getAll(), admin, noVoteUser);
+        USER_MATCHER.assertMatch(userRepository.findAll(), admin, noVoteUser);
     }
 
     @Test
@@ -72,7 +72,7 @@ class ProfileControllerTest extends AbstractControllerTest {
         int newId = created.id();
         newUser.setId(newId);
         USER_MATCHER.assertMatch(created, newUser);
-        USER_MATCHER.assertMatch(userService.get(newId), newUser);
+        USER_MATCHER.assertMatch(userRepository.getExisted(newId), newUser);
     }
 
     @Test
@@ -88,7 +88,7 @@ class ProfileControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        USER_MATCHER.assertMatch(userService.get(USER_ID), UserUtil.updateFromTo(new User(user), updatedTo));
+        USER_MATCHER.assertMatch(userRepository.getExisted(USER_ID), UserUtil.updateFromTo(new User(user), updatedTo));
     }
 
     @Test
