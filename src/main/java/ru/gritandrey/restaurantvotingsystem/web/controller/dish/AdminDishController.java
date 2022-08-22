@@ -18,11 +18,11 @@ import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
-@RequestMapping(value = AdminDishRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = AdminDishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 @Slf4j
 @Tags({@Tag(name = "Admin Dish controller", description = "Manage dishes")})
-public class AdminDishRestController {
+public class AdminDishController {
     public static final String REST_URL = "/api/admin/dishes";
     private final DishService dishService;
 

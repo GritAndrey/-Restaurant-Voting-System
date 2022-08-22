@@ -27,7 +27,7 @@ import static ru.gritandrey.restaurantvotingsystem.web.controller.user.UniqueMai
 
 class AdminUserControllerTest extends AbstractControllerTest {
 
-    private static final String REST_URL = AdminUserRestController.REST_URL + '/';
+    private static final String REST_URL = AdminUserController.REST_URL + '/';
 
 
     private final UserService userService;

@@ -19,11 +19,11 @@ import static ru.gritandrey.restaurantvotingsystem.UserTestData.ADMIN_MAIL;
 import static ru.gritandrey.restaurantvotingsystem.UserTestData.USER_MAIL;
 
 
-class AdminRestaurantRestControllerTest extends AbstractControllerTest {
-    public static final String REST_URL = AdminRestaurantRestController.REST_URL + '/';
+class AdminRestaurantControllerTest extends AbstractControllerTest {
+    public static final String REST_URL = AdminRestaurantController.REST_URL + '/';
     private final RestaurantService restaurantService;
 
-    public AdminRestaurantRestControllerTest(MockMvc mockMvc, RestaurantService restaurantService) {
+    public AdminRestaurantControllerTest(MockMvc mockMvc, RestaurantService restaurantService) {
         super(mockMvc);
         this.restaurantService = restaurantService;
     }

@@ -14,11 +14,11 @@ import ru.gritandrey.restaurantvotingsystem.to.RestaurantTo;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = UserRestaurantRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = UserRestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 @RequiredArgsConstructor
 @Tags({@Tag(name = "User restaurant controller", description = "View available restaurants. With or without menu.")})
-public class UserRestaurantRestController {
+public class UserRestaurantController {
 
     public static final String REST_URL = "/api/restaurants";
     public static final int DEFAULT_PAGE = 0;

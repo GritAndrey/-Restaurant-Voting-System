@@ -19,12 +19,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ru.gritandrey.restaurantvotingsystem.UserTestData.*;
 import static ru.gritandrey.restaurantvotingsystem.VoteTestData.*;
 
-class AdminVoteRestControllerTest extends AbstractControllerTest {
+class AdminVoteControllerTest extends AbstractControllerTest {
 
     private final VoteService voteService;
-    private static final String REST_URL = AdminVoteRestController.REST_URL + '/';
+    private static final String REST_URL = AdminVoteController.REST_URL + '/';
 
-    public AdminVoteRestControllerTest(MockMvc mockMvc, VoteService voteService) {
+    public AdminVoteControllerTest(MockMvc mockMvc, VoteService voteService) {
         super(mockMvc);
         this.voteService = voteService;
     }

@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.gritandrey.restaurantvotingsystem.UserTestData.*;
-import static ru.gritandrey.restaurantvotingsystem.web.controller.user.ProfileRestController.REST_URL;
+import static ru.gritandrey.restaurantvotingsystem.web.controller.user.ProfileController.REST_URL;
 import static ru.gritandrey.restaurantvotingsystem.web.controller.user.UniqueMailValidator.EXCEPTION_DUPLICATE_EMAIL;
 
 

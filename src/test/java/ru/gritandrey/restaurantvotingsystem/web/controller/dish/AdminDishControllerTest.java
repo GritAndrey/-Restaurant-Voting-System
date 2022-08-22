@@ -22,11 +22,11 @@ import static ru.gritandrey.restaurantvotingsystem.RestaurantAndDishTestData.*;
 import static ru.gritandrey.restaurantvotingsystem.UserTestData.ADMIN_MAIL;
 import static ru.gritandrey.restaurantvotingsystem.UserTestData.USER_MAIL;
 
-class AdminDishRestControllerTest extends AbstractControllerTest {
-    private static final String REST_URL = AdminDishRestController.REST_URL + '/';
+class AdminDishControllerTest extends AbstractControllerTest {
+    private static final String REST_URL = AdminDishController.REST_URL + '/';
     private final DishService dishService;
 
-    public AdminDishRestControllerTest(MockMvc mockMvc, DishService dishService) {
+    public AdminDishControllerTest(MockMvc mockMvc, DishService dishService) {
         super(mockMvc);
         this.dishService = dishService;
     }

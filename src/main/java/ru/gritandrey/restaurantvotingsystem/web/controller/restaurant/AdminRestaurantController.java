@@ -18,11 +18,11 @@ import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
-@RequestMapping(value = AdminRestaurantRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = AdminRestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 @RequiredArgsConstructor
 @Tags({@Tag(name = "Admin Restaurant controller", description = "Manage restaurants")})
-public class AdminRestaurantRestController {
+public class AdminRestaurantController {
     public static final String REST_URL = "/api/admin/restaurants";
     private final RestaurantService restaurantService;
 

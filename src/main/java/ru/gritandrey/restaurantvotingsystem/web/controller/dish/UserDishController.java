@@ -20,11 +20,11 @@ import java.util.Comparator;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = UserDishRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = UserDishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 @Slf4j
 @Tags({@Tag(name = "User Dish controller", description = "Get dishes by restaurantId and(or) date")})
-public class UserDishRestController {
+public class UserDishController {
     public static final String REST_URL = "/api/dishes";
     private final DishService dishService;
 

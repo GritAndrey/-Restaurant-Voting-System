@@ -19,9 +19,9 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping(value = UserVoteRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = UserVoteController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Tags({@Tag(name = "User votes controller", description = "Manage user votes")})
-public class UserVoteRestController {
+public class UserVoteController {
     public static final String REST_URL = "/api/profile/votes";
     private final VoteService voteService;
 

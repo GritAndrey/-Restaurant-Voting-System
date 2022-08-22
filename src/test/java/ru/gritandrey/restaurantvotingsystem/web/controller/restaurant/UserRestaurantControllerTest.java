@@ -14,11 +14,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ru.gritandrey.restaurantvotingsystem.RestaurantAndDishTestData.*;
 import static ru.gritandrey.restaurantvotingsystem.UserTestData.USER_MAIL;
 
-class UserRestaurantRestControllerTest extends AbstractControllerTest {
+class UserRestaurantControllerTest extends AbstractControllerTest {
     private final RestaurantService restaurantService;
-    public static final String REST_URL = UserRestaurantRestController.REST_URL + '/';
+    public static final String REST_URL = UserRestaurantController.REST_URL + '/';
 
-    public UserRestaurantRestControllerTest(MockMvc mockMvc, RestaurantService restaurantService) {
+    public UserRestaurantControllerTest(MockMvc mockMvc, RestaurantService restaurantService) {
         super(mockMvc);
         this.restaurantService = restaurantService;
     }

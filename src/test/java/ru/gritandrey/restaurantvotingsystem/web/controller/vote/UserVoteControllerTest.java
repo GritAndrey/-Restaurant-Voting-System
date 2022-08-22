@@ -22,11 +22,11 @@ import static ru.gritandrey.restaurantvotingsystem.RestaurantAndDishTestData.RES
 import static ru.gritandrey.restaurantvotingsystem.UserTestData.*;
 import static ru.gritandrey.restaurantvotingsystem.VoteTestData.*;
 
-class UserVoteRestControllerTest extends AbstractControllerTest {
+class UserVoteControllerTest extends AbstractControllerTest {
     private final VoteService voteService;
-    private static final String REST_URL = UserVoteRestController.REST_URL + '/';
+    private static final String REST_URL = UserVoteController.REST_URL + '/';
 
-    public UserVoteRestControllerTest(MockMvc mockMvc, VoteService voteService) {
+    public UserVoteControllerTest(MockMvc mockMvc, VoteService voteService) {
         super(mockMvc);
         this.voteService = voteService;
     }
