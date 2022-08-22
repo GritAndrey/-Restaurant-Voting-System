@@ -15,15 +15,11 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Dish extends AbstractBaseEntity {
+public class Dish extends AbstractNamedEntity {
 
     @Column(name = "price")
     @Positive
     private BigDecimal price;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "dish_name_id")
-    private Food food;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
@@ -33,10 +29,9 @@ public class Dish extends AbstractBaseEntity {
     @NotNull
     private LocalDate date;
 
-    public Dish(Integer id, BigDecimal price, Food food, Restaurant restaurant, LocalDate date) {
-        super(id);
+    public Dish(Integer id, BigDecimal price, String name, Restaurant restaurant, LocalDate date) {
+        super(id, name);
         this.price = price;
-        this.food = food;
         this.restaurant = restaurant;
         this.date = date;
     }

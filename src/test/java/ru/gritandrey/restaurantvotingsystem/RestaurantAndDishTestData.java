@@ -2,7 +2,6 @@ package ru.gritandrey.restaurantvotingsystem;
 
 
 import ru.gritandrey.restaurantvotingsystem.model.Dish;
-import ru.gritandrey.restaurantvotingsystem.model.Food;
 import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
 import ru.gritandrey.restaurantvotingsystem.to.DishTo;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantTo;
@@ -29,21 +28,18 @@ public class RestaurantAndDishTestData {
     public static final int RESTAURANT2_ID = START_SEQ + 1;
     public static final int RESTAURANT3_ID = START_SEQ + 2;
     public static final int RESTAURANT4_ID = START_SEQ + 3;
-    public static final int FOOD1_ID = RESTAURANT4_ID + 1;
-    public static final int DISH1_ID = FOOD1_ID + 10; //100014
-
-
-    public static final Food food1 = new Food(FOOD1_ID, "California Suncup");
-    public static final Food food2 = new Food(FOOD1_ID + 1, "Uluhe");
-    public static final Food food3 = new Food(FOOD1_ID + 2, "Wild Sweetwilliam");
-    public static final Food food4 = new Food(FOOD1_ID + 3, "Smallhead Cat's Ear");
-    public static final Food food5 = new Food(FOOD1_ID + 4, "West Indian Mahogany");
-    public static final Food food6 = new Food(FOOD1_ID + 5, "Plains Blackberry");
-    public static final Food food7 = new Food(FOOD1_ID + 6, "Narrow-petal Rein Orchid");
-    public static final Food food8 = new Food(FOOD1_ID + 7, "Oryctes");
-    public static final Food food9 = new Food(FOOD1_ID + 8, "Horsetail");
-    public static final Food food10 = new Food(FOOD1_ID + 9, "Goldback Fern");
-    public static final Food newFood = new Food("New food");
+    public static final int DISH1_ID = RESTAURANT4_ID + 1;
+    public static final String food1 = "California Suncup";
+    public static final String food2 = "Uluhe";
+    public static final String food3 = "Wild Sweetwilliam";
+    public static final String food4 = "Smallhead Cat's Ear";
+    public static final String food5 = "West Indian Mahogany";
+    public static final String food6 = "Plains Blackberry";
+    public static final String food7 = "Narrow-petal Rein Orchid";
+    public static final String food8 = "Oryctes";
+    public static final String food9 = "Horsetail";
+    public static final String food10 = "Goldback Fern";
+    public static final String newFood = "New food";
 
     public static final Restaurant restaurant1 = new Restaurant(RESTAURANT1_ID, "Rau LLC", "1 Stone Corner Junction");
     public static final Restaurant restaurant2 = new Restaurant(RESTAURANT2_ID, "Sporer-Parisian", "16 Forest Junction");
@@ -70,7 +66,7 @@ public class RestaurantAndDishTestData {
     public static final DishTo dish1To = DishTo.builder()
             .id(dish1.getId())
             .price(dish1.getPrice())
-            .name(dish1.getFood().getName())
+            .name(dish1.getName())
             .restaurantId(dish1.getRestaurant().getId())
             .build();
     public static final List<Dish> dishes = List.of(dish1, dish2, dish3, dish4, dish5, dish6, dish7, dish8, dish9, dish10, dish11, dish12);

@@ -1,16 +1,3 @@
-DELETE
-FROM vote;
-DELETE
-FROM dish;
-DELETE
-FROM food;
-DELETE
-FROM restaurant;
-DELETE
-FROM user_roles;
-DELETE
-FROM users;
-
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO restaurant(name, address)
@@ -19,33 +6,19 @@ VALUES ('Rau LLC', '1 Stone Corner Junction'),
        ('Kon and Sons', '4916 Kim Street'),
        ('Bechtelar Group', '3 Dorton Court');
 
-INSERT INTO food(name)
-VALUES ('California Suncup'),
-       ('Uluhe'),
-       ('Wild Sweetwilliam'),
-       ('Smallhead Cat''s Ear'),
-       ('West Indian Mahogany'),
-       ('Plains Blackberry'),
-       ('Narrow-petal Rein Orchid'),
-       ('Oryctes'),
-       ('Horsetail'),
-       ('Goldback Fern');
-
-INSERT INTO dish(restaurant_id, dish_date, dish_name_id, price)
-VALUES (100000, now(), 100004, '12.3'),
-       (100000, now(), 100005, '4.6'),
-       (100000, now(), 100006, '3.5'),
-       (100001, now(), 100007, '35.12'),
-       (100001, now(), 100008, '12.5'),
-       (100001, now(), 100009, '2.1'),
-       (100002, now(), 100010, '0.3'),
-       (100002, now(), 100011, '4.5'),
-       (100002, now(), 100012, '6.4'),
-       (100003, now(), 100013, '2.8'),
-       (100003, now(), 100007, '22.5'),
-       (100003, now(), 100008, '33.1');
-
-
+INSERT INTO dish(restaurant_id, dish_date, name, price)
+VALUES (100000, now(), 'California Suncup', '12.3'),
+       (100000, now(), 'Uluhe', '4.6'),
+       (100000, now(), 'Wild Sweetwilliam', '3.5'),
+       (100001, now(), 'Smallhead Cat''s Ear', '35.12'),
+       (100001, now(), 'West Indian Mahogany', '12.5'),
+       (100001, now(), 'Plains Blackberry', '2.1'),
+       (100002, now(), 'Narrow-petal Rein Orchid', '0.3'),
+       (100002, now(), 'Oryctes', '4.5'),
+       (100002, now(), 'Horsetail', '6.4'),
+       (100003, now(), 'Goldback Fern', '2.8'),
+       (100003, now(), 'Smallhead Cat''s Ear', '22.5'),
+       (100003, now(), 'West Indian Mahogany', '33.1');
 
 INSERT INTO users (id, name, email, password, enabled, registered)
 VALUES (1, 'User', 'user@gmail.com', '{noop}password', TRUE, now()),
@@ -63,30 +36,29 @@ VALUES (2, 100000, dateadd('DAY', -1, current_date), '11:01'),
        (1, 100000, now(), '12:00'),
        (2, 100001, now(), '10:00');
 
-INSERT INTO dish(restaurant_id, dish_date, dish_name_id, price)
-VALUES (100000, dateadd('DAY', -2, current_date), 100008, '12.3'),
-       (100000, dateadd('DAY', -2, current_date), 100007, '4.6'),
-       (100000, dateadd('DAY', -2, current_date), 100013, '3.5'),
-       (100001, dateadd('DAY', -2, current_date), 100012, '35.12'),
-       (100001, dateadd('DAY', -2, current_date), 100011, '12.5'),
-       (100001, dateadd('DAY', -2, current_date), 100010, '2.1'),
-       (100002, dateadd('DAY', -2, current_date), 100009, '0.3'),
-       (100002, dateadd('DAY', -2, current_date), 100008, '4.5'),
-       (100002, dateadd('DAY', -2, current_date), 100007, '6.4'),
-       (100003, dateadd('DAY', -2, current_date), 100006, '2.8'),
-       (100003, dateadd('DAY', -2, current_date), 100005, '22.5'),
-       (100003, dateadd('DAY', -2, current_date), 100004, '33.1'),
+INSERT INTO dish(restaurant_id, dish_date, name, price)
+VALUES (100003, dateadd('DAY', -2, current_date), 'California Suncup', '12.3'),
+       (100003, dateadd('DAY', -2, current_date), 'Uluhe', '4.6'),
+       (100003, dateadd('DAY', -2, current_date), 'Wild Sweetwilliam', '3.5'),
+       (100002, dateadd('DAY', -2, current_date), 'Smallhead Cat''s Ear', '35.12'),
+       (100002, dateadd('DAY', -2, current_date), 'West Indian Mahogany', '12.5'),
+       (100002, dateadd('DAY', -2, current_date), 'Plains Blackberry', '2.1'),
+       (100001, dateadd('DAY', -2, current_date), 'Narrow-petal Rein Orchid', '0.3'),
+       (100001, dateadd('DAY', -2, current_date), 'Oryctes', '4.5'),
+       (100001, dateadd('DAY', -2, current_date), 'Horsetail', '6.4'),
+       (100000, dateadd('DAY', -2, current_date), 'Goldback Fern', '2.8'),
+       (100000, dateadd('DAY', -2, current_date), 'Smallhead Cat''s Ear', '22.5'),
+       (100000, dateadd('DAY', -2, current_date), 'West Indian Mahogany', '33.1'),
 
-       (100000, dateadd('DAY', -1, current_date), 100005, '12.3'),
-       (100000, dateadd('DAY', -1, current_date), 100006, '4.6'),
-       (100000, dateadd('DAY', -1, current_date), 100007, '3.5'),
-       (100001, dateadd('DAY', -1, current_date), 100008, '35.12'),
-       (100001, dateadd('DAY', -1, current_date), 100009, '12.5'),
-       (100001, dateadd('DAY', -1, current_date), 100010, '2.1'),
-       (100002, dateadd('DAY', -1, current_date), 100012, '0.3'),
-       (100002, dateadd('DAY', -1, current_date), 100013, '4.5'),
-       (100002, dateadd('DAY', -1, current_date), 100011, '6.4'),
-       (100003, dateadd('DAY', -1, current_date), 100012, '2.8'),
-       (100003, dateadd('DAY', -1, current_date), 100004, '22.5'),
-       (100003, dateadd('DAY', -1, current_date), 100005, '33.1');
-
+       (100000, dateadd('DAY', -1, current_date), 'California Suncup', '12.3'),
+       (100001, dateadd('DAY', -1, current_date), 'Uluhe', '4.6'),
+       (100002, dateadd('DAY', -1, current_date), 'Wild Sweetwilliam', '3.5'),
+       (100003, dateadd('DAY', -1, current_date), 'Smallhead Cat''s Ear', '35.12'),
+       (100000, dateadd('DAY', -1, current_date), 'West Indian Mahogany', '12.5'),
+       (100001, dateadd('DAY', -1, current_date), 'Plains Blackberry', '2.1'),
+       (100002, dateadd('DAY', -1, current_date), 'Narrow-petal Rein Orchid', '0.3'),
+       (100003, dateadd('DAY', -1, current_date), 'Oryctes', '4.5'),
+       (100000, dateadd('DAY', -1, current_date), 'Horsetail', '6.4'),
+       (100001, dateadd('DAY', -1, current_date), 'Goldback Fern', '2.8'),
+       (100002, dateadd('DAY', -1, current_date), 'Smallhead Cat''s Ear', '22.5'),
+       (100003, dateadd('DAY', -1, current_date), 'West Indian Mahogany', '33.1');

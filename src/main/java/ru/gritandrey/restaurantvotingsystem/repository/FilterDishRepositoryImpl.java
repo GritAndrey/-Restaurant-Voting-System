@@ -28,7 +28,6 @@ public class FilterDishRepositoryImpl implements FilterDishRepository {
                 .select(dish)
                 .from(dish)
                 .where(predicate)
-                .join(dish.food).fetchJoin()
                 .fetch();
     }
 }

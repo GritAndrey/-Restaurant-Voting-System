@@ -1,7 +1,6 @@
 package ru.gritandrey.restaurantvotingsystem.service;
 
 import lombok.RequiredArgsConstructor;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -61,20 +60,6 @@ class DishServiceTest {
         newDish.setId(newId);
         DISH_MATCHER.assertMatch(created, newDish);
         DISH_MATCHER.assertMatch(dishService.get(newId), newDish);
-    }
-
-    @Test
-    @DisplayName("Checking that a new entry is NOT created in the food table when creating a dish with existing name")
-    void createNewWithExistingName() {
-        final Dish created = dishService.create(DishMapper.getTo(getNewDishWithExistingNameAndRestaurant()));
-        Assertions.assertThat(created.getFood().getId()).isEqualTo(food10.id());
-    }
-
-    @Test
-    @DisplayName("Checking that a new entry is created in the food table when creating a dish with a new name")
-    void createNewWithNewName() {
-        final Dish created = dishService.create(DishMapper.getTo(getNewDishWithNewNameAndRestaurant()));
-        Assertions.assertThat(created.getFood().getId()).isEqualTo(created.getId() - 1);
     }
 
     @Test

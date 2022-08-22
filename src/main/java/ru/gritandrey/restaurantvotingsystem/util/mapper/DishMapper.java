@@ -2,7 +2,6 @@ package ru.gritandrey.restaurantvotingsystem.util.mapper;
 
 import lombok.experimental.UtilityClass;
 import ru.gritandrey.restaurantvotingsystem.model.Dish;
-import ru.gritandrey.restaurantvotingsystem.model.Food;
 import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
 import ru.gritandrey.restaurantvotingsystem.to.DishTo;
 
@@ -18,7 +17,7 @@ public class DishMapper {
     public static DishTo getTo(Dish dish) {
         return DishTo.builder()
                 .restaurantId(dish.getRestaurant() == null ? null : dish.getRestaurant().getId())
-                .name(dish.getFood() == null ? null : dish.getFood().getName())
+                .name(dish.getName())
                 .price(dish.getPrice())
                 .id(dish.getId())
                 .build();
@@ -29,7 +28,7 @@ public class DishMapper {
     }
 
     public static Dish getDish(DishTo dishTo) {
-        return new Dish(dishTo.getId(), dishTo.getPrice(), new Food(dishTo.getName()), new Restaurant(), LocalDate.now());
+        return new Dish(dishTo.getId(), dishTo.getPrice(), dishTo.getName(), new Restaurant(), LocalDate.now());
     }
 
     public static List<Dish> getDishes(Collection<DishTo> dishesTo) {
