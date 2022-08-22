@@ -58,4 +58,4 @@ springdoc:
     operationsSorter: alpha
 
 voting:
-  voteEnding: "23:00"
+  voteEnding: "11:00"
