@@ -4,8 +4,8 @@ package ru.gritandrey.restaurantvotingsystem.util.validation;
 import lombok.experimental.UtilityClass;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.lang.NonNull;
+import ru.gritandrey.restaurantvotingsystem.HasId;
 import ru.gritandrey.restaurantvotingsystem.exception.IllegalRequestDataException;
-import ru.gritandrey.restaurantvotingsystem.model.HasId;
 
 import java.util.Optional;
 

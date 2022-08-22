@@ -5,6 +5,7 @@ import lombok.ToString;
 import lombok.Value;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
+import ru.gritandrey.restaurantvotingsystem.HasIdAndEmail;
 import ru.gritandrey.restaurantvotingsystem.util.validation.NoHtml;
 
 import javax.validation.constraints.Email;
@@ -16,7 +17,7 @@ import javax.validation.constraints.Size;
 @ToString(callSuper = true)
 @Jacksonized
 @SuperBuilder
-public class UserTo extends NamedTo {
+public class UserTo extends NamedTo implements HasIdAndEmail {
 
     @Email
     @NotBlank

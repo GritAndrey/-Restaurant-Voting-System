@@ -1,4 +1,4 @@
-package ru.gritandrey.restaurantvotingsystem.model;
+package ru.gritandrey.restaurantvotingsystem;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.util.Assert;

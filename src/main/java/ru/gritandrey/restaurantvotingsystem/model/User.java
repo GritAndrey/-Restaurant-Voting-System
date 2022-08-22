@@ -2,11 +2,10 @@ package ru.gritandrey.restaurantvotingsystem.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.util.CollectionUtils;
+import ru.gritandrey.restaurantvotingsystem.HasIdAndEmail;
 import ru.gritandrey.restaurantvotingsystem.util.validation.NoHtml;
 
 import javax.persistence.*;
@@ -26,9 +25,8 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @ToString(callSuper = true, exclude = {"password"})
-public class User extends AbstractNamedEntity implements Serializable {
+public class User extends AbstractNamedEntity implements Serializable, HasIdAndEmail {
     @Serial
     private static final long serialVersionUID = 1L;
 

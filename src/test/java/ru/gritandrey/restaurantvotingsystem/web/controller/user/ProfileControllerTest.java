@@ -13,11 +13,13 @@ import ru.gritandrey.restaurantvotingsystem.util.mapper.UserMapper;
 import ru.gritandrey.restaurantvotingsystem.web.controller.AbstractControllerTest;
 import ru.gritandrey.restaurantvotingsystem.web.json.JsonUtil;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.gritandrey.restaurantvotingsystem.UserTestData.*;
 import static ru.gritandrey.restaurantvotingsystem.web.controller.user.ProfileRestController.REST_URL;
+import static ru.gritandrey.restaurantvotingsystem.web.controller.user.UniqueMailValidator.EXCEPTION_DUPLICATE_EMAIL;
 
 
 class ProfileControllerTest extends AbstractControllerTest {
@@ -108,5 +110,20 @@ class ProfileControllerTest extends AbstractControllerTest {
                 .content(JsonUtil.writeValue(updatedTo)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    @WithUserDetails(value = USER_MAIL)
+    void updateDuplicate() throws Exception {
+        UserTo updatedTo = UserTo.builder()
+                .name("newName")
+                .email(ADMIN_MAIL)
+                .password("newPassword")
+                .build();
+        perform(MockMvcRequestBuilders.put(REST_URL).contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(updatedTo)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(content().string(containsString(EXCEPTION_DUPLICATE_EMAIL)));
     }
 }

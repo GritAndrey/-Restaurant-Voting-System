@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 import org.springframework.data.domain.Persistable;
 import org.springframework.util.Assert;
+import ru.gritandrey.restaurantvotingsystem.HasId;
 
 import javax.persistence.*;
 
