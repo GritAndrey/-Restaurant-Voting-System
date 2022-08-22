@@ -10,16 +10,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
+import ru.gritandrey.restaurantvotingsystem.exception.IllegalRequestDataException;
 import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
-import ru.gritandrey.restaurantvotingsystem.repository.DishRepository;
 import ru.gritandrey.restaurantvotingsystem.repository.RestaurantRepository;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantTo;
 import ru.gritandrey.restaurantvotingsystem.util.RestaurantUtil;
 
 import java.time.LocalDate;
-
-import static ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUtil.checkNotFoundWithId;
 
 @Service
 @RequiredArgsConstructor
@@ -27,11 +24,9 @@ import static ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUti
 public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
-    private final DishRepository dishRepository;
 
     public RestaurantTo get(int id) {
-        final var restaurant = checkNotFoundWithId(restaurantRepository.findById(id), id);
-        return RestaurantUtil.getTo(restaurant);
+        return RestaurantUtil.getTo(restaurantRepository.getExisted(id));
     }
 
     public Page<RestaurantTo> getAll(Integer page, Integer itemsPerPage) {
@@ -41,11 +36,8 @@ public class RestaurantService {
 
     @Cacheable("restWithMenu")
     public RestaurantTo getWithMenu(int id) {
-        final var dishes = dishRepository.findAllByRestaurantId(id);
-        if (dishes.isEmpty()) {
-            log.warn("There is no menu for the restaurant with id: {}", id);
-        }
-        final Restaurant restaurant = checkNotFoundWithId(restaurantRepository.getRestaurantByIdWithMenu(id, LocalDate.now()), id);
+        final Restaurant restaurant = restaurantRepository.getRestaurantByIdWithMenu(id, LocalDate.now())
+                .orElseThrow(() -> new IllegalRequestDataException("No menu for restaurant with id: " + id));
         return RestaurantUtil.getTo(restaurant);
     }
 
@@ -57,15 +49,13 @@ public class RestaurantService {
 
     @CacheEvict(value = "restWithMenu", allEntries = true)
     public Restaurant create(RestaurantTo restaurantTo) {
-        Assert.notNull(restaurantTo, "Restaurant must not be null");
         return restaurantRepository.save(RestaurantUtil.getRestaurant(restaurantTo));
     }
 
     @CacheEvict(value = "restWithMenu", key = "#restaurantTo.id")
     public void update(RestaurantTo restaurantTo) {
-        Assert.notNull(restaurantTo, "Restaurant must not be null");
         final var restaurant = RestaurantUtil.getRestaurant(restaurantTo);
-        checkNotFoundWithId(save(restaurant), restaurant.id());
+        save(restaurant);
     }
 
     @Transactional
@@ -74,13 +64,10 @@ public class RestaurantService {
             @CacheEvict(value = "restWithMenu")
     })
     public void delete(int id) {
-        checkNotFoundWithId(restaurantRepository.delete(id) != 0, id);
+        restaurantRepository.deleteExisted(id);
     }
 
     private Restaurant save(Restaurant restaurant) {
-        if (!restaurant.isNew() && get(restaurant.id()) == null) {
-            return null;
-        }
         return restaurantRepository.save(restaurant);
     }
 }

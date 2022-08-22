@@ -7,40 +7,8 @@ import org.springframework.lang.NonNull;
 import ru.gritandrey.restaurantvotingsystem.HasId;
 import ru.gritandrey.restaurantvotingsystem.exception.IllegalRequestDataException;
 
-import java.util.Optional;
-
 @UtilityClass
 public class ValidationUtil {
-    public static <T> T checkNotFoundWithId(Optional<T> object, int id) {
-        checkNotFoundWithId(object.isPresent(), id);
-        return object.get();
-    }
-
-    public static <T> T checkNotFoundWithId(T object, int id) {
-        checkNotFoundWithId(object != null, id);
-        return object;
-    }
-
-    public static void checkNotFoundWithId(boolean found, int id) {
-        checkNotFound(found, "id=" + id);
-    }
-
-    public static <T> T checkNotFound(Optional<T> object, String msg) {
-        checkNotFound(object.isPresent(), msg);
-        return object.get();
-    }
-
-    public static <T> T checkNotFound(T object, String msg) {
-        checkNotFound(object != null, msg);
-        return object;
-    }
-
-    public static void checkNotFound(boolean found, String msg) {
-        if (!found) {
-            throw new IllegalRequestDataException("Not found entity with " + msg);
-        }
-    }
-
     public static void checkNew(HasId bean) {
         if (!bean.isNew()) {
             throw new IllegalRequestDataException(bean + " must be new (id=null)");

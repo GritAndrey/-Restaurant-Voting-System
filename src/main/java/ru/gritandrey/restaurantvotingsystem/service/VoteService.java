@@ -17,7 +17,6 @@ import java.time.LocalTime;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
-import static ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUtil.checkNotFoundWithId;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +30,8 @@ public class VoteService {
     public LocalTime voteEndTime;
 
     public VoteTo get(int voteId, int userId) {
-        return VoteUtil.getTo(checkNotFoundWithId(voteRepository.findByUserIdAndId(userId, voteId), voteId));
+        return VoteUtil.getTo(voteRepository.get(voteId, userId)
+                .orElseThrow(() -> new IllegalRequestDataException("Entity with id=" + voteId + " not found")));
     }
 
     public List<VoteTo> getAll() {
@@ -49,8 +49,8 @@ public class VoteService {
         final var vote = Vote.builder()
                 .date(LocalDate.now())
                 .time(LocalTime.now())
-                .restaurant(checkNotFoundWithId(restaurantRepository.findById(restaurantId), restaurantId))
-                .user(checkNotFoundWithId(userRepository.findById(userId), userId))
+                .restaurant(restaurantRepository.getExisted(restaurantId))
+                .user(userRepository.getExisted(userId))
                 .build();
         return VoteUtil.getTo(save(vote));
     }
@@ -62,12 +62,12 @@ public class VoteService {
         final var mayBeVote = voteRepository.findByUserIdAndDate(userId, LocalDate.now());
         final var vote = mayBeVote.orElseThrow(() -> new IllegalRequestDataException("User haven`t voted yet"));
         vote.setTime(LocalTime.now());
-        vote.setRestaurant(checkNotFoundWithId(restaurantRepository.findById(restaurantId), restaurantId));
+        vote.setRestaurant(restaurantRepository.getExisted(restaurantId));
         save(vote);
     }
 
     public void delete(int id) {
-        checkNotFoundWithId(voteRepository.delete(id) != 0, id);
+        voteRepository.deleteExisted(id);
     }
 
     private Vote save(Vote vote) {
