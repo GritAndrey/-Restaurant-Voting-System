@@ -18,6 +18,7 @@ public class DishUtil {
         return DishTo.builder()
                 .restaurantId(dish.getRestaurant() == null ? null : dish.getRestaurant().getId())
                 .name(dish.getName())
+                .date(dish.getDate())
                 .price(dish.getPrice())
                 .id(dish.getId())
                 .build();

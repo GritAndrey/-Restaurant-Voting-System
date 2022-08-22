@@ -99,6 +99,7 @@ class AdminDishControllerTest extends AbstractControllerTest {
         Dish updated = getUpdatedDish();
         perform(MockMvcRequestBuilders.put(REST_URL + DISH1_ID).contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(DishUtil.getTo(updated))))
+                .andDo(print())
                 .andExpect(status().isNoContent());
         DISH_MATCHER.assertMatch(dishService.get(DISH1_ID), updated);
     }

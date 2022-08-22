@@ -39,7 +39,6 @@ public class RestaurantAndDishTestData {
     public static final String food8 = "Oryctes";
     public static final String food9 = "Horsetail";
     public static final String food10 = "Goldback Fern";
-    public static final String newFood = "New food";
 
     public static final Restaurant restaurant1 = new Restaurant(RESTAURANT1_ID, "Rau LLC", "1 Stone Corner Junction");
     public static final Restaurant restaurant2 = new Restaurant(RESTAURANT2_ID, "Sporer-Parisian", "16 Forest Junction");
@@ -66,6 +65,7 @@ public class RestaurantAndDishTestData {
     public static final DishTo dish1To = DishTo.builder()
             .id(dish1.getId())
             .price(dish1.getPrice())
+            .date(dish1.getDate())
             .name(dish1.getName())
             .restaurantId(dish1.getRestaurant().getId())
             .build();
@@ -100,7 +100,7 @@ public class RestaurantAndDishTestData {
     }
 
     public static Dish getUpdatedDish() {
-        return new Dish(DISH1_ID, new BigDecimal("12.300"), food1, restaurant1, TODAY);
+        return new Dish(DISH1_ID, new BigDecimal("1.300"), "updated", restaurant1, TODAY);
     }
 
     public static Restaurant getNewRestaurant() {

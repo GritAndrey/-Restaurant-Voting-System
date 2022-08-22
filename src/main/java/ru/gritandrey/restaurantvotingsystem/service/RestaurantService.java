@@ -54,8 +54,9 @@ public class RestaurantService {
 
     @CacheEvict(value = "restWithMenu", key = "#restaurantTo.id")
     public void update(RestaurantTo restaurantTo) {
-        get(restaurantTo.getId());
-        save(RestaurantUtil.getRestaurant(restaurantTo));
+        final var existed = restaurantRepository.getExisted(restaurantTo.getId());
+        existed.setName(restaurantTo.getName());
+        existed.setAddress(restaurantTo.getAddress());
     }
 
     @Transactional
@@ -65,9 +66,5 @@ public class RestaurantService {
     })
     public void delete(int id) {
         restaurantRepository.deleteExisted(id);
-    }
-
-    private Restaurant save(Restaurant restaurant) {
-        return restaurantRepository.save(restaurant);
     }
 }

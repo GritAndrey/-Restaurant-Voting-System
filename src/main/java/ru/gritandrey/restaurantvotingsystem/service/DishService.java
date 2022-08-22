@@ -52,7 +52,6 @@ public class DishService {
                 .collect(toList());
     }
 
-    @Transactional
     @Caching(evict = {
             @CacheEvict(value = "menus", allEntries = true),
             @CacheEvict(value = "restWithMenu", allEntries = true)
@@ -66,8 +65,10 @@ public class DishService {
             @CacheEvict(value = "menus", allEntries = true),
             @CacheEvict(value = "restWithMenu", allEntries = true)})
     public void update(DishTo dishTo) {
-        get(dishTo.getId());
-        save(DishUtil.getDish(dishTo), dishTo.getRestaurantId());
+        final var dish = get(dishTo.getId());
+        dish.setRestaurant(restaurantRepository.getExisted(dishTo.getRestaurantId()));
+        dish.setName(dishTo.getName());
+        dish.setPrice(dishTo.getPrice());
     }
 
     @Caching(evict = {
@@ -77,7 +78,8 @@ public class DishService {
         dishRepository.deleteExisted(id);
     }
 
-    private Dish save(Dish dish, int restaurantId) {
+    @Transactional
+    protected Dish save(Dish dish, int restaurantId) {
         dish.setDate(LocalDate.now());
         dish.setRestaurant(restaurantRepository.getExisted(restaurantId));
         return dishRepository.save(dish);
