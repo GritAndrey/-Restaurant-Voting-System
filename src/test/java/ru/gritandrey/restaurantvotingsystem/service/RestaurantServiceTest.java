@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-import ru.gritandrey.restaurantvotingsystem.exception.NotFoundException;
+import ru.gritandrey.restaurantvotingsystem.exception.IllegalRequestDataException;
 import ru.gritandrey.restaurantvotingsystem.util.mapper.RestaurantMapper;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -36,7 +36,7 @@ class RestaurantServiceTest {
     @Test
     @DisplayName("Get restaurant with fake id. Must be NotFoundException")
     void getNotFound() {
-        assertThrows(NotFoundException.class, () -> service.get(NOT_FOUND));
+        assertThrows(IllegalRequestDataException.class, () -> service.get(NOT_FOUND));
     }
 
     @Test
@@ -72,6 +72,6 @@ class RestaurantServiceTest {
     @DisplayName("Delete restaurant")
     void delete() {
         service.delete(RESTAURANT1_ID);
-        assertThrows(NotFoundException.class, () -> service.get(RESTAURANT1_ID));
+        assertThrows(IllegalRequestDataException.class, () -> service.get(RESTAURANT1_ID));
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ru.gritandrey.restaurantvotingsystem.exception.NotFoundException;
+import ru.gritandrey.restaurantvotingsystem.exception.IllegalRequestDataException;
 import ru.gritandrey.restaurantvotingsystem.model.Role;
 import ru.gritandrey.restaurantvotingsystem.model.User;
 import ru.gritandrey.restaurantvotingsystem.service.UserService;
@@ -67,7 +67,7 @@ class AdminUserControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.delete(REST_URL + USER_ID))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        assertThrows(NotFoundException.class, () -> userService.get(USER_ID));
+        assertThrows(IllegalRequestDataException.class, () -> userService.get(USER_ID));
     }
 
     @Test

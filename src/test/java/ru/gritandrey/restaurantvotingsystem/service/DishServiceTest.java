@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-import ru.gritandrey.restaurantvotingsystem.exception.NotFoundException;
+import ru.gritandrey.restaurantvotingsystem.exception.IllegalRequestDataException;
 import ru.gritandrey.restaurantvotingsystem.model.Dish;
 import ru.gritandrey.restaurantvotingsystem.to.DishFilter;
 import ru.gritandrey.restaurantvotingsystem.to.DishTo;
@@ -46,9 +46,9 @@ class DishServiceTest {
     }
 
     @Test
-    @DisplayName("Get Dish with fake id. Must be NotFoundException")
+    @DisplayName("Get Dish with fake id. Must be IllegalRequestDataException")
     void getNotFound() {
-        assertThrows(NotFoundException.class, () -> dishService.get(NOT_FOUND));
+        assertThrows(IllegalRequestDataException.class, () -> dishService.get(NOT_FOUND));
     }
 
     @Test
@@ -74,6 +74,6 @@ class DishServiceTest {
     @DisplayName("Delete dish1")
     void delete() {
         dishService.delete(DISH1_ID);
-        assertThrows(NotFoundException.class, () -> dishService.get(DISH1_ID));
+        assertThrows(IllegalRequestDataException.class, () -> dishService.get(DISH1_ID));
     }
 }

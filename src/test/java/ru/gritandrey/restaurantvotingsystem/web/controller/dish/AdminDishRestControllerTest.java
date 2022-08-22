@@ -6,7 +6,7 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ru.gritandrey.restaurantvotingsystem.exception.NotFoundException;
+import ru.gritandrey.restaurantvotingsystem.exception.IllegalRequestDataException;
 import ru.gritandrey.restaurantvotingsystem.model.Dish;
 import ru.gritandrey.restaurantvotingsystem.service.DishService;
 import ru.gritandrey.restaurantvotingsystem.to.DishTo;
@@ -83,7 +83,7 @@ class AdminDishRestControllerTest extends AbstractControllerTest {
     void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL + DISH1_ID))
                 .andExpect(status().isNoContent());
-        assertThrows(NotFoundException.class, () -> dishService.get(DISH1_ID));
+        assertThrows(IllegalRequestDataException.class, () -> dishService.get(DISH1_ID));
     }
 
     @Test

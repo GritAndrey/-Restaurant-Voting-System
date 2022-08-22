@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-import ru.gritandrey.restaurantvotingsystem.exception.NotFoundException;
+import ru.gritandrey.restaurantvotingsystem.exception.IllegalRequestDataException;
 import ru.gritandrey.restaurantvotingsystem.model.Dish;
 import ru.gritandrey.restaurantvotingsystem.repository.DishRepository;
 import ru.gritandrey.restaurantvotingsystem.repository.RestaurantRepository;
@@ -37,7 +37,7 @@ public class DishService {
     public List<MenuTo> getByFilter(DishFilter dishFilter) {
         final var filteredDishes = dishRepository.findAllByFilter(dishFilter);
         if (filteredDishes.isEmpty()) {
-            throw new NotFoundException("Dishes not found!");
+            throw new IllegalRequestDataException("Dishes not found!");
         }
         record MenuKey(LocalDate menuDate,
                        Integer restaurantId) {
