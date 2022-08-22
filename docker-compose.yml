@@ -1,0 +1,8 @@
+version: '3.5'
+services:
+  voting:
+    container_name: voting
+    build: .
+    image: voting:${TAG:-latest}
+    ports:
+      - 8080:8080
