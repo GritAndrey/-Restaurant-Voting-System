@@ -5,7 +5,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ru.gritandrey.restaurantvotingsystem.service.RestaurantService;
 import ru.gritandrey.restaurantvotingsystem.web.AbstractControllerTest;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -15,12 +14,10 @@ import static ru.gritandrey.restaurantvotingsystem.RestaurantAndDishTestData.*;
 import static ru.gritandrey.restaurantvotingsystem.UserTestData.USER_MAIL;
 
 class UserRestaurantControllerTest extends AbstractControllerTest {
-    private final RestaurantService restaurantService;
     public static final String REST_URL = UserRestaurantController.REST_URL + '/';
 
-    public UserRestaurantControllerTest(MockMvc mockMvc, RestaurantService restaurantService) {
+    public UserRestaurantControllerTest(MockMvc mockMvc) {
         super(mockMvc);
-        this.restaurantService = restaurantService;
     }
 
     @Test
