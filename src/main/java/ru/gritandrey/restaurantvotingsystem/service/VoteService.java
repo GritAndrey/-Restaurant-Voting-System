@@ -9,6 +9,7 @@ import ru.gritandrey.restaurantvotingsystem.model.Vote;
 import ru.gritandrey.restaurantvotingsystem.repository.RestaurantRepository;
 import ru.gritandrey.restaurantvotingsystem.repository.UserRepository;
 import ru.gritandrey.restaurantvotingsystem.repository.VoteRepository;
+import ru.gritandrey.restaurantvotingsystem.to.VoteFilter;
 import ru.gritandrey.restaurantvotingsystem.to.VoteTo;
 import ru.gritandrey.restaurantvotingsystem.util.VoteUtil;
 
@@ -32,6 +33,14 @@ public class VoteService {
     public VoteTo get(int voteId, int userId) {
         return VoteUtil.getTo(voteRepository.get(voteId, userId)
                 .orElseThrow(() -> new IllegalRequestDataException("Entity with id=" + voteId + " not found")));
+    }
+
+    public List<VoteTo> getByFilter(VoteFilter filter) {
+        final var filteredVotes = voteRepository.findAllByFilter(filter);
+        if (filteredVotes.isEmpty()) {
+            throw new IllegalRequestDataException("No votes with filter: " + filter.toString());
+        }
+        return VoteUtil.getTos(filteredVotes);
     }
 
     public List<VoteTo> getAll() {

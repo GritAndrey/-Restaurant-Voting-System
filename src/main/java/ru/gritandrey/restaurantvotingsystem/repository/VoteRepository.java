@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Transactional(readOnly = true)
-public interface VoteRepository extends BaseRepository<Vote> {
+public interface VoteRepository extends BaseRepository<Vote>, FilterVoteRepository {
 
     @Query("select v from Vote v where v.user.id = :userId")
     List<Vote> findAllByUserId(Integer userId);

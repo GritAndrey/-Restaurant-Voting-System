@@ -35,7 +35,7 @@ public class DishService {
     public List<MenuTo> getByFilter(DishFilter dishFilter) {
         final var filteredDishes = dishRepository.findAllByFilter(dishFilter);
         if (filteredDishes.isEmpty()) {
-            throw new IllegalRequestDataException("Dishes not found!");
+            throw new IllegalRequestDataException("No dishes with filter:" + dishFilter);
         }
         record MenuKey(LocalDate menuDate,
                        Integer restaurantId) {

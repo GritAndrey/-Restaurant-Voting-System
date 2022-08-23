@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,10 +31,10 @@ public class UserDishController {
 
     @GetMapping
     @Operation(summary = "GetAll dishes by Restaurant Id and period. If all params are null, return all menu for today")
-    public List<MenuTo> getAllBy(@RequestParam(required = false) Integer restaurantId,
-                                 @RequestParam(required = false)
+    public List<MenuTo> getAllBy(@RequestParam @Nullable Integer restaurantId,
+                                 @RequestParam @Nullable
                                  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                                 @RequestParam(required = false)
+                                 @RequestParam @Nullable
                                  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         if (startDate == null && endDate == null && restaurantId == null) {
             startDate = LocalDate.now();
