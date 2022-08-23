@@ -1,7 +1,10 @@
 # Restaurant voting system
-Design and implement a REST API using Hibernate/Spring/SpringMVC  without frontend.
 
-a voting system for deciding where to have lunch.
+Design and implement a REST API using Hibernate/Spring/SpringMVC without frontend.
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b3899be1a1ee4057b1a22c9aee7a78fa)](https://www.codacy.com/gh/GritAndrey/restaurant-voting-system/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=GritAndrey/restaurant-voting-system&amp;utm_campaign=Badge_Grade)
+
+A voting system for deciding where to have lunch.
 
 - 2 types of users: admin and regular users
 - Admin can input a restaurant and it's lunch menu of the day (2-5 items usually, just a food name and price)
