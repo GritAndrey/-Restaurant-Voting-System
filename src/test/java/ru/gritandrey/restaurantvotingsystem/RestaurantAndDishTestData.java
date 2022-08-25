@@ -5,7 +5,6 @@ import ru.gritandrey.restaurantvotingsystem.model.Dish;
 import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
 import ru.gritandrey.restaurantvotingsystem.to.DishTo;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantTo;
-import ru.gritandrey.restaurantvotingsystem.util.DishUtil;
 import ru.gritandrey.restaurantvotingsystem.util.RestaurantUtil;
 
 import java.math.BigDecimal;
@@ -65,9 +64,7 @@ public class RestaurantAndDishTestData {
     public static final DishTo dish1To = DishTo.builder()
             .id(dish1.getId())
             .price(dish1.getPrice())
-            .date(dish1.getDate())
             .name(dish1.getName())
-            .restaurantId(dish1.getRestaurant().getId())
             .build();
     public static final List<Dish> dishes = List.of(dish1, dish2, dish3, dish4, dish5, dish6, dish7, dish8, dish9, dish10, dish11, dish12);
     public static final List<RestaurantTo> restaurantsTo;
@@ -92,11 +89,6 @@ public class RestaurantAndDishTestData {
 
     public static Dish getNewDishWithExistingNameAndRestaurant() {
         return new Dish(null, new BigDecimal("33.1"), food10, restaurant1, TODAY);
-    }
-
-    public static DishTo getNewDishTo() {
-        final var newDish = getNewDishWithExistingNameAndRestaurant();
-        return DishUtil.getTo(newDish);
     }
 
     public static Dish getUpdatedDish() {

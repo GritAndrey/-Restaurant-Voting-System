@@ -11,13 +11,16 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @EqualsAndHashCode(callSuper = true)
 @Value
 @ToString(callSuper = true)
 @Jacksonized
 @SuperBuilder
-public class DishTo extends BaseTo {
+public class DishCreateTo extends BaseTo {
+
+    LocalDate date;
 
     @Positive
     @NotNull
@@ -26,4 +29,7 @@ public class DishTo extends BaseTo {
     @NotBlank
     @Size(min = 2, max = 128)
     String name;
+
+    @NotNull
+    Integer restaurantId;
 }

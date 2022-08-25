@@ -66,13 +66,12 @@ class AdminDishControllerTest extends AbstractControllerTest {
     @WithUserDetails(value = ADMIN_MAIL)
     void createWithLocation() throws Exception {
         final var newDish = getNewDishWithExistingNameAndRestaurant();
-        final var newDishTo = getNewDishTo();
+
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(newDishTo)))
+                .content(JsonUtil.writeValue(DishUtil.getCreateTo(newDish))))
                 .andExpect(status().isCreated());
         DishTo created = DISH_TO_MATCHER.readFromJson(action);
-
         int newId = created.id();
         newDish.setId(newId);
         DISH_MATCHER.assertMatch(dishService.get(newId), newDish);
@@ -98,7 +97,7 @@ class AdminDishControllerTest extends AbstractControllerTest {
     void update() throws Exception {
         Dish updated = getUpdatedDish();
         perform(MockMvcRequestBuilders.put(REST_URL + DISH1_ID).contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(DishUtil.getTo(updated))))
+                .content(JsonUtil.writeValue(DishUtil.getCreateTo(updated))))
                 .andDo(print())
                 .andExpect(status().isNoContent());
         DISH_MATCHER.assertMatch(dishService.get(DISH1_ID), updated);

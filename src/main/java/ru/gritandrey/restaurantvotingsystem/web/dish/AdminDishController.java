@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.gritandrey.restaurantvotingsystem.service.DishService;
-import ru.gritandrey.restaurantvotingsystem.to.DishTo;
+import ru.gritandrey.restaurantvotingsystem.to.DishCreateTo;
 import ru.gritandrey.restaurantvotingsystem.util.DishUtil;
 import ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUtil;
 
@@ -27,29 +27,29 @@ public class AdminDishController {
     private final DishService dishService;
 
     @GetMapping("{id}")
-    public DishTo get(@PathVariable int id) {
-        DishTo dish = DishUtil.getTo(dishService.get(id));
+    public DishCreateTo get(@PathVariable int id) {
+        DishCreateTo dish = DishUtil.getCreateTo(dishService.get(id));
         log.info("Get restaurant dish with id: {} {}", dish.getId(), dish);
         return dish;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<DishTo> createWithLocation(@Valid @RequestBody DishTo dishTo) {
-        ValidationUtil.checkNew(dishTo);
-        final var created = dishService.create(dishTo);
+    public ResponseEntity<DishCreateTo> createWithLocation(@Valid @RequestBody DishCreateTo dishdishCreateToo) {
+        ValidationUtil.checkNew(dishdishCreateToo);
+        final var created = dishService.create(dishdishCreateToo);
         log.info("Create {}", created);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
-        return ResponseEntity.created(uriOfNewResource).body(DishUtil.getTo(created));
+        return ResponseEntity.created(uriOfNewResource).body(DishUtil.getCreateTo(created));
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@Valid @RequestBody DishTo dishTo, @PathVariable int id) {
-        ValidationUtil.assureIdConsistent(dishTo, id);
-        log.info("Update {}", dishTo);
-        dishService.update(dishTo);
+    public void update(@Valid @RequestBody DishCreateTo dishCreateTo, @PathVariable int id) {
+        ValidationUtil.assureIdConsistent(dishCreateTo, id);
+        log.info("Update {}", dishCreateTo);
+        dishService.update(dishCreateTo);
     }
 
     @DeleteMapping("/{id}")

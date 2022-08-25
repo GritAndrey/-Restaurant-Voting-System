@@ -22,10 +22,6 @@ public class RestaurantUtil {
     }
 
     public static Restaurant getRestaurant(RestaurantTo restaurantTo) {
-        final var restaurant = new Restaurant(restaurantTo.getId(), restaurantTo.getName(), restaurantTo.getAddress());
-        if (!restaurantTo.getMenu().isEmpty()) {
-            restaurant.setMenu(DishUtil.getDishes(restaurantTo.getMenu()));
-        }
-        return restaurant;
+        return new Restaurant(restaurantTo.getId(), restaurantTo.getName(), restaurantTo.getAddress());
     }
 }

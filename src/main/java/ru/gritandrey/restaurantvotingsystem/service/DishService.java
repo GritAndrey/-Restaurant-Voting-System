@@ -10,8 +10,8 @@ import ru.gritandrey.restaurantvotingsystem.exception.IllegalRequestDataExceptio
 import ru.gritandrey.restaurantvotingsystem.model.Dish;
 import ru.gritandrey.restaurantvotingsystem.repository.DishRepository;
 import ru.gritandrey.restaurantvotingsystem.repository.RestaurantRepository;
+import ru.gritandrey.restaurantvotingsystem.to.DishCreateTo;
 import ru.gritandrey.restaurantvotingsystem.to.DishFilter;
-import ru.gritandrey.restaurantvotingsystem.to.DishTo;
 import ru.gritandrey.restaurantvotingsystem.to.MenuTo;
 import ru.gritandrey.restaurantvotingsystem.util.DishUtil;
 
@@ -56,19 +56,19 @@ public class DishService {
             @CacheEvict(value = "menus", allEntries = true),
             @CacheEvict(value = "restWithMenu", allEntries = true)
     })
-    public Dish create(DishTo dishTo) {
-        return save(DishUtil.getDish(dishTo), dishTo.getRestaurantId());
+    public Dish create(DishCreateTo dishCreateTo) {
+        return save(DishUtil.getDish(dishCreateTo), dishCreateTo.getRestaurantId());
     }
 
     @Transactional
     @Caching(evict = {
             @CacheEvict(value = "menus", allEntries = true),
             @CacheEvict(value = "restWithMenu", allEntries = true)})
-    public void update(DishTo dishTo) {
-        final var dish = get(dishTo.getId());
-        dish.setRestaurant(restaurantRepository.getExisted(dishTo.getRestaurantId()));
-        dish.setName(dishTo.getName());
-        dish.setPrice(dishTo.getPrice());
+    public void update(DishCreateTo dishCreateTo) {
+        final var dish = get(dishCreateTo.getId());
+        dish.setRestaurant(restaurantRepository.getExisted(dishCreateTo.getRestaurantId()));
+        dish.setName(dishCreateTo.getName());
+        dish.setPrice(dishCreateTo.getPrice());
     }
 
     @Caching(evict = {

@@ -53,7 +53,7 @@ class DishServiceTest {
     @DisplayName("Checking new dish creation")
     void create() {
         final var newDish = getNewDishWithExistingNameAndRestaurant();
-        final Dish created = dishService.create(DishUtil.getTo(newDish));
+        final Dish created = dishService.create(DishUtil.getCreateTo(newDish));
         final var newId = created.getId();
         newDish.setId(newId);
         DISH_MATCHER.assertMatch(created, newDish);
@@ -64,7 +64,7 @@ class DishServiceTest {
     @DisplayName("Update dish1")
     void update() {
         final Dish updatedDish = getUpdatedDish();
-        dishService.update(DishUtil.getTo(updatedDish));
+        dishService.update(DishUtil.getCreateTo(updatedDish));
         DISH_MATCHER.assertMatch(dishService.get(DISH1_ID), updatedDish);
     }
 
