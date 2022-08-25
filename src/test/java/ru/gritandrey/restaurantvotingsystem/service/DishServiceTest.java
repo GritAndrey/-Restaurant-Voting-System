@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-import ru.gritandrey.restaurantvotingsystem.exception.IllegalRequestDataException;
+import ru.gritandrey.restaurantvotingsystem.exception.DataConflictException;
 import ru.gritandrey.restaurantvotingsystem.model.Dish;
 import ru.gritandrey.restaurantvotingsystem.to.DishFilter;
 import ru.gritandrey.restaurantvotingsystem.to.DishTo;
@@ -29,7 +29,7 @@ class DishServiceTest {
     @Test
     @DisplayName("Get one dish")
     void get() {
-        final var dish = dishService.get(DISH1_ID);
+        final var dish = dishService.get(DISH1_ID, RESTAURANT1_ID);
         DISH_MATCHER.assertMatch(dish, dish1);
     }
 
@@ -44,34 +44,34 @@ class DishServiceTest {
     }
 
     @Test
-    @DisplayName("Get Dish with fake id. Must be IllegalRequestDataException")
+    @DisplayName("Get Dish with fake id. Must be DataConflictException")
     void getNotFound() {
-        assertThrows(IllegalRequestDataException.class, () -> dishService.get(NOT_FOUND));
+        assertThrows(DataConflictException.class, () -> dishService.get(NOT_FOUND, RESTAURANT1_ID));
     }
 
     @Test
     @DisplayName("Checking new dish creation")
     void create() {
         final var newDish = getNewDishWithExistingNameAndRestaurant();
-        final Dish created = dishService.create(DishUtil.getCreateTo(newDish));
+        final Dish created = dishService.create(newDish, newDish.getRestaurant().getId());
         final var newId = created.getId();
         newDish.setId(newId);
         DISH_MATCHER.assertMatch(created, newDish);
-        DISH_MATCHER.assertMatch(dishService.get(newId), newDish);
+        DISH_MATCHER.assertMatch(dishService.get(newId, RESTAURANT1_ID), newDish);
     }
 
     @Test
     @DisplayName("Update dish1")
     void update() {
         final Dish updatedDish = getUpdatedDish();
-        dishService.update(DishUtil.getCreateTo(updatedDish));
-        DISH_MATCHER.assertMatch(dishService.get(DISH1_ID), updatedDish);
+        dishService.update(updatedDish, updatedDish.getId(), updatedDish.getRestaurant().getId());
+        DISH_MATCHER.assertMatch(dishService.get(DISH1_ID, RESTAURANT1_ID), updatedDish);
     }
 
     @Test
     @DisplayName("Delete dish1")
     void delete() {
-        dishService.delete(DISH1_ID);
-        assertThrows(IllegalRequestDataException.class, () -> dishService.get(DISH1_ID));
+        dishService.delete(DISH1_ID, RESTAURANT1_ID);
+        assertThrows(DataConflictException.class, () -> dishService.get(DISH1_ID, RESTAURANT1_ID));
     }
 }

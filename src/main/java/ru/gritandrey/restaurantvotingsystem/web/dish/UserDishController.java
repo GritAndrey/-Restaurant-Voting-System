@@ -8,10 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.lang.Nullable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.gritandrey.restaurantvotingsystem.service.DishService;
 import ru.gritandrey.restaurantvotingsystem.to.DishFilter;
 import ru.gritandrey.restaurantvotingsystem.to.MenuTo;
@@ -26,17 +23,17 @@ import java.util.List;
 @Slf4j
 @Tags({@Tag(name = "User Dish controller", description = "Get dishes by restaurantId and(or) date")})
 public class UserDishController {
-    public static final String REST_URL = "/api/dishes";
+    public static final String REST_URL = "/api/restaurants/{restaurantId}/dishes";
     private final DishService dishService;
 
     @GetMapping
     @Operation(summary = "GetAll dishes by Restaurant Id and period. If all params are null, return all menu for today")
-    public List<MenuTo> getAllBy(@RequestParam @Nullable Integer restaurantId,
+    public List<MenuTo> getAllBy(@PathVariable Integer restaurantId,
                                  @RequestParam @Nullable
                                  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                  @RequestParam @Nullable
                                  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-        if (startDate == null && endDate == null && restaurantId == null) {
+        if (startDate == null && endDate == null) {
             startDate = LocalDate.now();
         }
         final var menus = dishService.getByFilter(new DishFilter(restaurantId, startDate, endDate));

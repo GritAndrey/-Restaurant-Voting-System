@@ -6,10 +6,9 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ru.gritandrey.restaurantvotingsystem.exception.IllegalRequestDataException;
+import ru.gritandrey.restaurantvotingsystem.exception.DataConflictException;
 import ru.gritandrey.restaurantvotingsystem.model.Dish;
 import ru.gritandrey.restaurantvotingsystem.service.DishService;
-import ru.gritandrey.restaurantvotingsystem.to.DishTo;
 import ru.gritandrey.restaurantvotingsystem.util.DishUtil;
 import ru.gritandrey.restaurantvotingsystem.util.JsonUtil;
 import ru.gritandrey.restaurantvotingsystem.web.AbstractControllerTest;
@@ -23,7 +22,7 @@ import static ru.gritandrey.restaurantvotingsystem.UserTestData.ADMIN_MAIL;
 import static ru.gritandrey.restaurantvotingsystem.UserTestData.USER_MAIL;
 
 class AdminDishControllerTest extends AbstractControllerTest {
-    private static final String REST_URL = AdminDishController.REST_URL + '/';
+    private static final String REST_URL = "/api/admin/restaurants/" + RESTAURANT1_ID + "/dishes" + '/';
     private final DishService dishService;
 
     public AdminDishControllerTest(MockMvc mockMvc, DishService dishService) {
@@ -59,7 +58,7 @@ class AdminDishControllerTest extends AbstractControllerTest {
     void getNotFound() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + NOT_FOUND))
                 .andDo(print())
-                .andExpect(status().isUnprocessableEntity());
+                .andExpect(status().isConflict());
     }
 
     @Test
@@ -69,12 +68,12 @@ class AdminDishControllerTest extends AbstractControllerTest {
 
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(DishUtil.getCreateTo(newDish))))
+                .content(JsonUtil.writeValue(newDish)))
                 .andExpect(status().isCreated());
-        DishTo created = DISH_TO_MATCHER.readFromJson(action);
+        Dish created = DISH_MATCHER.readFromJson(action);
         int newId = created.id();
         newDish.setId(newId);
-        DISH_MATCHER.assertMatch(dishService.get(newId), newDish);
+        DISH_MATCHER.assertMatch(dishService.get(newId, RESTAURANT1_ID), newDish);
     }
 
     @Test
@@ -82,14 +81,14 @@ class AdminDishControllerTest extends AbstractControllerTest {
     void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL + DISH1_ID))
                 .andExpect(status().isNoContent());
-        assertThrows(IllegalRequestDataException.class, () -> dishService.get(DISH1_ID));
+        assertThrows(DataConflictException.class, () -> dishService.get(DISH1_ID, RESTAURANT1_ID));
     }
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void deleteNotFound() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL + NOT_FOUND))
-                .andExpect(status().isUnprocessableEntity());
+                .andExpect(status().isConflict());
     }
 
     @Test
@@ -97,10 +96,10 @@ class AdminDishControllerTest extends AbstractControllerTest {
     void update() throws Exception {
         Dish updated = getUpdatedDish();
         perform(MockMvcRequestBuilders.put(REST_URL + DISH1_ID).contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(DishUtil.getCreateTo(updated))))
+                .content(JsonUtil.writeValue(updated)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        DISH_MATCHER.assertMatch(dishService.get(DISH1_ID), updated);
+        DISH_MATCHER.assertMatch(dishService.get(DISH1_ID, RESTAURANT1_ID), updated);
     }
 
     @Test

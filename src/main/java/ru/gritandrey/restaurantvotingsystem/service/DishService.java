@@ -10,7 +10,6 @@ import ru.gritandrey.restaurantvotingsystem.exception.IllegalRequestDataExceptio
 import ru.gritandrey.restaurantvotingsystem.model.Dish;
 import ru.gritandrey.restaurantvotingsystem.repository.DishRepository;
 import ru.gritandrey.restaurantvotingsystem.repository.RestaurantRepository;
-import ru.gritandrey.restaurantvotingsystem.to.DishCreateTo;
 import ru.gritandrey.restaurantvotingsystem.to.DishFilter;
 import ru.gritandrey.restaurantvotingsystem.to.MenuTo;
 import ru.gritandrey.restaurantvotingsystem.util.DishUtil;
@@ -27,8 +26,8 @@ public class DishService {
     private final DishRepository dishRepository;
     private final RestaurantRepository restaurantRepository;
 
-    public Dish get(int id) {
-        return dishRepository.getExisted(id);
+    public Dish get(int dishId, int restaurantId) {
+        return dishRepository.checkBelong(dishId, restaurantId);
     }
 
     @Cacheable(value = "menus", condition = ("#dishFilter.startDate != null && #dishFilter.startDate.equals(T(java.time.LocalDate).now())"))
@@ -56,31 +55,30 @@ public class DishService {
             @CacheEvict(value = "menus", allEntries = true),
             @CacheEvict(value = "restWithMenu", allEntries = true)
     })
-    public Dish create(DishCreateTo dishCreateTo) {
-        return save(DishUtil.getDish(dishCreateTo), dishCreateTo.getRestaurantId());
+    public Dish create(Dish dish, Integer restaurantId) {
+        return save(dish, restaurantId);
     }
 
     @Transactional
     @Caching(evict = {
             @CacheEvict(value = "menus", allEntries = true),
             @CacheEvict(value = "restWithMenu", allEntries = true)})
-    public void update(DishCreateTo dishCreateTo) {
-        final var dish = get(dishCreateTo.getId());
-        dish.setRestaurant(restaurantRepository.getExisted(dishCreateTo.getRestaurantId()));
-        dish.setName(dishCreateTo.getName());
-        dish.setPrice(dishCreateTo.getPrice());
+    public void update(Dish updated, Integer updatedId, Integer restaurantId) {
+        final var dish = dishRepository.checkBelong(updatedId, restaurantId);
+        dish.setName(updated.getName());
+        dish.setPrice(updated.getPrice());
     }
 
     @Caching(evict = {
             @CacheEvict(value = "menus", allEntries = true),
             @CacheEvict(value = "restWithMenu", allEntries = true)})
-    public void delete(int id) {
-        dishRepository.deleteExisted(id);
+    public void delete(int id, int restaurantId) {
+        dishRepository.delete(dishRepository.checkBelong(id, restaurantId));
     }
 
     @Transactional
     protected Dish save(Dish dish, int restaurantId) {
-        dish.setRestaurant(restaurantRepository.getExisted(restaurantId));
+        dish.setRestaurant(restaurantRepository.getReferenceById(restaurantId));
         return dishRepository.save(dish);
     }
 }
