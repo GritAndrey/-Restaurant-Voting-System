@@ -17,8 +17,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
-
 @Service
 @RequiredArgsConstructor
 public class VoteService {
@@ -41,10 +39,6 @@ public class VoteService {
             throw new IllegalRequestDataException("No votes with filter: " + filter.toString());
         }
         return VoteUtil.getTos(filteredVotes);
-    }
-
-    public List<VoteTo> getAll() {
-        return voteRepository.findAll().stream().map(VoteUtil::getTo).collect(toList());
     }
 
     public List<VoteTo> getAllByUserId(int userId) {
