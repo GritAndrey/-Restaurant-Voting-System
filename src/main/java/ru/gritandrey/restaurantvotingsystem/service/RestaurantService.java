@@ -62,7 +62,7 @@ public class RestaurantService {
     @Transactional
     @Caching(evict = {
             @CacheEvict(value = "menus", allEntries = true),
-            @CacheEvict(value = "restWithMenu")
+            @CacheEvict(value = "restWithMenu", allEntries = true)
     })
     public void delete(int id) {
         restaurantRepository.deleteExisted(id);
