@@ -80,7 +80,6 @@ public class DishService {
 
     @Transactional
     protected Dish save(Dish dish, int restaurantId) {
-        dish.setDate(LocalDate.now());
         dish.setRestaurant(restaurantRepository.getExisted(restaurantId));
         return dishRepository.save(dish);
     }

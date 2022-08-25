@@ -5,7 +5,6 @@ import ru.gritandrey.restaurantvotingsystem.model.Dish;
 import ru.gritandrey.restaurantvotingsystem.model.Restaurant;
 import ru.gritandrey.restaurantvotingsystem.to.DishTo;
 
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -29,7 +28,12 @@ public class DishUtil {
     }
 
     public static Dish getDish(DishTo dishTo) {
-        return new Dish(dishTo.getId(), dishTo.getPrice(), dishTo.getName(), new Restaurant(), LocalDate.now());
+        return new Dish(dishTo.getId(),
+                dishTo.getPrice(),
+                dishTo.getName(),
+                new Restaurant(),
+                dishTo.getDate()
+        );
     }
 
     public static List<Dish> getDishes(Collection<DishTo> dishesTo) {

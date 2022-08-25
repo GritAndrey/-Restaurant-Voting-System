@@ -1,6 +1,5 @@
 package ru.gritandrey.restaurantvotingsystem.to;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.Value;
@@ -21,7 +20,6 @@ import java.time.LocalDate;
 @SuperBuilder
 public class DishTo extends BaseTo {
 
-    @Schema(hidden = true)
     LocalDate date;
 
     @Positive

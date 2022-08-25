@@ -12,8 +12,7 @@ import ru.gritandrey.restaurantvotingsystem.to.DishFilter;
 import ru.gritandrey.restaurantvotingsystem.to.DishTo;
 import ru.gritandrey.restaurantvotingsystem.util.DishUtil;
 
-import java.util.Comparator;
-
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.gritandrey.restaurantvotingsystem.RestaurantAndDishTestData.*;
@@ -38,11 +37,10 @@ class DishServiceTest {
     @DisplayName("Get all today dishes")
     void getAllToday() {
         final var actual = dishService.getByFilter(new DishFilter(null, TODAY, null)).stream()
-                .flatMap(menuTo -> menuTo.getDishes().stream()).collect(toList());
-        DISH_TO_MATCHER.assertMatch(actual, DishUtil.getTos(dishes)
-                .stream()
-                .sorted(Comparator.comparing(DishTo::getId))
-                .collect(toList()));
+                .flatMap(menuTo -> menuTo.getDishes().stream())
+                .sorted(comparing(DishTo::getId))
+                .collect(toList());
+        DISH_TO_MATCHER.assertMatch(actual, DishUtil.getTos(dishes));
     }
 
     @Test
