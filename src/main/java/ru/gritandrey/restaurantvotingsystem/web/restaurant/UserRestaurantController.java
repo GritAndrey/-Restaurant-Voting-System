@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
-import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import ru.gritandrey.restaurantvotingsystem.service.RestaurantService;
 import ru.gritandrey.restaurantvotingsystem.to.RestaurantTo;
@@ -40,14 +39,14 @@ public class UserRestaurantController {
     @GetMapping()
     @Operation(summary = "return all restaurants. If showMenu=true, returns restaurants with menu on today")
     public Page<RestaurantTo> getAll(@RequestParam(defaultValue = "false") boolean showMenu,
-                                     @RequestParam @Nullable Integer page,
-                                     @RequestParam @Nullable Integer itemsPerPage) {
+                                     @RequestParam Optional<Integer> page,
+                                     @RequestParam Optional<Integer> itemsPerPage) {
         if (showMenu) {
             log.info("GetAll Restaurants with menu on today");
-            return restaurantService.getAllWithMenu(Optional.ofNullable(page).orElse(DEFAULT_PAGE),
-                    Optional.ofNullable(itemsPerPage).orElse(DEFAULT_ITEMS_PER_PAGE));
+            return restaurantService.getAllWithMenu(page.orElse(DEFAULT_PAGE),
+                    itemsPerPage.orElse(DEFAULT_ITEMS_PER_PAGE));
         }
         log.info("GetAll Restaurants without menu");
-        return restaurantService.getAll(page, itemsPerPage);
+        return restaurantService.getAll(page.orElse(DEFAULT_PAGE), itemsPerPage.orElse(DEFAULT_ITEMS_PER_PAGE));
     }
 }
