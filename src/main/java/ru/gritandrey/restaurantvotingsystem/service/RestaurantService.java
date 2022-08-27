@@ -31,7 +31,9 @@ public class RestaurantService {
 
     public Page<RestaurantTo> getAll(Integer page, Integer itemsPerPage) {
         var pageRequest = PageRequest.of(page, itemsPerPage, Sort.by("id"));
-        return restaurantRepository.findAllBy(pageRequest).map(RestaurantUtil::getTo);
+        final var result = restaurantRepository.findAllBy(pageRequest);
+        checkTotalPages(page, result.getTotalPages());
+        return result.map(RestaurantUtil::getTo);
     }
 
     @Cacheable("restWithMenu")
@@ -43,9 +45,10 @@ public class RestaurantService {
 
     public Page<RestaurantTo> getAllWithMenu(Integer page, Integer itemsPerPage) {
         var pageRequest = PageRequest.of(page, itemsPerPage, Sort.by("id"));
-        return restaurantRepository.findAllWithMenus(pageRequest, LocalDate.now()).map(RestaurantUtil::getTo);
+        final var result = restaurantRepository.findAllWithMenus(pageRequest, LocalDate.now());
+        checkTotalPages(page, result.getTotalPages());
+        return result.map(RestaurantUtil::getTo);
     }
-
 
     @CacheEvict(value = "restWithMenu", allEntries = true)
     public Restaurant create(RestaurantTo restaurantTo) {
@@ -66,5 +69,11 @@ public class RestaurantService {
     })
     public void delete(int id) {
         restaurantRepository.deleteExisted(id);
+    }
+
+    private void checkTotalPages(Integer page, int totalPages) {
+        if (page >= totalPages) {
+            throw new IllegalRequestDataException("Invalid page. page =" + page + " total pages=" + totalPages);
+        }
     }
 }

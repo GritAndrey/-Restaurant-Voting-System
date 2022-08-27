@@ -54,4 +54,21 @@ class UserRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(RESTAURANT_TO_MATCHER.contentJson(restaurant1ToWithMenu));
     }
+
+    @Test
+    @WithUserDetails(value = USER_MAIL)
+    void getAllWithMenuInvalidPage() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL)
+                .param("showMenu", String.valueOf(true))
+                .param("page", String.valueOf(NOT_FOUND)))
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    @WithUserDetails(value = USER_MAIL)
+    void getAllInvalidPage() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL)
+                .param("page", String.valueOf(NOT_FOUND)))
+                .andExpect(status().isUnprocessableEntity());
+    }
 }
