@@ -73,4 +73,4 @@ Open [localhost](http://localhost:8080/)
 ## API documentation
 
 - [api-docs](http://localhost:8080/v3/api-docs/REST%20API) - Api docs
-- [swagger](http://localhost:8080/swagger-ui/) - Swagger ui
+- [swagger](http://localhost:8080/swagger-ui/index.html) - Swagger ui
