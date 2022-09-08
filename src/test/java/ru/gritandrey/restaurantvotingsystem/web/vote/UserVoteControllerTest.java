@@ -89,7 +89,6 @@ class UserVoteControllerTest extends AbstractControllerTest {
     @WithUserDetails(value = NO_VOTE_USER_EMAIL)
     void voteForRestaurant() throws Exception {
         final var voteTo = VoteTo.builder()
-                .userId(NO_VOTE_USER_ID)
                 .restaurantId(RESTAURANT1_ID)
                 .date(LocalDate.now())
                 .time(LocalTime.now())

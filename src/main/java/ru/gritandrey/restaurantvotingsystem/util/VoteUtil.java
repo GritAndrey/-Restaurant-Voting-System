@@ -18,7 +18,6 @@ public class VoteUtil {
         return VoteTo.builder()
                 .id(vote.getId())
                 .restaurantId(restaurant == null ? null : restaurant.getId())
-                .userId(user == null ? null : user.getId())
                 .date(vote.getDate())
                 .time(vote.getTime())
                 .build();

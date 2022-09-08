@@ -15,7 +15,6 @@ import java.time.LocalTime;
 public class VoteTo extends BaseTo {
 
     Integer restaurantId;
-    Integer userId;
     LocalDate date;
     LocalTime time;
 }
