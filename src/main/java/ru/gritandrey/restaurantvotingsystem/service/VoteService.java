@@ -34,11 +34,7 @@ public class VoteService {
     }
 
     public List<VoteTo> getByFilter(VoteFilter filter) {
-        final var filteredVotes = voteRepository.findAllByFilter(filter);
-        if (filteredVotes.isEmpty()) {
-            throw new IllegalRequestDataException("No votes with filter: " + filter.toString());
-        }
-        return VoteUtil.getTos(filteredVotes);
+        return VoteUtil.getTos(voteRepository.findAllByFilter(filter));
     }
 
     public List<VoteTo> getAllByUserId(int userId) {

@@ -6,7 +6,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.gritandrey.restaurantvotingsystem.exception.IllegalRequestDataException;
 import ru.gritandrey.restaurantvotingsystem.model.Dish;
 import ru.gritandrey.restaurantvotingsystem.repository.DishRepository;
 import ru.gritandrey.restaurantvotingsystem.repository.RestaurantRepository;
@@ -33,9 +32,6 @@ public class DishService {
     @Cacheable(value = "menus", condition = ("#dishFilter.startDate != null && #dishFilter.startDate.equals(T(java.time.LocalDate).now())"))
     public List<MenuTo> getByFilter(DishFilter dishFilter) {
         final var filteredDishes = dishRepository.findAllByFilter(dishFilter);
-        if (filteredDishes.isEmpty()) {
-            throw new IllegalRequestDataException("No dishes with filter:" + dishFilter);
-        }
         record MenuKey(LocalDate menuDate,
                        Integer restaurantId) {
         }
