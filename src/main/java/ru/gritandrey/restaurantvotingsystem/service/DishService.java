@@ -14,6 +14,7 @@ import ru.gritandrey.restaurantvotingsystem.to.MenuTo;
 import ru.gritandrey.restaurantvotingsystem.util.DishUtil;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 
 import static java.util.stream.Collectors.groupingBy;
@@ -43,8 +44,8 @@ public class DishService {
                         .menuDate(entry.getKey().menuDate())
                         .dishes(DishUtil.getTos(entry.getValue()))
                         .build()
-                )
-                .collect(toList());
+                ).sorted(Comparator.comparing(MenuTo::getMenuDate).reversed().thenComparing(MenuTo::getRestaurantId)).collect(toList());
+
     }
 
     @Caching(evict = {

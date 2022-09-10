@@ -27,16 +27,15 @@ public class AdminDishController {
 
     @GetMapping("/{id}")
     public Dish get(@PathVariable int id, @PathVariable int restaurantId) {
-        Dish dish = dishService.get(id, restaurantId);
-        log.info("Get restaurant dish with id: {} restaurantId: {}", dish.getId(), restaurantId);
-        return dish;
+        log.info("Get restaurant dish with id: {} restaurantId: {}", id, restaurantId);
+        return dishService.get(id, restaurantId);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Dish> createWithLocation(@Valid @RequestBody Dish dish, @PathVariable int restaurantId) {
+        log.info("Create {}", dish);
         ValidationUtil.checkNew(dish);
         final var created = dishService.create(dish, restaurantId);
-        log.info("Create {}", created);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(restaurantId, created.getId()).toUri();
@@ -46,8 +45,8 @@ public class AdminDishController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody Dish dish, @PathVariable int id, @PathVariable int restaurantId) {
-        ValidationUtil.assureIdConsistent(dish, id);
         log.info("Update {}", dish);
+        ValidationUtil.assureIdConsistent(dish, id);
         dishService.update(dish, id, restaurantId);
     }
 

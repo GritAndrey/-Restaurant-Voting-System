@@ -14,7 +14,6 @@ import ru.gritandrey.restaurantvotingsystem.to.DishFilter;
 import ru.gritandrey.restaurantvotingsystem.to.MenuTo;
 
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -36,9 +35,7 @@ public class UserDishController {
         if (startDate == null && endDate == null) {
             startDate = LocalDate.now();
         }
-        final var menus = dishService.getByFilter(new DishFilter(restaurantId, startDate, endDate));
-        log.info("GetAll dishes by Restaurant Id and Date  {}", menus);
-        menus.sort(Comparator.comparing(MenuTo::getMenuDate).reversed().thenComparing(MenuTo::getRestaurantId));
-        return menus;
+        log.info("GetAll dishes by Restaurant Id: {} and startDate: {} , endDate: {}", restaurantId, startDate, endDate);
+        return dishService.getByFilter(new DishFilter(restaurantId, startDate, endDate));
     }
 }

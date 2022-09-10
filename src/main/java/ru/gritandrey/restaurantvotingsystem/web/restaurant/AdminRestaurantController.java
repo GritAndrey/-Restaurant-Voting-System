@@ -28,9 +28,9 @@ public class AdminRestaurantController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestaurantTo> createWithLocation(@Valid @RequestBody RestaurantTo restaurantTo) {
+        log.info("Create {}", restaurantTo);
         ValidationUtil.checkNew(restaurantTo);
         final var created = restaurantService.create(restaurantTo);
-        log.info("Create {}", created);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
@@ -40,8 +40,8 @@ public class AdminRestaurantController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody RestaurantTo restaurantTo, @PathVariable int id) {
-        ValidationUtil.assureIdConsistent(restaurantTo, id);
         log.info("Update restaurant: {} with id: {}", restaurantTo, id);
+        ValidationUtil.assureIdConsistent(restaurantTo, id);
         restaurantService.update(restaurantTo);
     }
 
