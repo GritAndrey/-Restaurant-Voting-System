@@ -69,7 +69,7 @@ class UserVoteControllerTest extends AbstractControllerTest {
     @WithUserDetails(value = USER_MAIL)
     void update() throws Exception {
         final var updated = getUpdatedVote();
-        voteService.voteEndTime = LocalTime.now().plusMinutes(10);
+        voteService.setVoteEndTime(LocalTime.MAX);
         perform(MockMvcRequestBuilders.put(REST_URL)
                 .param("restaurantId", String.valueOf(RESTAURANT2_ID)))
                 .andExpect(status().isNoContent());
@@ -79,7 +79,7 @@ class UserVoteControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = USER_MAIL)
     void updateWhenVoteTimeEnded() throws Exception {
-        voteService.voteEndTime = LocalTime.now().minusMinutes(10);
+        voteService.setVoteEndTime(LocalTime.MIN);
         perform(MockMvcRequestBuilders.put(REST_URL)
                 .param("restaurantId", String.valueOf(RESTAURANT2_ID)))
                 .andExpect(status().isUnprocessableEntity());
