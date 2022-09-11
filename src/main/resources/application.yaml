@@ -35,7 +35,7 @@ spring:
 
   # https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties-cache
   cache:
-    cache-names: restWithMenu,menus
+    cache-names: restWithMenu,menus,restaurants
     caffeine.spec: maximumSize=1000,expireAfterAccess=600s
 
 logging:

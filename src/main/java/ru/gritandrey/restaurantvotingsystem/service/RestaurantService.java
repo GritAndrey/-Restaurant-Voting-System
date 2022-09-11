@@ -43,6 +43,7 @@ public class RestaurantService {
         return RestaurantUtil.getTo(restaurant);
     }
 
+    @Cacheable("restaurants")
     public Page<RestaurantTo> getAllWithMenu(Integer page, Integer itemsPerPage) {
         var pageRequest = PageRequest.of(page, itemsPerPage, Sort.by("id"));
         final var result = restaurantRepository.findAllWithMenus(pageRequest, LocalDate.now());
@@ -50,12 +51,15 @@ public class RestaurantService {
         return result.map(RestaurantUtil::getTo);
     }
 
-    @CacheEvict(value = "restWithMenu", allEntries = true)
+    @CacheEvict(value = "restaurants", allEntries = true)
     public Restaurant create(RestaurantTo restaurantTo) {
         return restaurantRepository.save(RestaurantUtil.getRestaurant(restaurantTo));
     }
 
-    @CacheEvict(value = "restWithMenu", key = "#restaurantTo.id")
+    @Caching(evict = {
+            @CacheEvict(value = "restWithMenu", key = "#restaurantTo.id"),
+            @CacheEvict(value = "restaurants", allEntries = true)
+    })
     public void update(RestaurantTo restaurantTo) {
         final var existed = restaurantRepository.getExisted(restaurantTo.getId());
         existed.setName(restaurantTo.getName());
@@ -64,8 +68,9 @@ public class RestaurantService {
 
     @Transactional
     @Caching(evict = {
+            @CacheEvict(value = "restWithMenu", key = "#id"),
             @CacheEvict(value = "menus", allEntries = true),
-            @CacheEvict(value = "restWithMenu", allEntries = true)
+            @CacheEvict(value = "restaurants", allEntries = true)
     })
     public void delete(int id) {
         restaurantRepository.deleteExisted(id);

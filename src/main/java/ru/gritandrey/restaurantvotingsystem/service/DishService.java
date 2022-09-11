@@ -50,7 +50,7 @@ public class DishService {
 
     @Caching(evict = {
             @CacheEvict(value = "menus", allEntries = true),
-            @CacheEvict(value = "restWithMenu", allEntries = true)
+            @CacheEvict(value = "restWithMenu", key = "#restaurantId")
     })
     public Dish create(Dish dish, Integer restaurantId) {
         return save(dish, restaurantId);
@@ -59,7 +59,7 @@ public class DishService {
     @Transactional
     @Caching(evict = {
             @CacheEvict(value = "menus", allEntries = true),
-            @CacheEvict(value = "restWithMenu", allEntries = true)})
+            @CacheEvict(value = "restWithMenu", key = "#restaurantId")})
     public void update(Dish updated, Integer updatedId, Integer restaurantId) {
         final var dish = dishRepository.checkBelong(updatedId, restaurantId);
         dish.setName(updated.getName());
@@ -68,7 +68,7 @@ public class DishService {
 
     @Caching(evict = {
             @CacheEvict(value = "menus", allEntries = true),
-            @CacheEvict(value = "restWithMenu", allEntries = true)})
+            @CacheEvict(value = "restWithMenu", key = "#restaurantId")})
     public void delete(int id, int restaurantId) {
         dishRepository.delete(dishRepository.checkBelong(id, restaurantId));
     }
