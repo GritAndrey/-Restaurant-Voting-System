@@ -31,7 +31,7 @@ public class RestaurantService {
 
     public Page<RestaurantTo> getAll(Integer page, Integer itemsPerPage) {
         var pageRequest = PageRequest.of(page, itemsPerPage, Sort.by("id"));
-        final var result = restaurantRepository.findAllBy(pageRequest);
+        final Page<Restaurant> result = restaurantRepository.findAllBy(pageRequest);
         checkTotalPages(page, result.getTotalPages());
         return result.map(RestaurantUtil::getTo);
     }
@@ -46,7 +46,7 @@ public class RestaurantService {
     @Cacheable("restaurants")
     public Page<RestaurantTo> getAllWithMenu(Integer page, Integer itemsPerPage) {
         var pageRequest = PageRequest.of(page, itemsPerPage, Sort.by("id"));
-        final var result = restaurantRepository.findAllWithMenus(pageRequest, LocalDate.now());
+        final Page<Restaurant> result = restaurantRepository.findAllWithMenus(pageRequest, LocalDate.now());
         checkTotalPages(page, result.getTotalPages());
         return result.map(RestaurantUtil::getTo);
     }
