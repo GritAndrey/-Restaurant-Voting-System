@@ -16,6 +16,7 @@ import ru.gritandrey.restaurantvotingsystem.util.DishUtil;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
@@ -33,19 +34,7 @@ public class DishService {
     @Cacheable(value = "menus", condition = ("#dishFilter.startDate != null && #dishFilter.startDate.equals(T(java.time.LocalDate).now())"))
     public List<MenuTo> getByFilter(DishFilter dishFilter) {
         final var filteredDishes = dishRepository.findAllByFilter(dishFilter);
-        record MenuKey(LocalDate menuDate,
-                       Integer restaurantId) {
-        }
-        final var groupedByDateAndRestaurantId = filteredDishes.stream()
-                .collect(groupingBy(dish -> new MenuKey(dish.getDate(), dish.getRestaurant().getId())));
-        return groupedByDateAndRestaurantId.entrySet().stream()
-                .map(entry -> MenuTo.builder()
-                        .restaurantId(entry.getKey().restaurantId())
-                        .menuDate(entry.getKey().menuDate())
-                        .dishes(DishUtil.getTos(entry.getValue()))
-                        .build()
-                ).sorted(Comparator.comparing(MenuTo::getMenuDate).reversed().thenComparing(MenuTo::getRestaurantId)).collect(toList());
-
+        return getMenuTos(filteredDishes);
     }
 
     @Caching(evict = {
@@ -77,5 +66,20 @@ public class DishService {
     protected Dish save(Dish dish, int restaurantId) {
         dish.setRestaurant(restaurantRepository.getReferenceById(restaurantId));
         return dishRepository.save(dish);
+    }
+
+    private List<MenuTo> getMenuTos(List<Dish> filteredDishes) {
+        record MenuKey(LocalDate menuDate,
+                       Integer restaurantId) {
+        }
+        final Map<MenuKey, List<Dish>> groupedByDateAndRestaurantId = filteredDishes.stream()
+                .collect(groupingBy(dish -> new MenuKey(dish.getDate(), dish.getRestaurant().getId())));
+        return groupedByDateAndRestaurantId.entrySet().stream()
+                .map(entry -> MenuTo.builder()
+                        .restaurantId(entry.getKey().restaurantId())
+                        .menuDate(entry.getKey().menuDate())
+                        .dishes(DishUtil.getTos(entry.getValue()))
+                        .build()
+                ).sorted(Comparator.comparing(MenuTo::getMenuDate).reversed().thenComparing(MenuTo::getRestaurantId)).collect(toList());
     }
 }
