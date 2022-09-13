@@ -31,7 +31,9 @@ public class DishService {
         return dishRepository.checkBelong(dishId, restaurantId);
     }
 
-    @Cacheable(value = "menus", condition = ("#dishFilter.startDate != null && #dishFilter.startDate.equals(T(java.time.LocalDate).now())"))
+    @Cacheable(value = "menus",
+            condition = ("#dishFilter.startDate != null && #dishFilter.startDate.equals(T(java.time.LocalDate).now())")
+            , keyGenerator = "DishFilterTodayKeyGenerator")
     public List<MenuTo> getByFilter(DishFilter dishFilter) {
         final var filteredDishes = dishRepository.findAllByFilter(dishFilter);
         return getMenuTos(filteredDishes);
