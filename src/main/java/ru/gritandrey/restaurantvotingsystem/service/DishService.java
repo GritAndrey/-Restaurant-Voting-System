@@ -1,5 +1,6 @@
 package ru.gritandrey.restaurantvotingsystem.service;
 
+import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -9,17 +10,20 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.gritandrey.restaurantvotingsystem.model.Dish;
 import ru.gritandrey.restaurantvotingsystem.repository.DishRepository;
 import ru.gritandrey.restaurantvotingsystem.repository.RestaurantRepository;
+import ru.gritandrey.restaurantvotingsystem.repository.querydsl.QPredicates;
 import ru.gritandrey.restaurantvotingsystem.to.DishFilter;
 import ru.gritandrey.restaurantvotingsystem.to.MenuTo;
 import ru.gritandrey.restaurantvotingsystem.util.DishUtil;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
+import static ru.gritandrey.restaurantvotingsystem.model.QDish.dish;
 
 @Service
 @RequiredArgsConstructor
@@ -35,8 +39,11 @@ public class DishService {
             condition = ("#dishFilter.startDate != null && #dishFilter.startDate.equals(T(java.time.LocalDate).now())")
             , keyGenerator = "DishFilterTodayKeyGenerator")
     public List<MenuTo> getByFilter(DishFilter dishFilter) {
-        final var filteredDishes = dishRepository.findAllByFilter(dishFilter);
-        return getMenuTos(filteredDishes);
+        final Predicate predicate = getPredicate(dishFilter);
+        final Iterable<Dish> filteredDishes = dishRepository.findAll(predicate);
+        List<Dish> dishes = new ArrayList<>();
+        filteredDishes.forEach(dishes::add);
+        return getMenuTos(dishes);
     }
 
     @Caching(evict = {
@@ -68,6 +75,14 @@ public class DishService {
     protected Dish save(Dish dish, int restaurantId) {
         dish.setRestaurant(restaurantRepository.getReferenceById(restaurantId));
         return dishRepository.save(dish);
+    }
+
+    private Predicate getPredicate(DishFilter dishFilter) {
+        return QPredicates.builder()
+                .add(dishFilter.restaurantId(), dish.restaurant.id::eq)
+                .add(dishFilter.startDate(), dish.date::goe)
+                .add(dishFilter.endDate(), dish.date::loe)
+                .build();
     }
 
     private List<MenuTo> getMenuTos(List<Dish> filteredDishes) {
