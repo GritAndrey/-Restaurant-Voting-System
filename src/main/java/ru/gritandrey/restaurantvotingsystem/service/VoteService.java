@@ -36,6 +36,11 @@ public class VoteService {
                 .orElseThrow(() -> new IllegalRequestDataException("Entity with id=" + voteId + " not found")));
     }
 
+    public VoteTo getTodayVote(int userId) {
+        return VoteUtil.getTo(voteRepository.findByUserIdAndDate(userId, LocalDate.now())
+                .orElseThrow(() -> new IllegalRequestDataException("No Vote today")));
+    }
+
     public List<VoteTo> getAllByUserId(int userId) {
         return VoteUtil.getTos(voteRepository.findAllByUserId(userId));
     }
@@ -48,11 +53,12 @@ public class VoteService {
                 .restaurant(restaurantRepository.getExisted(restaurantId))
                 .user(userRepository.getExisted(userId))
                 .build();
-        return VoteUtil.getTo(save(vote));
+        return VoteUtil.getTo(voteRepository.save(vote));
     }
 
     @Transactional
-    public void update(Integer userId, Integer restaurantId) {
+    public void update(Integer userId, Integer restaurantId, Integer voteId) {
+        voteRepository.checkBelong(voteId, userId);
         if (LocalTime.now().isAfter(voteEndTime)) {
             throw new IllegalRequestDataException("Update Vote time is over");
         }
@@ -60,14 +66,10 @@ public class VoteService {
         final var vote = mayBeVote.orElseThrow(() -> new IllegalRequestDataException("User haven`t voted yet"));
         vote.setTime(LocalTime.now());
         vote.setRestaurant(restaurantRepository.getExisted(restaurantId));
-        save(vote);
     }
 
     public void delete(int id) {
         voteRepository.deleteExisted(id);
     }
 
-    private Vote save(Vote vote) {
-        return voteRepository.save(vote);
-    }
 }

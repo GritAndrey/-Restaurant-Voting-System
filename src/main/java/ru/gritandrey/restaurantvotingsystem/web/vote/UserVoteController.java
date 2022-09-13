@@ -40,12 +40,19 @@ public class UserVoteController {
         return vote;
     }
 
-    @PutMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestParam int restaurantId) {
+    @GetMapping("/today")
+    public VoteTo getToday() {
         final var userId = SecurityUtil.authId();
-        log.info("Update vote. UserId: {} RestaurantId: {}", userId, restaurantId);
-        voteService.update(userId, restaurantId);
+        log.info("Get today vote  with userId {}", userId);
+        return voteService.getTodayVote(userId);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@RequestParam int restaurantId, @PathVariable int id) {
+        final var userId = SecurityUtil.authId();
+        log.info("Update vote. UserId: {} RestaurantId: {}, voteId: {}", userId, restaurantId, id);
+        voteService.update(userId, restaurantId, id);
     }
 
     @PostMapping()

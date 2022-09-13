@@ -39,7 +39,7 @@ public class RestaurantService {
     @Cacheable("restWithMenu")
     public RestaurantTo getWithMenu(int id) {
         final Restaurant restaurant = restaurantRepository.getRestaurantByIdWithMenu(id, LocalDate.now())
-                .orElseThrow(() -> new IllegalRequestDataException("No menu for restaurant with id: " + id));
+                .orElse(restaurantRepository.getExisted(id));
         return RestaurantUtil.getTo(restaurant);
     }
 
