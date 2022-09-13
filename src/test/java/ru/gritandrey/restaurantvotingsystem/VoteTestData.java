@@ -19,9 +19,9 @@ public class VoteTestData {
     public static Vote adminVote = new Vote();
     public static Vote adminVote2 = new Vote();
     public static Vote updatedVote = new Vote();
-    public static final Integer USER_VOTE_ID = 100017;
-    public static final Integer ADMIN_VOTE_ID = 100016;
-    public static final Integer ADMIN_VOTE2_ID = 100018;
+    public static final Integer USER_VOTE_ID = 2;
+    public static final Integer ADMIN_VOTE_ID = 1;
+    public static final Integer ADMIN_VOTE2_ID = 3;
 
     static {
         prepareVotes();

@@ -27,7 +27,7 @@ public class RestaurantAndDishTestData {
     public static final int RESTAURANT2_ID = START_SEQ + 1;
     public static final int RESTAURANT3_ID = START_SEQ + 2;
     public static final int RESTAURANT4_ID = START_SEQ + 3;
-    public static final int DISH1_ID = RESTAURANT4_ID + 1;
+    public static final int DISH1_ID = START_SEQ;
     public static final String food1 = "California Suncup";
     public static final String food2 = "Uluhe";
     public static final String food3 = "Wild Sweetwilliam";

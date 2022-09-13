@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class MenuItem extends NamedEntity {
 
-    @Column(name = "price")
+    @Column(name = "price", columnDefinition = "NUMERIC(20, 3)", nullable = false)
     @Positive
     private BigDecimal price;
 

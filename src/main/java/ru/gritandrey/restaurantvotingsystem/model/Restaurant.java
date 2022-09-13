@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import ru.gritandrey.restaurantvotingsystem.util.validation.NoHtml;
 
 import javax.persistence.*;
@@ -28,6 +30,7 @@ public class Restaurant extends NamedEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @JsonBackReference
     @ToString.Exclude
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<MenuItem> menu;
 
     public Restaurant(Integer id, String name, String address) {
