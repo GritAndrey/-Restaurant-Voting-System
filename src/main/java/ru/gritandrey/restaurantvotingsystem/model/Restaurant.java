@@ -19,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString(callSuper = true)
 public class Restaurant extends NamedEntity {
-    @Column(name = "address")
+    @Column(name = "address", nullable = false)
     @NotBlank
     @Size(min = 2, max = 128)
     @NoHtml

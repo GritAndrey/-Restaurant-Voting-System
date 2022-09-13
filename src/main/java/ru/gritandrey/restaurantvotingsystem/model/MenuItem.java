@@ -12,7 +12,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "menu_item")
+@Table(name = "menu_item",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"restaurant_id", "dish_date", "name"},
+                name = "dish_restaurant_date_idx")})
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,7 +29,7 @@ public class MenuItem extends NamedEntity {
     @JsonIgnore
     private Restaurant restaurant;
 
-    @Column(name = "dish_date")
+    @Column(name = "dish_date", nullable = false)
     @NotNull
     private LocalDate date;
 

@@ -8,7 +8,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "vote")
+@Table(name = "vote",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "vote_date"}, name = "vote_unique_user_date_idx")})
 @Getter
 @Setter
 @Builder
@@ -27,10 +28,10 @@ public class Vote extends BaseEntity {
     @ToString.Exclude
     private Restaurant restaurant;
 
-    @Column(name = "vote_date")
+    @Column(name = "vote_date", nullable = false)
     private LocalDate date;
 
-    @Column(name = "vote_time")
+    @Column(name = "vote_time", nullable = false)
     @NotNull
     private LocalTime time;
 }
