@@ -11,7 +11,7 @@ import org.springframework.cache.interceptor.SimpleKey;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import ru.gritandrey.restaurantvotingsystem.to.DishFilter;
+import ru.gritandrey.restaurantvotingsystem.to.MenuItemFilter;
 import ru.gritandrey.restaurantvotingsystem.util.JsonUtil;
 
 import java.sql.SQLException;
@@ -37,8 +37,8 @@ public class AppConfig {
     @Bean
     KeyGenerator DishFilterTodayKeyGenerator() {
         return (target, method, params) -> {
-            DishFilter dishFilter = (DishFilter) params[0];
-            return new SimpleKey(dishFilter.restaurantId(), dishFilter.startDate());
+            MenuItemFilter menuItemFilter = (MenuItemFilter) params[0];
+            return new SimpleKey(menuItemFilter.restaurantId(), menuItemFilter.startDate());
         };
     }
 }

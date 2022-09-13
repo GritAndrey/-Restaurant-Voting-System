@@ -1,4 +1,4 @@
-package ru.gritandrey.restaurantvotingsystem.web.dish;
+package ru.gritandrey.restaurantvotingsystem.web.menuitem;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
@@ -9,33 +9,33 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.gritandrey.restaurantvotingsystem.model.Dish;
-import ru.gritandrey.restaurantvotingsystem.service.DishService;
+import ru.gritandrey.restaurantvotingsystem.model.MenuItem;
+import ru.gritandrey.restaurantvotingsystem.service.MenuItemService;
 import ru.gritandrey.restaurantvotingsystem.util.validation.ValidationUtil;
 
 import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
-@RequestMapping(value = AdminDishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = AdminMenuItemController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 @Slf4j
-@Tags({@Tag(name = "Admin Dish controller", description = "Manage dishes")})
-public class AdminDishController {
-    public static final String REST_URL = "/api/admin/restaurants/{restaurantId}/dishes";
-    private final DishService dishService;
+@Tags({@Tag(name = "Admin MenuItem controller", description = "Manage dishes")})
+public class AdminMenuItemController {
+    public static final String REST_URL = "/api/admin/restaurants/{restaurantId}/menu-items";
+    private final MenuItemService menuItemService;
 
     @GetMapping("/{id}")
-    public Dish get(@PathVariable int id, @PathVariable int restaurantId) {
+    public MenuItem get(@PathVariable int id, @PathVariable int restaurantId) {
         log.info("Get restaurant dish with id: {} restaurantId: {}", id, restaurantId);
-        return dishService.get(id, restaurantId);
+        return menuItemService.get(id, restaurantId);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Dish> createWithLocation(@Valid @RequestBody Dish dish, @PathVariable int restaurantId) {
-        log.info("Create {}", dish);
-        ValidationUtil.checkNew(dish);
-        final var created = dishService.create(dish, restaurantId);
+    public ResponseEntity<MenuItem> createWithLocation(@Valid @RequestBody MenuItem menuItem, @PathVariable int restaurantId) {
+        log.info("Create {}", menuItem);
+        ValidationUtil.checkNew(menuItem);
+        final var created = menuItemService.create(menuItem, restaurantId);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(restaurantId, created.getId()).toUri();
@@ -44,16 +44,16 @@ public class AdminDishController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@Valid @RequestBody Dish dish, @PathVariable int id, @PathVariable int restaurantId) {
-        log.info("Update {}", dish);
-        ValidationUtil.assureIdConsistent(dish, id);
-        dishService.update(dish, id, restaurantId);
+    public void update(@Valid @RequestBody MenuItem menuItem, @PathVariable int id, @PathVariable int restaurantId) {
+        log.info("Update {}", menuItem);
+        ValidationUtil.assureIdConsistent(menuItem, id);
+        menuItemService.update(menuItem, id, restaurantId);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id, @PathVariable int restaurantId) {
         log.info("Delete {}", id);
-        dishService.delete(id, restaurantId);
+        menuItemService.delete(id, restaurantId);
     }
 }

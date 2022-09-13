@@ -31,5 +31,5 @@ public class RestaurantTo extends NamedTo {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @JsonDeserialize
-    List<DishTo> menu = new ArrayList<>();
+    List<MenuItemTo> menu = new ArrayList<>();
 }

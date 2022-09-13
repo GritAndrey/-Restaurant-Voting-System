@@ -12,11 +12,11 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "dish")
+@Table(name = "menu_item")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Dish extends NamedEntity {
+public class MenuItem extends NamedEntity {
 
     @Column(name = "price")
     @Positive
@@ -31,7 +31,7 @@ public class Dish extends NamedEntity {
     @NotNull
     private LocalDate date;
 
-    public Dish(Integer id, BigDecimal price, String name, Restaurant restaurant, LocalDate date) {
+    public MenuItem(Integer id, BigDecimal price, String name, Restaurant restaurant, LocalDate date) {
         super(id, name);
         this.price = price;
         this.restaurant = restaurant;

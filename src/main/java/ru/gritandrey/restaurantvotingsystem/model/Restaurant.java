@@ -28,7 +28,7 @@ public class Restaurant extends NamedEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @JsonBackReference
     @ToString.Exclude
-    private List<Dish> menu;
+    private List<MenuItem> menu;
 
     public Restaurant(Integer id, String name, String address) {
         super(id, name);

@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @ToString(callSuper = true)
 @Jacksonized
 @SuperBuilder
-public class DishTo extends BaseTo {
+public class MenuItemTo extends BaseTo {
 
     BigDecimal price;
 

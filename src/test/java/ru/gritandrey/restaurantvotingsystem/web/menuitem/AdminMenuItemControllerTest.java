@@ -1,4 +1,4 @@
-package ru.gritandrey.restaurantvotingsystem.web.dish;
+package ru.gritandrey.restaurantvotingsystem.web.menuitem;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -7,10 +7,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.gritandrey.restaurantvotingsystem.exception.DataConflictException;
-import ru.gritandrey.restaurantvotingsystem.model.Dish;
-import ru.gritandrey.restaurantvotingsystem.service.DishService;
-import ru.gritandrey.restaurantvotingsystem.util.DishUtil;
+import ru.gritandrey.restaurantvotingsystem.model.MenuItem;
+import ru.gritandrey.restaurantvotingsystem.service.MenuItemService;
 import ru.gritandrey.restaurantvotingsystem.util.JsonUtil;
+import ru.gritandrey.restaurantvotingsystem.util.MenuItemUtil;
 import ru.gritandrey.restaurantvotingsystem.web.AbstractControllerTest;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -21,13 +21,13 @@ import static ru.gritandrey.restaurantvotingsystem.RestaurantAndDishTestData.*;
 import static ru.gritandrey.restaurantvotingsystem.UserTestData.ADMIN_MAIL;
 import static ru.gritandrey.restaurantvotingsystem.UserTestData.USER_MAIL;
 
-class AdminDishControllerTest extends AbstractControllerTest {
-    private static final String REST_URL = "/api/admin/restaurants/" + RESTAURANT1_ID + "/dishes" + '/';
-    private final DishService dishService;
+class AdminMenuItemControllerTest extends AbstractControllerTest {
+    private static final String REST_URL = "/api/admin/restaurants/" + RESTAURANT1_ID + "/menu-items" + '/';
+    private final MenuItemService menuItemService;
 
-    public AdminDishControllerTest(MockMvc mockMvc, DishService dishService) {
+    public AdminMenuItemControllerTest(MockMvc mockMvc, MenuItemService menuItemService) {
         super(mockMvc);
-        this.dishService = dishService;
+        this.menuItemService = menuItemService;
     }
 
     @Test
@@ -70,10 +70,10 @@ class AdminDishControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newDish)))
                 .andExpect(status().isCreated());
-        Dish created = DISH_MATCHER.readFromJson(action);
+        MenuItem created = DISH_MATCHER.readFromJson(action);
         int newId = created.id();
         newDish.setId(newId);
-        DISH_MATCHER.assertMatch(dishService.get(newId, RESTAURANT1_ID), newDish);
+        DISH_MATCHER.assertMatch(menuItemService.get(newId, RESTAURANT1_ID), newDish);
     }
 
     @Test
@@ -81,7 +81,7 @@ class AdminDishControllerTest extends AbstractControllerTest {
     void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL + DISH1_ID))
                 .andExpect(status().isNoContent());
-        assertThrows(DataConflictException.class, () -> dishService.get(DISH1_ID, RESTAURANT1_ID));
+        assertThrows(DataConflictException.class, () -> menuItemService.get(DISH1_ID, RESTAURANT1_ID));
     }
 
     @Test
@@ -94,21 +94,21 @@ class AdminDishControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void update() throws Exception {
-        Dish updated = getUpdatedDish();
+        MenuItem updated = getUpdatedDish();
         perform(MockMvcRequestBuilders.put(REST_URL + DISH1_ID).contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        DISH_MATCHER.assertMatch(dishService.get(DISH1_ID, RESTAURANT1_ID), updated);
+        DISH_MATCHER.assertMatch(menuItemService.get(DISH1_ID, RESTAURANT1_ID), updated);
     }
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void updateNotFound() throws Exception {
-        Dish updated = getUpdatedDish();
+        MenuItem updated = getUpdatedDish();
         updated.setId(NOT_FOUND);
         perform(MockMvcRequestBuilders.put(REST_URL + NOT_FOUND).contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(DishUtil.getTo(updated))))
+                .content(JsonUtil.writeValue(MenuItemUtil.getTo(updated))))
                 .andExpect(status().isUnprocessableEntity());
     }
 }

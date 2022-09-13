@@ -16,7 +16,7 @@ public class RestaurantUtil {
                 .address(restaurant.getAddress())
                 .build();
         if (Hibernate.isInitialized(restaurant.getMenu()) && restaurant.getMenu() != null) {
-            restaurantTo.getMenu().addAll(DishUtil.getTos(restaurant.getMenu()));
+            restaurantTo.getMenu().addAll(MenuItemUtil.getTos(restaurant.getMenu()));
         }
         return restaurantTo;
     }

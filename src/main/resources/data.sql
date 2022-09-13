@@ -6,7 +6,7 @@ VALUES ('Rau LLC', '1 Stone Corner Junction'),
        ('Kon and Sons', '4916 Kim Street'),
        ('Bechtelar Group', '3 Dorton Court');
 
-INSERT INTO dish(restaurant_id, dish_date, name, price)
+INSERT INTO menu_item(restaurant_id, dish_date, name, price)
 VALUES (100000, now(), 'California Suncup', '12.3'),
        (100000, now(), 'Uluhe', '4.6'),
        (100000, now(), 'Wild Sweetwilliam', '3.5'),
@@ -36,7 +36,7 @@ VALUES (2, 100000, dateadd('DAY', -1, current_date), '11:01'),
        (1, 100000, now(), '12:00'),
        (2, 100001, now(), '10:00');
 
-INSERT INTO dish(restaurant_id, dish_date, name, price)
+INSERT INTO menu_item(restaurant_id, dish_date, name, price)
 VALUES (100003, dateadd('DAY', -2, current_date), 'California Suncup', '12.3'),
        (100003, dateadd('DAY', -2, current_date), 'Uluhe', '4.6'),
        (100003, dateadd('DAY', -2, current_date), 'Wild Sweetwilliam', '3.5'),

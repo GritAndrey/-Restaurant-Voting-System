@@ -16,5 +16,5 @@ public class MenuTo {
 
     LocalDate menuDate;
     Integer restaurantId;
-    List<DishTo> dishes;
+    List<MenuItemTo> dishes;
 }
